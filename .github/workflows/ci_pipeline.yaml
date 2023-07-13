@@ -13,6 +13,7 @@ on:
     branches: [ "master" ]
     paths:
       - 'agents/**'
+      - 'results/**'
 
 permissions:
   contents: read
@@ -33,3 +34,6 @@ jobs:
     - name: Analysing the agents code with pylint
       run: |
         pylint agents --rcfile=.github/pylint.conf
+    - name: Analysing the results code with pylint
+      run: |
+        pylint results --rcfile=.github/pylint.conf
