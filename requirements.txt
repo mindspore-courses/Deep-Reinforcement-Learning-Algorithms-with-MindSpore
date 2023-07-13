@@ -1,0 +1,4 @@
+numpy
+matplotlib
+gym==0.10.9
+mindspore==2.0.0
