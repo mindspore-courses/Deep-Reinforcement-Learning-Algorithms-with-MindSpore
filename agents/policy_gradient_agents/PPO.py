@@ -11,9 +11,8 @@ from multiprocessing import Pool
 from contextlib import closing
 
 
-
 class PPO(Base_Agent):
-    """Proximal Policy Optimization agent"""
+    # Proximal Policy Optimization agent
     agent_name = "PPO"
 
     def __init__(self, config):
@@ -176,7 +175,6 @@ class PPO(Base_Agent):
             self.game_full_episode_scores.append(total_reward)
             self.rolling_results.append(np.mean(self.game_full_episode_scores[-1 * self.rolling_score_window:]))
         self.save_max_result_seen()
-
 
     # def play_n_episodes(self, n, exploration_epsilon=None):
     #     """Plays n episodes in parallel using the fixed policy and returns the data"""
