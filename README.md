@@ -1,9 +1,11 @@
 # Deep Reinforcement Learning Algorithms with MindSpore
 this is fork by Deep Reinforcement Learning Algorithms with PyTorch
-
 ![Travis CI](https://travis-ci.org/p-christ/Deep-Reinforcement-Learning-Algorithms-with-PyTorch.svg?branch=master)
 [![contributions welcome](https://img.shields.io/badge/contributions-welcome-brightgreen.svg?style=flat)](https://github.com/dwyl/esta/issues)
 
+## History：
+### 2023.7.13:
+DQN, SAC and PPO codes have been done already.
 
 
 ![RL](utilities/RL_image.jpeg)   ![PyTorch](utilities/PyTorch-logo-2.jpg)
