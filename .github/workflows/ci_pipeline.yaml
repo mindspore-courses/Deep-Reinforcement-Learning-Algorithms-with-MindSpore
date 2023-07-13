@@ -8,12 +8,17 @@ on:
     branches: [ "main" ]
     paths:
       - 'agents/**'
+      - 'exploration_strategies/**'
+      - 'utilities/**'
+      - 'results/**'
       - '.github/workflows/**'
   push:
     branches: [ "main" ]
     paths:
       - 'agents/**'
       - 'results/**'
+      - 'exploration_strategies/**'
+      - 'utilities/**'
 
 permissions:
   contents: read
@@ -37,3 +42,9 @@ jobs:
     - name: Analysing the results code with pylint
       run: |
         pylint results --rcfile=.github/pylint.conf
+    - name: Analysing the utilities code with pylint
+      run: |
+        pylint utilities --rcfile=.github/pylint.conf
+    - name: Analysing the exploration_strategies code with pylint
+      run: |
+        pylint exploration_strategies --rcfile=.github/pylint.conf
