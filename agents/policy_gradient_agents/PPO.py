@@ -170,8 +170,8 @@ class PPO(Base_Agent):
 
     def save_result(self):
         """Save the results seen by the agent in the most recent experiences"""
-        for ep in range(len(self.many_episode_rewards)):
-            total_reward = np.sum(self.many_episode_rewards[ep])
+        for ep, episode_reward in enumerate(self.many_episode_rewards):
+            total_reward = np.sum(episode_reward)
             self.game_full_episode_scores.append(total_reward)
             self.rolling_results.append(np.mean(self.game_full_episode_scores[-1 * self.rolling_score_window:]))
         self.save_max_result_seen()
