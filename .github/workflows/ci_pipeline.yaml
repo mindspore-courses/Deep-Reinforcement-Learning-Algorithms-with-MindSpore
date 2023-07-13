@@ -3,6 +3,17 @@
 
 name: CI Pipe
 
+on:
+  pull_request:
+    branches: [ "master" ]
+    paths:
+      - 'agents/**'
+      - '.github/workflows/**'
+  push:
+    branches: [ "master" ]
+    paths:
+      - 'agents/**'
+
 permissions:
   contents: read
 
