@@ -33,8 +33,3 @@ jobs:
     - name: Analysing the agents code with pylint
       run: |
         pylint agents --rcfile=.github/pylint.conf
-    - name: Install MindSpore
-      shell: bash
-      env:
-        OS: ubuntu-latest
-        PYTHON: 3.7
