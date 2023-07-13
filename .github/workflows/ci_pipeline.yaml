@@ -5,12 +5,12 @@ name: CI Pipe
 
 on:
   pull_request:
-    branches: [ "master" ]
+    branches: [ "main" ]
     paths:
       - 'agents/**'
       - '.github/workflows/**'
   push:
-    branches: [ "master" ]
+    branches: [ "main" ]
     paths:
       - 'agents/**'
       - 'results/**'
