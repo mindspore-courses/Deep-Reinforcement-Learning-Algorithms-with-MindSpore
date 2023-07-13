@@ -26,7 +26,7 @@ jobs:
         PYTHON: 3.7
     - name: Analysing the mindnlp code with pylint
       run: |
-        pylint agents --rcfile=.github/pylint.conf
+        pylint mindnlp --rcfile=.github/pylint.conf
     - name: Analysing the tests code with pylint
       run: |
         pylint tests --rcfile=.github/pylint.conf
