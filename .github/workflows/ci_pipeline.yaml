@@ -24,9 +24,6 @@ jobs:
       env:
         OS: ubuntu-latest
         PYTHON: 3.9
-    - name: Analysing the mindnlp code with pylint
+    - name: Analysing the agents code with pylint
       run: |
         pylint agents --rcfile=.github/pylint.conf
-    - name: Analysing the tests code with pylint
-      run: |
-        pylint tests --rcfile=.github/pylint.conf
