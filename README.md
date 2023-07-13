@@ -10,7 +10,7 @@ DQN, SAC and PPO codes have been done already.
 
 ![RL](utilities/RL_image.jpeg)   ![PyTorch](utilities/PyTorch-logo-2.jpg)
 
-This repository contains PyTorch implementations of deep reinforcement learning algorithms and environments. 
+This repository contains MindSpore implementations of deep reinforcement learning algorithms and environments. 
 
 (To help you remember things you learn about machine learning in general write them in [Save All](https://saveall.ai/shared/deck/140&4&3K3uXPazkg4&github_links) and try out the public deck there about Fast AI's machine learning textbook.)
 
