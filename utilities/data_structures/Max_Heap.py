@@ -1,8 +1,13 @@
+"""
+Max Heap
+"""
 import numpy as np
 from utilities.data_structures.Node import Node
 
-class Max_Heap(object):
+
+class Max_Heap:
     """Generic max heap object"""
+
     def __init__(self, max_size, dimension_of_value_attribute, default_key_to_use):
 
         self.max_size = max_size
@@ -12,17 +17,28 @@ class Max_Heap(object):
 
     def initialise_heap(self):
         """Initialises a heap of Nodes of length self.max_size * 4 + 1"""
-        heap = np.array([Node(self.default_key_to_use, tuple([None for _ in range(self.dimension_of_value_attribute)])) for _ in range(self.max_size * 4 + 1)])
+
+        heap = np.array(
+            [
+                Node(
+                    self.default_key_to_use,
+                    ([None for _ in range(self.dimension_of_value_attribute)])
+                )
+                for _ in range(self.max_size * 4 + 1)
+            ]
+        )
 
         # We don't use the 0th element in a heap so we want it to have infinite value so it is never swapped with a lower node
         heap[0] = Node(float("inf"), (None, None, None, None, None))
         return heap
 
     def update_element_and_reorganise_heap(self, heap_index_for_change, new_element):
+        """Updates the element and re-organises the heap"""
         self.update_heap_element(heap_index_for_change, new_element)
         self.reorganise_heap(heap_index_for_change)
 
     def update_heap_element(self, heap_index, new_element):
+        """Update the heap element"""
         self.heap[heap_index] = new_element
 
     def reorganise_heap(self, heap_index_changed):

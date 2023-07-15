@@ -1,17 +1,23 @@
-class Node(object):
+"""
+Node
+"""
+class Node:
     """Generic Node class. Used in the implementation of a prioritised replay buffer"""
     def __init__(self, key, value):
         self.key = key
         self.value = value
 
     def update_key_and_value(self, new_key, new_value):
+        """Update the key and value"""
         self.update_key(new_key)
         self.update_value(new_value)
 
     def update_key(self, new_key):
+        """Update the key"""
         self.key = new_key
 
     def update_value(self, new_value):
+        """Update the value"""
         self.value = new_value
 
     def __eq__(self, other):

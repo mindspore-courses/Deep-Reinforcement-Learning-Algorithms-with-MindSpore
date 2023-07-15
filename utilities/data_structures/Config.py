@@ -1,4 +1,5 @@
-class Config(object):
+"""Config"""
+class Config:
     """Object to hold the config requirements for an agent/game"""
     def __init__(self):
         self.seed = None
@@ -20,5 +21,3 @@ class Config(object):
         self.debug_mode = False
         self.device_target = 'CPU'
         self.device_id = 0
-
-

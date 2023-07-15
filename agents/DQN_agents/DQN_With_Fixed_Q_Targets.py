@@ -1,4 +1,7 @@
-import copy
+"""
+DQN with fixed Q targets
+"""
+# pylint: disable=C0103
 
 from agents.Base_Agent import Base_Agent
 from agents.DQN_agents.DQN import DQN
@@ -15,7 +18,8 @@ class DQN_With_Fixed_Q_Targets(DQN):
 
     def learn(self, experiences=None):
         """Runs a learning iteration for the Q network"""
-        super(DQN_With_Fixed_Q_Targets, self).learn(experiences=experiences)
+        # super(DQN_With_Fixed_Q_Targets, self).learn(experiences=experiences)
+        super().learn(experiences=experiences)
         self.soft_update_of_target_network(self.q_network_local, self.q_network_target,
                                            self.hyperparameters["tau"])  # Update the target network
 

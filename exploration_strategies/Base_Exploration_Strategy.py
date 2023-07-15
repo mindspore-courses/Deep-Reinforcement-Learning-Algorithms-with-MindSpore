@@ -1,8 +1,12 @@
+"""
+Base exploration
+"""
 
 
-class Base_Exploration_Strategy(object):
+class Base_Exploration_Strategy:
     """Base abstract class for agent exploration strategies. Every exploration strategy must inherit from this class
     and implement the methods perturb_action_for_exploration_purposes and add_exploration_rewards"""
+
     def __init__(self, config):
         self.config = config
 

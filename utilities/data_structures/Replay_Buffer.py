@@ -1,10 +1,12 @@
+"""
+Replay Buffer
+"""
 from collections import namedtuple, deque
 import random
-import mindspore as ms
 import mindspore.numpy as np
 
 
-class Replay_Buffer(object):
+class Replay_Buffer:
     """Replay buffer to store experiences that the agent can then use for training data"""
 
     def __init__(self, buffer_size, batch_size, seed):
@@ -18,8 +20,10 @@ class Replay_Buffer(object):
 
     def add_experience(self, states, actions, rewards, next_states, dones):
         """Adds experience(s) into the replay buffer"""
-        if type(dones) == list:
-            assert type(dones[0]) != list, "A done shouldn't be a list"
+        # if type(dones) == list:
+        if isinstance(dones, list):
+            # assert type(dones[0]) != list, "A done shouldn't be a list"
+            assert not isinstance(dones[0], list), "A done shouldn't be a list"
             experiences = [
                 self.experience(state, action, reward, next_state, done)
                 for state, action, reward, next_state, done in zip(states, actions, rewards, next_states, dones)
@@ -31,15 +35,20 @@ class Replay_Buffer(object):
 
     def sample(self, num_experiences=None, separate_out_data_types=True):
         """Draws a random sample of experience from the replay buffer"""
+        result = None
+
         experiences = self.pick_experiences(num_experiences)
         if separate_out_data_types:
             states, actions, rewards, next_states, dones = self.separate_out_data_types(experiences)
-            return states, actions, rewards, next_states, dones
+            result = states, actions, rewards, next_states, dones
         else:
-            return experiences
+            result = experiences
+
+        return result
 
     def separate_out_data_types(self, experiences):
-        states, actions, rewards, next_states, dones = list(), list(), list(), list(), list()
+        """separate_out_data_types"""
+        states, actions, rewards, next_states, dones = [], [], [], [], []
         states_append, actions_append, rewards_append, next_states_append, dones_append \
             = states.append, actions.append, rewards.append, next_states.append, dones.append
         for e in experiences:
@@ -64,6 +73,9 @@ class Replay_Buffer(object):
         )
 
     def pick_experiences(self, num_experiences=None):
+        """
+        pick experience
+        """
         if num_experiences is not None:
             batch_size = num_experiences
         else:

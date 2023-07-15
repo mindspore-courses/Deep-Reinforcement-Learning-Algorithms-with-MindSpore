@@ -1,3 +1,7 @@
+"""
+DDQN with Prioritised experience replay
+"""
+# pylint: disable=C0103
 import mindspore as ms
 from mindspore import ops
 from agents.DQN_agents.DDQN import DDQN
@@ -26,11 +30,11 @@ class DDQN_With_Prioritised_Experience_Replay(DDQN):
         # loss, td_errors = self.compute_loss_and_td_errors(
         #     states, next_states, rewards, actions, dones, importance_sampling_weights
         # )
-        (loss, td_errors), grads = self.grad_fn(
+        (_, td_errors), grads = self.grad_fn(
                 states, next_states, rewards, actions, dones, importance_sampling_weights
             )
         self.take_optimisation_step(
-            self.q_network_optimizer, loss, grads, self.hyperparameters["gradient_clipping_norm"]
+            self.q_network_optimizer, grads, self.hyperparameters["gradient_clipping_norm"]
         )
         self.soft_update_of_target_network(self.q_network_local, self.q_network_target, self.hyperparameters["tau"])
         self.memory.update_td_errors(td_errors.squeeze(1))

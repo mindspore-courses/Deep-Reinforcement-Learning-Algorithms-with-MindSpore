@@ -1,8 +1,13 @@
+"""
+Deque
+"""
 import numpy as np
 from utilities.data_structures.Node import Node
 
-class Deque(object):
+
+class Deque:
     """Generic deque object"""
+
     def __init__(self, max_size, dimension_of_value_attribute):
 
         self.max_size = max_size
@@ -14,7 +19,14 @@ class Deque(object):
 
     def initialise_deque(self):
         """Initialises a queue of Nodes of length self.max_size"""
-        deque = np.array([Node(0, tuple([None for _ in range(self.dimension_of_value_attribute)])) for _ in range(self.max_size)])
+        deque = np.array(
+            [
+                Node(
+                    0, ([None for _ in range(self.dimension_of_value_attribute)])
+                )
+                for _ in range(self.max_size)
+            ]
+        )
         return deque
 
     def add_element_to_deque(self, new_key, new_value):
@@ -25,13 +37,16 @@ class Deque(object):
         self.update_deque_index_to_overwrite_next()
 
     def update_deque_node_key_and_value(self, index, new_key, new_value):
+        """update_deque_node_key_and_valuet"""
         self.update_deque_node_key(index, new_key)
         self.update_deque_node_value(index, new_value)
 
     def update_deque_node_key(self, index, new_key):
+        """update deque node key"""
         self.deque[index].update_key(new_key)
 
     def update_deque_node_value(self, index, new_value):
+        """update deque node value"""
         self.deque[index].update_value(new_value)
 
     def update_deque_index_to_overwrite_next(self):

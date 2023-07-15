@@ -1,6 +1,11 @@
-from exploration_strategies.Base_Exploration_Strategy import Base_Exploration_Strategy
-import numpy as np
+"""
+Epsilon greedy exploration
+"""
+# pylint:disable=W0107
 import random
+import numpy as np
+from exploration_strategies.Base_Exploration_Strategy import Base_Exploration_Strategy
+
 
 class Epsilon_Greedy_Exploration(Base_Exploration_Strategy):
     """Implements an epsilon greedy exploration strategy"""
@@ -16,7 +21,7 @@ class Epsilon_Greedy_Exploration(Base_Exploration_Strategy):
 
         if "random_episodes_to_run" in self.config.hyperparameters.keys():
             self.random_episodes_to_run = self.config.hyperparameters["random_episodes_to_run"]
-            print("Running {} random episodes".format(self.random_episodes_to_run))
+            print(f"Running {self.random_episodes_to_run} random episodes")
         else:
             self.random_episodes_to_run = 0
 
@@ -52,8 +57,10 @@ class Epsilon_Greedy_Exploration(Base_Exploration_Strategy):
         max_epsilon = 0.5
         min_epsilon = 0.001
         increment = (max_epsilon - min_epsilon) / float(self.exploration_cycle_episodes_length / 2)
-        cycle = [ix for ix in range(int(self.exploration_cycle_episodes_length / 2))] + [ix for ix in range(
-            int(self.exploration_cycle_episodes_length / 2), 0, -1)]
+        cycle = list(range(int(self.exploration_cycle_episodes_length/2))) + \
+                list(range(int(self.exploration_cycle_episodes_length/2), 0, -1))
+        # cycle = [ix for ix in range(int(self.exploration_cycle_episodes_length / 2))] + \
+        #         [ix for ix in range(int(self.exploration_cycle_episodes_length / 2), 0, -1)]
         cycle_ix = episode_number % self.exploration_cycle_episodes_length
         epsilon = max_epsilon - cycle[cycle_ix] * increment
         return epsilon

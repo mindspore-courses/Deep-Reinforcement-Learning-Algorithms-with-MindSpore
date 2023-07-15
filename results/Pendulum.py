@@ -1,7 +1,9 @@
-# 测试连续动作
+"""
+测试连续动作 Pendulum
+"""
 import gym
 
-from agents.policy_gradient_agents.PPO import PPO
+# from agents.policy_gradient_agents.PPO import PPO
 # from agents.actor_critic_agents.DDPG import DDPG
 from agents.actor_critic_agents.SAC import SAC
 # from agents.actor_critic_agents.TD3 import TD3
@@ -13,7 +15,7 @@ config = Config()
 config.seed = 1
 config.environment = gym.make("Pendulum-v0")
 config.num_episodes_to_run = 450
-config.file_to_save_data_results = Noneta
+config.file_to_save_data_results = None
 config.file_to_save_results_graph = None
 config.show_solution_score = False
 config.visualise_individual_results = False

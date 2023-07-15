@@ -1,10 +1,14 @@
-from agents.Base_Agent import Base_Agent
+""""
+SAC
+"""
+import numpy as np
+import mindspore as ms
+from mindspore import nn, ops
+from mindspore.nn.probability.distribution import Normal
 from utilities.OU_Noise import OU_Noise
 from utilities.data_structures.Replay_Buffer import Replay_Buffer
-import numpy as np
-from mindspore import nn, ops
-import mindspore as ms
-from mindspore.nn.probability.distribution import Normal
+from agents.Base_Agent import Base_Agent
+
 
 LOG_SIG_MAX = 2
 LOG_SIG_MIN = -20
@@ -97,11 +101,15 @@ class SAC(Base_Agent):
             self.calculate_qf2_grads, grad_position=None, weights=self.critic_local_2.trainable_params(),
             has_aux=False
         )
-        self.critic_loss = ms.Tensor([0])
+        # self.critic_loss = ms.Tensor([0])
 
         # standard normal
         self.normal = Normal(mean=0, sd=1)
         self.sample = self.normal.sample
+
+        self.episode_step_number_val = None
+        self.action = None
+        self.state = None
 
     def save_result(self):
         """Saves the result of an episode of the game. Overriding the method in Base Agent that does this because we
@@ -222,7 +230,7 @@ class SAC(Base_Agent):
     def eval_produce_action_and_action_info(self, state):
         """Given the state, produces an action, the log probability of the action, and the tanh of the mean action"""
         actor_output = self.actor_local(state)
-        mean, log_std = actor_output[:, :self.action_size], actor_output[:, self.action_size:]
+        mean, _ = actor_output[:, :self.action_size], actor_output[:, self.action_size:]
         return ops.tanh(mean)
 
     def time_for_critic_and_actor_to_learn(self):
@@ -239,8 +247,8 @@ class SAC(Base_Agent):
         # qf1_loss, qf2_loss = self.calculate_critic_losses(state_batch, action_batch, reward_batch, next_state_batch,
         #                                                   mask_batch)
         # self.calculate_qf1_grads(state_batch, action_batch, next_q_value)
-        qf1_loss, qf1_grads = self.q1_grad_fn(state_batch, action_batch, next_q_value)
-        qf2_loss, qf2_grads = self.q2_grad_fn(state_batch, action_batch, next_q_value)
+        _, qf1_grads = self.q1_grad_fn(state_batch, action_batch, next_q_value)
+        _, qf2_grads = self.q2_grad_fn(state_batch, action_batch, next_q_value)
         # self.update_critic_parameters(
         #     critic_loss_1=qf1_loss, critic_loss_2=qf2_loss, critic_grads_1=qf1_grads, critic_grads_2=qf2_grads
         # )
@@ -249,21 +257,25 @@ class SAC(Base_Agent):
             critic_grads_1=qf1_grads, critic_grads_2=qf2_grads
         )
 
-        (policy_loss, log_pi), policy_grads = self.actor_grad_fn(state_batch)
+        (_, log_pi), policy_grads = self.actor_grad_fn(state_batch)
         if self.automatic_entropy_tuning:
             # alpha_loss = self.calculate_entropy_tuning_loss(log_pi)
-            alpha_loss, alpha_grads = self.alpha_grad_fn(log_pi)
+            _, alpha_grads = self.alpha_grad_fn(log_pi)
         else:
-            alpha_loss = None
             alpha_grads = None
         self.update_actor_parameters(
-            actor_loss=policy_loss, alpha_loss=alpha_loss, actor_grads=policy_grads, alpha_grads=alpha_grads
+            # actor_loss=policy_loss, alpha_loss=alpha_loss,
+            actor_grads=policy_grads, alpha_grads=alpha_grads
         )
 
     def sample_experiences(self):
+        """Sample"""
         return self.memory.sample()
 
     def pre_calculate_next_q_value(self, reward_batch, next_state_batch, mask_batch):
+        """
+        pre caculate next q value
+        """
         # with torch.no_grad():
         # next_state_action, next_state_log_pi, _ = self.produce_action_and_action_info(next_state_batch)
         next_state_action, next_state_log_pi = self.action_log_prob_produce_action_and_action_info(next_state_batch)
@@ -274,11 +286,13 @@ class SAC(Base_Agent):
         return next_q_value
 
     def calculate_qf1_grads(self, state_batch, action_batch, next_q_value):
+        """Calculates qf1 gradient"""
         qf1 = self.critic_local_1(ops.cat((state_batch, action_batch), axis=1))
         qf1_loss = self.mse_loss(qf1, next_q_value)
         return qf1_loss
 
     def calculate_qf2_grads(self, state_batch, action_batch, next_q_value):
+        """Calculates qf2 gradient"""
         qf2 = self.critic_local_2(ops.cat((state_batch, action_batch), axis=1))
         qf2_loss = self.mse_loss(qf2, next_q_value)
         return qf2_loss
@@ -313,26 +327,26 @@ class SAC(Base_Agent):
 
     def update_critic_parameters(self, critic_grads_1, critic_grads_2):
         """Updates the parameters for both critics"""
-        self.take_optimisation_step(self.critic_optimizer_1, self.critic_loss, critic_grads_1,
+        self.take_optimisation_step(self.critic_optimizer_1, critic_grads_1,
                                     self.hyperparameters["Critic"]["gradient_clipping_norm"])
-        self.take_optimisation_step(self.critic_optimizer_2, self.critic_loss, critic_grads_2,
+        self.take_optimisation_step(self.critic_optimizer_2, critic_grads_2,
                                     self.hyperparameters["Critic"]["gradient_clipping_norm"])
         self.soft_update_of_target_network(self.critic_local_1, self.critic_target_1,
                                            self.hyperparameters["Critic"]["tau"])
         self.soft_update_of_target_network(self.critic_local_2, self.critic_target_2,
                                            self.hyperparameters["Critic"]["tau"])
 
-    def update_actor_parameters(self, actor_loss, alpha_loss, actor_grads, alpha_grads):
+    def update_actor_parameters(self, actor_grads, alpha_grads):
         """Updates the parameters for the actor and (if specified) the temperature parameter"""
-        self.take_optimisation_step(self.actor_optimizer, actor_loss, actor_grads,
+        self.take_optimisation_step(self.actor_optimizer, actor_grads,
                                     self.hyperparameters["Actor"]["gradient_clipping_norm"])
-        if alpha_loss is not None:
-            self.take_optimisation_step(self.alpha_optim, alpha_loss, alpha_grads, None)
+        if alpha_grads is not None:
+            self.take_optimisation_step(self.alpha_optim, alpha_grads, None)
             self.alpha = self.log_alpha.exp()
 
     def print_summary_of_latest_evaluation_episode(self):
         """Prints a summary of the latest episode"""
         print(" ")
         print("----------------------------")
-        print("Episode score {} ".format(self.total_episode_score_so_far))
+        print(f"Episode score {self.total_episode_score_so_far} ")
         print("----------------------------")

@@ -1,7 +1,11 @@
+"""
+Prioritised_Replay_Buffer
+"""
 import numpy as np
 import mindspore as ms
 from utilities.data_structures.Deque import Deque
 from utilities.data_structures.Max_Heap import Max_Heap
+
 
 class Prioritised_Replay_Buffer(Max_Heap, Deque):
     """Data structure that maintains a deque, a heap and an array. The deque keeps track of which experiences are the oldest and so
@@ -39,6 +43,9 @@ class Prioritised_Replay_Buffer(Max_Heap, Deque):
             "done": 4
         }
 
+        # init for pylint
+        self.deque_sample_indexes_to_update_td_error_for = None
+
     def initialise_td_errors_array(self):
         """Initialises a deque of Nodes of length self.max_size"""
         return np.zeros(self.max_size)
@@ -54,7 +61,7 @@ class Prioritised_Replay_Buffer(Max_Heap, Deque):
 
     def update_overall_sum(self, new_td_error, old_td_error):
         """Updates the overall sum of td_values present in the buffer"""
-        self.adapted_overall_sum_of_td_errors += new_td_error  - old_td_error
+        self.adapted_overall_sum_of_td_errors += new_td_error - old_td_error
 
     def update_deque_and_deque_td_errors(self, td_error, state, action, reward, next_state, done):
         """Updates the deque by overwriting the oldest experience with the experience provided"""
@@ -89,10 +96,10 @@ class Prioritised_Replay_Buffer(Max_Heap, Deque):
         self.heap[index1].heap_index = index1
         self.heap[index2].heap_index = index2
 
-    def sample(self, rank_based=True):
-        """Randomly samples a batch from experiences giving a higher likelihood to experiences with a higher td error. It then
-        calculates an importance sampling weight for each sampled experience, you can read about this in the paper:
-        https://arxiv.org/pdf/1511.05952.pdf"""
+    def sample(self):
+        """Randomly samples a batch from experiences giving a higher likelihood to experiences with a higher td
+        error. It then calculates an importance sampling weight for each sampled experience, you can read about this
+        in the paper: https://arxiv.org/pdf/1511.05952.pdf"""
         experiences, deque_sample_indexes = self.pick_experiences_based_on_proportional_td_error()
         states, actions, rewards, next_states, dones = self.separate_out_data_types(experiences)
         self.deque_sample_indexes_to_update_td_error_for = deque_sample_indexes
@@ -102,13 +109,14 @@ class Prioritised_Replay_Buffer(Max_Heap, Deque):
     def pick_experiences_based_on_proportional_td_error(self):
         """Randomly picks a batch of experiences with probability equal to their proportional td_errors"""
         probabilities = self.deques_td_errors / self.give_adapted_sum_of_td_errors()
-        deque_sample_indexes = np.random.choice(range(len(self.deques_td_errors)), size=self.batch_size, replace=False, p=probabilities)
+        deque_sample_indexes = np.random.choice(range(len(self.deques_td_errors)), size=self.batch_size, replace=False,
+                                                p=probabilities)
         experiences = self.deque[deque_sample_indexes]
         return experiences, deque_sample_indexes
 
     def separate_out_data_types(self, experiences):
         """Separates out experiences into their different parts and makes them tensors ready to be used in a pytorch model"""
-        states, actions, rewards, next_states, dones = list(), list(), list(), list(), list()
+        states, actions, rewards, next_states, dones = [], [], [], [], []
         states_append, actions_append, rewards_append, next_states_append, dones_append \
             = states.append, actions.append, rewards.append, next_states.append, dones.append
         for e in experiences:
@@ -129,9 +137,12 @@ class Prioritised_Replay_Buffer(Max_Heap, Deque):
         """Calculates the importance sampling weight of each observation in the sample. The weight is proportional to the td_error of the observation,
         see the paper here for more details: https://arxiv.org/pdf/1511.05952.pdf"""
         td_errors = [experience.key for experience in experiences]
-        importance_sampling_weights = [((1.0 / self.number_experiences_in_deque) * (self.give_adapted_sum_of_td_errors() / td_error)) ** self.beta for td_error in td_errors]
+        importance_sampling_weights = [
+            ((1.0 / self.number_experiences_in_deque) * (self.give_adapted_sum_of_td_errors() / td_error)) ** self.beta
+            for td_error in td_errors]
         sample_max_importance_weight = max(importance_sampling_weights)
-        importance_sampling_weights = [is_weight / sample_max_importance_weight for is_weight in importance_sampling_weights]
+        importance_sampling_weights = [is_weight / sample_max_importance_weight for is_weight in
+                                       importance_sampling_weights]
         # importance_sampling_weights = torch.tensor(importance_sampling_weights).float().to(self.device)
         importance_sampling_weights = ms.Tensor(importance_sampling_weights, ms.float32)
         return importance_sampling_weights
@@ -140,7 +151,7 @@ class Prioritised_Replay_Buffer(Max_Heap, Deque):
         """Updates the td_errors for the provided heap indexes. The indexes should be the observations provided most
         recently by the give_sample method"""
         for raw_td_error, deque_index in zip(td_errors, self.deque_sample_indexes_to_update_td_error_for):
-            td_error =  (abs(raw_td_error) + self.incremental_td_error) ** self.alpha
+            td_error = (abs(raw_td_error) + self.incremental_td_error) ** self.alpha
             corresponding_heap_index = self.deque[deque_index].heap_index
             self.update_overall_sum(td_error, self.heap[corresponding_heap_index].key)
             self.heap[corresponding_heap_index].key = td_error
@@ -158,4 +169,3 @@ class Prioritised_Replay_Buffer(Max_Heap, Deque):
     def __len__(self):
         """Tells us how many experiences there are in the replay buffer. This number will never exceed self.max_size"""
         return self.number_experiences_in_deque
-

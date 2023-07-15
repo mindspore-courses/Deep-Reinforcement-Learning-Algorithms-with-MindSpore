@@ -1,18 +1,17 @@
+"""
+parallel experence
+"""
 import random
 import mindspore as ms
-from contextlib import closing
-from multiprocessing import Pool
+# from contextlib import closing
 #
 # from pathos.multiprocessing import ProcessingPool as Pool
-
 # from torch.multiprocessing import Pool
-from random import randint
-
 from utilities.OU_Noise import OU_Noise
 from utilities.Utility_Functions import create_actor_distribution
 
 
-class Parallel_Experience_Generator(object):
+class Parallel_Experience_Generator:
     """ Plays n episode in parallel using a fixed agent. Only works for PPO or DDPG type agents at the moment,
     not Q-learning agents"""
 
@@ -31,6 +30,8 @@ class Parallel_Experience_Generator(object):
                 self.hyperparameters["theta"],
                 self.hyperparameters["sigma"]
             )
+
+        self.exploration_epsilon = None
 
     def play_n_episodes(self, n, exploration_epsilon=None):
         """Plays n episodes in parallel using the fixed policy and returns the data"""

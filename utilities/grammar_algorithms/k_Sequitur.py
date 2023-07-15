@@ -1,14 +1,15 @@
+"""
+My implementation of the k_Sequitur algorithm described in the papers: https://arxiv.org/pdf/cs/9709102.pdf
+and https://www.biorxiv.org/content/biorxiv/early/2018/03/13/281543.full.pdf
+The algorithm takes in a sequence and forms a grammar using two rules:
+1) No pair of adjacent symbols appears more than k times in the grammar
+2) Every rule in the grammar is used more than k times
 
-# My implementation of the k_Sequitur algorithm described in the papers: https://arxiv.org/pdf/cs/9709102.pdf
-# and https://www.biorxiv.org/content/biorxiv/early/2018/03/13/281543.full.pdf
-# The algorithm takes in a sequence and forms a grammar using two rules:
-# 1) No pair of adjacent symbols appears more than k times in the grammar
-# 2) Every rule in the grammar is used more than k times
-#
-# e.g. string "abddddeabde" with k=2 would turn to:
-# "AdddBAB"
-# R1: A --> ab
-# R2: B --> de
+e.g. string "abddddeabde" with k=2 would turn to:
+"AdddBAB"
+R1: A --> ab
+R2: B --> de
+"""
 
 # TODO fix the fact that it sometimes provides rules that have end of episode symbol in them
 # TODO add an option to return rules in terms of the amount of times they appear in a set of provided episodes
@@ -16,7 +17,8 @@
 from collections import defaultdict, Counter
 
 
-class k_Sequitur(object):
+class k_Sequitur:
+    """Sequitur """
 
     def __init__(self, k, end_of_episode_symbol="/"):
         self.k = k
@@ -26,7 +28,7 @@ class k_Sequitur(object):
     def generate_action_grammar(self, actions):
         """Generates a grammar given a list of actions"""
         assert isinstance(actions, list), actions
-        assert not isinstance(actions[0], list), "Should be 1 long list of actions - {}".format(actions[0])
+        assert not isinstance(actions[0], list), f"Should be 1 long list of actions - {actions[0]}"
         assert len(actions) > 0, "Need to provide a list of at least 1 action"
         assert isinstance(actions[0], int), "The actions should be integers"
         new_actions, all_rules, rule_usage, rules_episode_appearance_count = self.discover_all_rules_and_new_actions_representation(actions)
@@ -51,8 +53,8 @@ class k_Sequitur(object):
             all_rules.update(rules)
             new_actions, rules_usage_count = self.convert_a_string_using_reverse_rules(current_actions, reverse_rules,
                                                                                        rules_episode_appearance_tracker)
-            for key in rules_usage_count.keys():
-                rule_usage[key] += rules_usage_count[key]
+            for key, value in rules_usage_count.items():
+                rule_usage[key] += value
 
         rules_episode_appearance_count = defaultdict(int)
 
@@ -71,7 +73,8 @@ class k_Sequitur(object):
         skip_next_symbol = False
         rules = {}
 
-        assert string[-1] == self.end_of_episode_symbol, "Final element of string must be self.end_of_episode_symbol {}".format(string)
+        assert string[-1] == self.end_of_episode_symbol, f"Final element of string must be self.end_of_episode_symbol" \
+                                                         f" {string}"
 
         for ix in range(len(string) - 1):
             # We skip the next symbol if it is already being used in a rule we just made
@@ -98,14 +101,14 @@ class k_Sequitur(object):
 
     def get_next_rule_name(self):
         """Returns next rule name to use and increments count """
-        next_rule_name = "R{}".format(self.next_rule_name_ix)
+        next_rule_name = f"R{self.next_rule_name_ix}"
         self.next_rule_name_ix += 1
         return next_rule_name
 
     def convert_symbol_to_raw_actions(self, symbol, rules):
         """Converts a symbol back to the sequence of raw actions it represents"""
         assert not isinstance(symbol, list)
-        assert isinstance(symbol, str) or isinstance(symbol, int)
+        assert isinstance(symbol, (int, str))
         symbol = [symbol]
         finished = False
         while not finished:
@@ -116,8 +119,10 @@ class k_Sequitur(object):
                     new_symbol.append(rules[symbol_val][1])
                 else:
                     new_symbol.append(symbol_val)
-            if new_symbol == symbol: finished = True
-            else: symbol = new_symbol
+            if new_symbol == symbol:
+                finished = True
+            else:
+                symbol = new_symbol
         new_symbol = tuple(new_symbol)
         return new_symbol
 
@@ -138,8 +143,8 @@ class k_Sequitur(object):
 
         rules_used_this_episode = []
 
-        for ix in range(len(string)):
-            if string[ix] == self.end_of_episode_symbol:
+        for ix, ele_string in enumerate(string):
+            if ele_string == self.end_of_episode_symbol:
                 rules_used_this_episode = set(rules_used_this_episode)
                 for rule in rules_used_this_episode:
                     rules_episode_appearance_tracker[episode][rule] = 1
@@ -163,4 +168,3 @@ class k_Sequitur(object):
             else:
                 new_string.append(string[ix])
         return new_string, rules_usage_count
-

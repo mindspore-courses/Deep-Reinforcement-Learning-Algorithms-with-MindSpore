@@ -1,20 +1,21 @@
-import os
+"""
+Cartpole
+"""
 import sys
 from os.path import dirname, abspath
-
-sys.path.append(dirname(dirname(abspath(__file__))))
 import mindspore as ms
 import gym
-
-from agents.DQN_agents.Dueling_DDQN import Dueling_DDQN
+# from agents.DQN_agents.Dueling_DDQN import Dueling_DDQN
 from agents.actor_critic_agents.SAC_Discrete import SAC_Discrete
-from agents.policy_gradient_agents.PPO import PPO
+# from agents.policy_gradient_agents.PPO import PPO
 from agents.Trainer import Trainer
 from utilities.data_structures.Config import Config
-from agents.DQN_agents.DDQN import DDQN
-from agents.DQN_agents.DDQN_With_Prioritised_Experience_Replay import DDQN_With_Prioritised_Experience_Replay
-from agents.DQN_agents.DQN import DQN
-from agents.DQN_agents.DQN_With_Fixed_Q_Targets import DQN_With_Fixed_Q_Targets
+# from agents.DQN_agents.DDQN import DDQN
+# from agents.DQN_agents.DDQN_With_Prioritised_Experience_Replay import DDQN_With_Prioritised_Experience_Replay
+# from agents.DQN_agents.DQN import DQN
+# from agents.DQN_agents.DQN_With_Fixed_Q_Targets import DQN_With_Fixed_Q_Targets
+
+sys.path.append(dirname(dirname(abspath(__file__))))
 
 config = Config()
 config.seed = 1
@@ -90,7 +91,6 @@ config.hyperparameters = {
         "linear_hidden_units": [20, 10],
         "final_layer_activation": ["SOFTMAX", None],
         "gradient_clipping_norm": 5.0,
-        "discount_rate": 0.99,
         "epsilon_decay_rate_denominator": 1.0,
         "normalise_rewards": True,
         "exploration_worker_difference": 2.0,

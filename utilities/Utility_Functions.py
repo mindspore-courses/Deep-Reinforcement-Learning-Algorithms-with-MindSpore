@@ -1,17 +1,16 @@
-import math
-
-import numpy as np
+"""Function"""
 from abc import ABCMeta
+import numpy as np
 import mindspore as ms
 import mindspore.nn.probability.distribution as msd
 from mindspore import ops
-from mindspore.common.api import jit
 
 
 # import torch
 # from torch.distributions import Categorical, normal, MultivariateNormal
 
 def abstract(cls):
+    """Abstract class"""
     return ABCMeta(cls.__name__, cls.__bases__, dict(cls.__dict__))
 
 
@@ -33,16 +32,18 @@ def create_actor_distribution(action_types, actor_output, action_size):
     if action_types == "DISCRETE":
         assert actor_output.shape[1] == action_size, "Actor output the wrong size"
         # action_distribution = Categorical(actor_output)  # this creates a distribution to sample from
-        actor_output = ms.numpy.clip(actor_output, xmin=eps, xmax=(1-eps))
+        actor_output = ms.numpy.clip(actor_output, xmin=eps, xmax=1-eps)
         action_distribution = msd.Categorical(actor_output)  # mindspore: this creates a distribution to sample from
     else:
         assert actor_output.shape[1] == action_size * 2, "Actor output the wrong size"
         means = actor_output[:, :action_size]
         stds = actor_output[:, action_size:]
-        if len(means.shape) == 2: means = means.squeeze(-1)
-        if len(stds.shape) == 2: stds = stds.squeeze(-1)
+        if len(means.shape) == 2:
+            means = means.squeeze(-1)
+        if len(stds.shape) == 2:
+            stds = stds.squeeze(-1)
         if len(stds.shape) > 1 or len(means.shape) > 1:
-            raise ValueError("Wrong mean and std shapes - {} -- {}".format(stds.shape, means.shape))
+            raise ValueError(f"Wrong mean and std shapes - {stds.shape} -- {means.shape}")
         action_distribution = msd.Normal(means, ops.abs(stds)+eps)
     return action_distribution
 
@@ -127,7 +128,8 @@ def backtrack_action_to_primitive_actions(action_tuple, global_action_id_to_prim
     """Converts an action tuple back to the primitive actions it represents in a recursive way."""
     print("Recursing to backtrack on ", action_tuple)
     primitive_actions = range(num_primitive_actions)
-    if all(action in primitive_actions for action in action_tuple): return action_tuple  # base case
+    if all(action in primitive_actions for action in action_tuple):
+        return action_tuple  # base case
     new_action_tuple = []
     for action in action_tuple:
         if action in primitive_actions:
@@ -138,4 +140,4 @@ def backtrack_action_to_primitive_actions(action_tuple, global_action_id_to_prim
             new_action_tuple.extend(converted_action)
             print("Should have changed: ", new_action_tuple)
     new_action_tuple = tuple(new_action_tuple)
-    return backtrack_action_to_primitive_actions(new_action_tuple)
+    return new_action_tuple
