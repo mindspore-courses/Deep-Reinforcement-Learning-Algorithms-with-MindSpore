@@ -1,0 +1,9 @@
+2023-07-20 22:52:22,366 - agents.Base_Agent - INFO - 0 -- CartPole
+2023-07-20 22:52:22,366 - agents.Base_Agent - INFO - 1 -- DISCRETE
+2023-07-20 22:52:22,366 - agents.Base_Agent - INFO - 2 -- 2
+2023-07-20 22:52:22,366 - agents.Base_Agent - INFO - 3 -- None
+2023-07-20 22:52:22,366 - agents.Base_Agent - INFO - 4 -- 4
+2023-07-20 22:52:22,366 - agents.Base_Agent - INFO - 5 -- {'learning_rate': 0.005, 'linear_hidden_units': [128, 128], 'final_layer_activation': 'SOFTMAX', 'learning_iterations_per_round': 5, 'discount_rate': 0.99, 'batch_norm': False, 'clip_epsilon': 0.1, 'episodes_per_learning_round': 1, 'normalise_rewards': True, 'gradient_clipping_norm': 1.0, 'mu': 0.0, 'theta': 0.0, 'sigma': 0.0, 'epsilon_decay_rate_denominator': 1.0, 'clip_rewards': False}
+2023-07-20 22:52:22,366 - agents.Base_Agent - INFO - 6 -- 195.0
+2023-07-20 22:52:22,366 - agents.Base_Agent - INFO - 7 -- 100
+2023-07-20 22:52:34,157 - agents.Base_Agent - INFO - Learning rate 0

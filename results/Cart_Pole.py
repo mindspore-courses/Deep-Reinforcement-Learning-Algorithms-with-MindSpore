@@ -10,6 +10,7 @@ from agents.actor_critic_agents.SAC_Discrete import SAC_Discrete
 # from agents.policy_gradient_agents.PPO import PPO
 from agents.Trainer import Trainer
 from utilities.data_structures.Config import Config
+from agents.policy_gradient_agents.REINFORCE import REINFORCE
 # from agents.DQN_agents.DDQN import DDQN
 # from agents.DQN_agents.DDQN_With_Prioritised_Experience_Replay import DDQN_With_Prioritised_Experience_Replay
 # from agents.DQN_agents.DQN import DQN
@@ -68,6 +69,7 @@ config.hyperparameters = {
         "clip_rewards": False
     },
     "Policy_Gradient_Agents": {
+        # PPO: 0.005, REINFORCE: 0.05
         "learning_rate": 0.005,
         "linear_hidden_units": [128, 128],
         "final_layer_activation": "SOFTMAX",
@@ -137,7 +139,7 @@ config.hyperparameters = {
 if __name__ == "__main__":
     # AGENTS = [SAC_Discrete, DDQN, Dueling_DDQN, DQN, DQN_With_Fixed_Q_Targets,
     #           DDQN_With_Prioritised_Experience_Replay, A2C, PPO]
-    ms.set_context(mode=ms.GRAPH_MODE)
-    AGENTS = [SAC_Discrete]
+    # ms.set_context(mode=ms.GRAPH_MODE)
+    AGENTS = [REINFORCE]
     trainer = Trainer(config, AGENTS)
     trainer.run_games_for_agents()

@@ -73,7 +73,8 @@ class Trainer:
             "A2C": "#F1948A",
             "SAC": "#1C2833",
             "DIAYN": "#F322CD",
-            "HRL": "#0E0F0F"
+            "HRL": "#0E0F0F",
+            "REINFORCE": "#7fb35D"
         }
         return agent_to_color_dictionary
 

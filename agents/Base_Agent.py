@@ -300,6 +300,7 @@ class Base_Agent:
 
     def update_learning_rate(self, starting_lr, optimizer):
         """Lowers the learning rate according to how close we are to the solution"""
+        new_lr = starting_lr
         if len(self.rolling_results) > 0:
             last_rolling_score = self.rolling_results[-1]
             if last_rolling_score > 0.75 * self.average_score_required_to_win:
