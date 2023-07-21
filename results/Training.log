@@ -1,8 +1,8 @@
-2023-07-21 10:41:51,675 - agents.Base_Agent - INFO - 0 -- Pendulum
-2023-07-21 10:41:51,675 - agents.Base_Agent - INFO - 1 -- CONTINUOUS
-2023-07-21 10:41:51,675 - agents.Base_Agent - INFO - 2 -- 1
-2023-07-21 10:41:51,675 - agents.Base_Agent - INFO - 3 -- None
-2023-07-21 10:41:51,675 - agents.Base_Agent - INFO - 4 -- 3
-2023-07-21 10:41:51,675 - agents.Base_Agent - INFO - 5 -- {'Actor': {'learning_rate': 0.0003, 'linear_hidden_units': [128, 128], 'final_layer_activation': None, 'batch_norm': False, 'tau': 0.005, 'gradient_clipping_norm': 5, 'initialiser': 'Xavier'}, 'Critic': {'learning_rate': 0.0005, 'linear_hidden_units': [128, 128], 'final_layer_activation': None, 'batch_norm': False, 'buffer_size': 1000000, 'tau': 0.005, 'gradient_clipping_norm': 5, 'initialiser': 'Xavier'}, 'min_steps_before_learning': 1000, 'batch_size': 256, 'discount_rate': 0.99, 'mu': 0.0, 'theta': 0.15, 'sigma': 0.25, 'action_noise_std': 0.2, 'action_noise_clipping_range': 0.5, 'update_every_n_steps': 20, 'learning_updates_per_learning_session': 10, 'automatically_tune_entropy_hyperparameter': True, 'entropy_term_weight': None, 'add_extra_noise': True, 'do_evaluation_iterations': True, 'clip_rewards': False}
-2023-07-21 10:41:51,675 - agents.Base_Agent - INFO - 6 -- -500
-2023-07-21 10:41:51,675 - agents.Base_Agent - INFO - 7 -- 100
+2023-07-21 11:22:52,283 - agents.Base_Agent - INFO - 0 -- Pendulum
+2023-07-21 11:22:52,283 - agents.Base_Agent - INFO - 1 -- CONTINUOUS
+2023-07-21 11:22:52,283 - agents.Base_Agent - INFO - 2 -- 1
+2023-07-21 11:22:52,283 - agents.Base_Agent - INFO - 3 -- None
+2023-07-21 11:22:52,283 - agents.Base_Agent - INFO - 4 -- 3
+2023-07-21 11:22:52,283 - agents.Base_Agent - INFO - 5 -- {'Actor': {'learning_rate': 0.0003, 'linear_hidden_units': [128, 128], 'final_layer_activation': None, 'batch_norm': False, 'tau': 0.005, 'gradient_clipping_norm': 5, 'initialiser': 'Xavier'}, 'Critic': {'learning_rate': 0.0005, 'linear_hidden_units': [128, 128], 'final_layer_activation': None, 'batch_norm': False, 'buffer_size': 1000000, 'tau': 0.005, 'gradient_clipping_norm': 5, 'initialiser': 'Xavier'}, 'min_steps_before_learning': 1000, 'batch_size': 256, 'discount_rate': 0.99, 'mu': 0.0, 'theta': 0.15, 'sigma': 0.25, 'action_noise_std': 0.2, 'action_noise_clipping_range': 0.5, 'update_every_n_steps': 20, 'learning_updates_per_learning_session': 10, 'automatically_tune_entropy_hyperparameter': True, 'entropy_term_weight': None, 'add_extra_noise': True, 'do_evaluation_iterations': True, 'clip_rewards': False, 'HER_sample_proportion': 0.8}
+2023-07-21 11:22:52,283 - agents.Base_Agent - INFO - 6 -- -500
+2023-07-21 11:22:52,283 - agents.Base_Agent - INFO - 7 -- 100

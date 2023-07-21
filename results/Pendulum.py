@@ -4,9 +4,10 @@
 import gym
 
 # from agents.policy_gradient_agents.PPO import PPO
-from agents.actor_critic_agents.DDPG import DDPG
+# from agents.actor_critic_agents.DDPG import DDPG
 # from agents.actor_critic_agents.SAC import SAC
 # from agents.actor_critic_agents.TD3 import TD3
+from agents.actor_critic_agents.DDPG_HER import DDPG_HER
 from agents.Trainer import Trainer
 from utilities.data_structures.Config import Config
 
@@ -83,7 +84,8 @@ config.hyperparameters = {
         "entropy_term_weight": None,
         "add_extra_noise": True,
         "do_evaluation_iterations": True,
-        "clip_rewards": False
+        "clip_rewards": False,
+        "HER_sample_proportion": 0.8
 
     }
 
@@ -91,7 +93,7 @@ config.hyperparameters = {
 
 if __name__ == "__main__":
     # AGENTS = [TD3, DDPG, PPO]
-    AGENTS = [DDPG]
+    AGENTS = [DDPG_HER]
     trainer = Trainer(config, AGENTS)
     trainer.run_games_for_agents()
 

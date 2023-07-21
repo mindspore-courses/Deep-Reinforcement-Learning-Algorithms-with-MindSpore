@@ -41,13 +41,17 @@ class HER_Base:
         self.next_state_dict = None
 
     def reset_game(self):
-        """Resets the game information so we are ready to play a new episode"""
+        """Resets the game information, so we are ready to play a new episode"""
         self.state_dict = self.environment.reset()
-        self.observation = self.state_dict["observation"]
-        self.desired_goal = self.state_dict["desired_goal"]
-        self.achieved_goal = self.state_dict["achieved_goal"]
+        if isinstance(self.state_dict, dict):
+            self.observation = self.state_dict["observation"]
+            self.desired_goal = self.state_dict["desired_goal"]
+            self.achieved_goal = self.state_dict["achieved_goal"]
 
-        self.state = self.create_state_from_observation_and_desired_goal(self.observation, self.desired_goal)
+            self.state = self.create_state_from_observation_and_desired_goal(self.observation, self.desired_goal)
+        else:
+            self.state = self.state_dict
+
         self.next_state = None
         self.action = None
         self.reward = None
@@ -78,13 +82,14 @@ class HER_Base:
         self.episode_states.append(self.state)
         self.episode_next_states.append(self.next_state)
 
-        self.episode_desired_goals.append(self.state_dict["desired_goal"])
-        self.episode_achieved_goals.append(self.state_dict["achieved_goal"])
-        self.episode_observations.append(self.state_dict["observation"])
+        if isinstance(self.state_dict, dict):
+            self.episode_desired_goals.append(self.state_dict["desired_goal"])
+            self.episode_achieved_goals.append(self.state_dict["achieved_goal"])
+            self.episode_observations.append(self.state_dict["observation"])
 
-        self.episode_next_desired_goals.append(self.next_state_dict["desired_goal"])
-        self.episode_next_achieved_goals.append(self.next_state_dict["achieved_goal"])
-        self.episode_next_observations.append(self.next_state_dict["observation"])
+            self.episode_next_desired_goals.append(self.next_state_dict["desired_goal"])
+            self.episode_next_achieved_goals.append(self.next_state_dict["achieved_goal"])
+            self.episode_next_observations.append(self.next_state_dict["observation"])
 
     def conduct_action_in_changeable_goal_envs(self, action):
         """Adapts conduct_action from base agent so that can handle changeable goal environments"""
@@ -92,10 +97,14 @@ class HER_Base:
         self.total_episode_score_so_far += self.reward
         if self.hyperparameters["clip_rewards"]:
             self.reward = max(min(self.reward, 1.0), -1.0)
-        self.observation = self.next_state_dict["observation"]
-        self.desired_goal = self.next_state_dict["desired_goal"]
-        self.achieved_goal = self.next_state_dict["achieved_goal"]
-        self.next_state = self.create_state_from_observation_and_desired_goal(self.observation, self.desired_goal)
+
+        if isinstance(self.next_state_dict, dict):
+            self.observation = self.next_state_dict["observation"]
+            self.desired_goal = self.next_state_dict["desired_goal"]
+            self.achieved_goal = self.next_state_dict["achieved_goal"]
+            self.next_state = self.create_state_from_observation_and_desired_goal(self.observation, self.desired_goal)
+        else:
+            self.next_state = self.next_state_dict
 
     def create_state_from_observation_and_desired_goal(self, observation, desired_goal):
         """Create state from observation and desired goal"""
