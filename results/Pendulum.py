@@ -6,8 +6,8 @@ import gym
 # from agents.policy_gradient_agents.PPO import PPO
 # from agents.actor_critic_agents.DDPG import DDPG
 # from agents.actor_critic_agents.SAC import SAC
-# from agents.actor_critic_agents.TD3 import TD3
-from agents.actor_critic_agents.DDPG_HER import DDPG_HER
+from agents.actor_critic_agents.TD3 import TD3
+# from agents.actor_critic_agents.DDPG_HER import DDPG_HER
 from agents.Trainer import Trainer
 from utilities.data_structures.Config import Config
 
@@ -93,7 +93,7 @@ config.hyperparameters = {
 
 if __name__ == "__main__":
     # AGENTS = [TD3, DDPG, PPO]
-    AGENTS = [DDPG_HER]
+    AGENTS = [TD3]
     trainer = Trainer(config, AGENTS)
     trainer.run_games_for_agents()
 
