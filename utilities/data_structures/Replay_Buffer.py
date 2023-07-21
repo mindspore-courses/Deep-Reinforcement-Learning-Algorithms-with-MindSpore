@@ -59,8 +59,13 @@ class Replay_Buffer:
                 next_states_append(e.next_state)
                 dones_append(int(e.done))
 
-        states, actions, rewards = np.array(states), np.array(actions).unsqueeze(-1), np.array(rewards).unsqueeze(-1)
-        next_states, dones = np.array(next_states), np.array(dones).unsqueeze(-1)
+        states, actions = np.array(states, dtype=np.float32), np.array(actions).unsqueeze(-1)
+        rewards = np.array(rewards).unsqueeze(-1)
+        next_states, dones = np.array(next_states, dtype=np.float32), np.array(dones).unsqueeze(-1)
+        if len(states.shape) == 1:
+            states = states.unsqueeze(-1)
+        if len(next_states.shape) == 1:
+            next_states = next_states.unsqueeze(-1)
 
         actions = actions.squeeze(-1) if len(actions.shape) == 3 else actions
 

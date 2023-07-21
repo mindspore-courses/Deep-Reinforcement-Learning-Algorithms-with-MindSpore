@@ -4,825 +4,309 @@
 # ===============================================================================
 
 subgraph attr:
-subgraph instance: after_grad.1145 : 0x14f607418
-# In file /Users/moranvl/anaconda3/envs/mindspore/lib/python3.9/site-packages/mindspore/ops/composite/base.py:573/                    def after_grad(*args):/
-subgraph @after_grad.1145(%para1_args0, %para2_nets.0.weight, %para3_nets.0.bias, %para4_nets.3.weight, %para5_nets.3.bias, %para6_nets.6.weight, %para7_nets.6.bias) {
-  %1([CNode]1162) = MakeTuple(%para1_args0)
-      : (<Tensor[Float32], (69, 1)>) -> (<Tuple[Tensor[Float32]], TupleShape((69, 1))>)
+subgraph instance: construct.Default.26 : 0x11422e418
+# In file /Users/moranvl/Code/Deep-Reinforcement-Learning-Algorithms-with-MindSpore/agents/Base_Agent.py:450/    def construct(self, x):/
+subgraph @construct.Default.26(%para1_x, %para2_nets.0.bias, %para3_nets.0.weight, %para4_nets.3.bias, %para5_nets.3.weight, %para6_nets.6.bias, %para7_nets.6.weight) {
+  %1([CNode]38) = call @bool_.37(())
+      : (<Tuple[], TupleShape()>) -> (<Bool, NoShape>)
       #scope: (Default)
-      # In file /Users/moranvl/anaconda3/envs/mindspore/lib/python3.9/site-packages/mindspore/ops/composite/base.py:573/                    def after_grad(*args):/
-  %2(1163) = UnpackGraph(call @calculate_policy_loss_on_episode.1141, %1)
-      : (<Func, NoShape>, <Tuple[Tensor[Float32]], TupleShape((69, 1))>) -> (<Func, NoShape>)
+      # In file /Users/moranvl/Code/Deep-Reinforcement-Learning-Algorithms-with-MindSpore/agents/Base_Agent.py:452/        if self.y_range:/
+  %2([CNode]39) = Switch(%1, call @✓construct.Default.40, call @✗construct.Default.28)
+      : (<Bool, NoShape>, <Func, NoShape>, <Func, NoShape>) -> (<Func, NoShape>)
       #scope: (Default)
-      # In file /Users/moranvl/anaconda3/envs/mindspore/lib/python3.9/site-packages/mindspore/ops/composite/base.py:574/                        return grad_(fn, weights)(*args)/
-  %3([CNode]1164) = MakeTuple(%para2_nets.0.weight, %para3_nets.0.bias, %para4_nets.3.weight, %para5_nets.3.bias, %para6_nets.6.weight, %para7_nets.6.bias)
-      : (<Ref[Tensor[Float32]], (128, 4)>, <Ref[Tensor[Float32]], (128)>, <Ref[Tensor[Float32]], (128, 128)>, <Ref[Tensor[Float32]], (128)>, <Ref[Tensor[Float32]], (2, 128)>, <Ref[Tensor[Float32]], (2)>) -> (<Tuple[Ref[Tensor[Float32]]*6], TupleShape((128, 4), (128), (128, 128), (128), (2, 128), (2))>)
-      #scope: (Default)
-      # In file /Users/moranvl/anaconda3/envs/mindspore/lib/python3.9/site-packages/mindspore/ops/composite/base.py:574/                        return grad_(fn, weights)(*args)/
-  %4(1163) = S-Prim-grad(%2, %3)
-      : (<Func, NoShape>, <Tuple[Ref[Tensor[Float32]]*6], TupleShape((128, 4), (128), (128, 128), (128), (2, 128), (2))>) -> (<Func, NoShape>)
-      #scope: (Default)
-      # In file /Users/moranvl/anaconda3/envs/mindspore/lib/python3.9/site-packages/mindspore/ops/composite/base.py:574/                        return grad_(fn, weights)(*args)/
+      # In file /Users/moranvl/Code/Deep-Reinforcement-Learning-Algorithms-with-MindSpore/agents/Base_Agent.py:452/        if self.y_range:/
 
 #------------------------> 0
-  %5(1163) = UnpackCall-unpack_call(%4, %1)
-      : (<Func, NoShape>, <Tuple[Tensor[Float32]], TupleShape((69, 1))>) -> (<null>)
+  %3([CNode]41) = %2()
       #scope: (Default)
-      # In file /Users/moranvl/anaconda3/envs/mindspore/lib/python3.9/site-packages/mindspore/ops/composite/base.py:574/                        return grad_(fn, weights)(*args)/
-  Return(%5)
+      # In file /Users/moranvl/Code/Deep-Reinforcement-Learning-Algorithms-with-MindSpore/agents/Base_Agent.py:452/        if self.y_range:/
+  %4([CNode]43) = call @↓construct.Default.42(%3)
+      : (<null>) -> (<null>)
+      #scope: (Default)
+  Return(%4)
       : (<null>)
       #scope: (Default)
-      # In file /Users/moranvl/anaconda3/envs/mindspore/lib/python3.9/site-packages/mindspore/ops/composite/base.py:574/                        return grad_(fn, weights)(*args)/
+      # In file /Users/moranvl/Code/Deep-Reinforcement-Learning-Algorithms-with-MindSpore/agents/Base_Agent.py:452/        if self.y_range:/
 }
 # Order:
-#   1: @after_grad.1145:1163{[0]: ValueNode<UnpackGraphPrimitive> UnpackGraph, [1]: ValueNode<FuncGraph> calculate_policy_loss_on_episode.1141, [2]: [CNode]1162}
-#   2: @after_grad.1145:1163{[0]: ValueNode<DoSignaturePrimitive> S-Prim-grad, [1]: 1163, [2]: [CNode]1164}
-#   3: @after_grad.1145:1163{[0]: ValueNode<UnpackCall> MetaFuncGraph-unpack_call.1165, [1]: 1163, [2]: [CNode]1162}
-#   4: @after_grad.1145:[CNode]1166{[0]: ValueNode<Primitive> Return, [1]: 1163}
+#   1: @construct.Default.26:x{[0]: ValueNode<FuncGraph> construct.SequentialCell.29, [1]: x}
+#   2: @construct.Default.26:[CNode]38{[0]: ValueNode<FuncGraph> bool_.37, [1]: ValueNode<ValueTuple> ()}
+#   3: @construct.Default.26:[CNode]39{[0]: ValueNode<Primitive> Switch, [1]: [CNode]38, [2]: ValueNode<FuncGraph> ✓construct.Default.40, [3]: ValueNode<FuncGraph> ✗construct.Default.28}
+#   4: @construct.Default.26:[CNode]41{[0]: [CNode]39}
+#   5: @construct.Default.26:[CNode]43{[0]: ValueNode<FuncGraph> ↓construct.Default.42, [1]: [CNode]41}
+#   6: @construct.Default.26:[CNode]44{[0]: ValueNode<Primitive> Return, [1]: [CNode]43}
 
 
 subgraph attr:
-core : 1
-subgraph instance: UnpackCall.1146 : 0x14f664a18
-# In file /Users/moranvl/anaconda3/envs/mindspore/lib/python3.9/site-packages/mindspore/ops/composite/base.py:574/                        return grad_(fn, weights)(*args)/
-subgraph @UnpackCall.1146(%para8_, %para9_) {
-  %1(1163) = TupleGetItem(%para9_1148, I64(0))
-      : (<Tuple[Tensor[Float32]], TupleShape((69, 1))>, <Int64, NoShape>) -> (<Tensor[Float32], (69, 1)>)
-      #scope: (Default)
-      # In file /Users/moranvl/anaconda3/envs/mindspore/lib/python3.9/site-packages/mindspore/ops/composite/base.py:574/                        return grad_(fn, weights)(*args)/
+subgraph instance: ✗construct.Default.28 : 0x11422ea18
+# In file /Users/moranvl/Code/Deep-Reinforcement-Learning-Algorithms-with-MindSpore/agents/Base_Agent.py:452/        if self.y_range:/
+subgraph @✗construct.Default.28 parent: [subgraph @construct.Default.26]() {
 
 #------------------------> 1
-  %2(1163) = %para8_1147(%1)
-      : (<Tensor[Float32], (69, 1)>) -> (<null>)
+  %1(x) = $(construct.Default.26):call @construct.SequentialCell.29(%para1_x)
+      : (<Tensor[Float32], (256, 2)>) -> (<null>)
       #scope: (Default)
-      # In file /Users/moranvl/anaconda3/envs/mindspore/lib/python3.9/site-packages/mindspore/ops/composite/base.py:574/                        return grad_(fn, weights)(*args)/
-  Return(%2)
+      # In file /Users/moranvl/Code/Deep-Reinforcement-Learning-Algorithms-with-MindSpore/agents/Base_Agent.py:451/        x = self.nets(x)/
+  Return(%1)
       : (<null>)
       #scope: (Default)
-      # In file /Users/moranvl/anaconda3/envs/mindspore/lib/python3.9/site-packages/mindspore/ops/composite/base.py:574/                        return grad_(fn, weights)(*args)/
+      # In file /Users/moranvl/Code/Deep-Reinforcement-Learning-Algorithms-with-MindSpore/agents/Base_Agent.py:452/        if self.y_range:/
 }
 # Order:
-#   1: @UnpackCall.1146:1163{[0]: 1147, [1]: 1163}
-#   2: @UnpackCall.1146:1163{[0]: ValueNode<Primitive> Return, [1]: 1163}
+#   1: @✗construct.Default.28:[CNode]45{[0]: ValueNode<Primitive> Return, [1]: x}
 
 
 subgraph attr:
-k_graph : 1
-core : 1
-subgraph instance: calculate_policy_loss_on_episode.1149 : 0x14f667e18
-# In file /Users/moranvl/Code/Deep-Reinforcement-Learning-Algorithms-with-MindSpore/agents/policy_gradient_agents/REINFORCE.py:128/    def calculate_policy_loss_on_episode(self, total_discounted_reward):/
-subgraph @calculate_policy_loss_on_episode.1149 parent: [subgraph @calculate_policy_loss_on_episode.1167](%para10_) {
-  %1(1163) = $(calculate_policy_loss_on_episode.1167):J[side_effect_propagate=I64(1)](%para-1_1168)
-      : (<Func, NoShape>) -> (<Func, NoShape>)
-      #scope: (Default)
-      # In file /Users/moranvl/anaconda3/envs/mindspore/lib/python3.9/site-packages/mindspore/ops/composite/base.py:574/                        return grad_(fn, weights)(*args)/
+subgraph instance: construct.SequentialCell.29 : 0x114234e18
+# In file /Users/moranvl/anaconda3/envs/mindspore/lib/python3.9/site-packages/mindspore/nn/layer/container.py:285/    def construct(self, input_data):/
+subgraph @construct.SequentialCell.29 parent: [subgraph @construct.Default.26](%para8_input_data) {
 
 #------------------------> 2
-  %2(1163) = %1(%para10_calculate_policy_loss_on_episode)
-      : (<Tensor[Float32], (69, 1)>) -> (<null>)
-      #scope: (Default)
-      # In file /Users/moranvl/anaconda3/envs/mindspore/lib/python3.9/site-packages/mindspore/ops/composite/base.py:574/                        return grad_(fn, weights)(*args)/
-  %3(1163) = TupleGetItem(%2, I64(0))
-      : (<null>, <null>) -> (<null>)
-      #scope: (Default)
-      # In file /Users/moranvl/anaconda3/envs/mindspore/lib/python3.9/site-packages/mindspore/ops/composite/base.py:574/                        return grad_(fn, weights)(*args)/
-  %4(1163) = TupleGetItem(%2, I64(1))
-      : (<null>, <null>) -> (<null>)
-      #scope: (Default)
-      # In file /Users/moranvl/anaconda3/envs/mindspore/lib/python3.9/site-packages/mindspore/ops/composite/base.py:574/                        return grad_(fn, weights)(*args)/
-  %5(1163) = HyperMapPy-hyper_map[ones_like_leaf]{fn_leaf=MultitypeFuncGraph-ones_like_leaf{(TypeType), (Tensor), (Number), (COOTensor), (CSRTensor), (Func)}}(%3)
-      : (<null>) -> (<null>)
-      #scope: (Default)
-      # In file /Users/moranvl/anaconda3/envs/mindspore/lib/python3.9/site-packages/mindspore/ops/composite/base.py:574/                        return grad_(fn, weights)(*args)/
-  %6(1163) = %4(%5)
-      : (<null>) -> (<null>)
-      #scope: (Default)
-      # In file /Users/moranvl/anaconda3/envs/mindspore/lib/python3.9/site-packages/mindspore/ops/composite/base.py:574/                        return grad_(fn, weights)(*args)/
-  %7(1163) = TupleGetItem(%6, I64(0))
-      : (<null>, <null>) -> (<null>)
-      #scope: (Default)
-      # In file /Users/moranvl/anaconda3/envs/mindspore/lib/python3.9/site-packages/mindspore/ops/composite/base.py:574/                        return grad_(fn, weights)(*args)/
-  %8(1163) = Partial[side_effect_propagate=I64(1)](MultitypeFuncGraph-env_get{(EnvType, Tensor), (EnvType, MapTensor)}, %7)
-      : (<null>, <null>) -> (<null>)
-      #scope: (Default)
-      # In file /Users/moranvl/anaconda3/envs/mindspore/lib/python3.9/site-packages/mindspore/ops/composite/base.py:574/                        return grad_(fn, weights)(*args)/
-  %9(1163) = HyperMap-hyper_map(%8, %para-1_1169)
-      : (<null>, <Tuple[Ref[Tensor[Float32]]*6], TupleShape((128, 4), (128), (128, 128), (128), (2, 128), (2))>) -> (<null>)
-      #scope: (Default)
-      # In file /Users/moranvl/anaconda3/envs/mindspore/lib/python3.9/site-packages/mindspore/ops/composite/base.py:574/                        return grad_(fn, weights)(*args)/
-  %10(1163) = MakeTuple(%3, %9)
-      : (<null>, <null>) -> (<null>)
-      #scope: (Default)
-      # In file /Users/moranvl/anaconda3/envs/mindspore/lib/python3.9/site-packages/mindspore/ops/composite/base.py:574/                        return grad_(fn, weights)(*args)/
-  Return(%10)
+  %1([CNode]46) = call @↵construct.SequentialCell.30(I64(0), %para8_input_data)
+      : (<Int64, NoShape>, <Tensor[Float32], (256, 2)>) -> (<null>)
+      #scope: (Default/nets-SequentialCell)
+      # In file /Users/moranvl/anaconda3/envs/mindspore/lib/python3.9/site-packages/mindspore/nn/layer/container.py:286/        for cell in self.cell_list:/
+  Return(%1)
       : (<null>)
-      #scope: (Default)
-      # In file /Users/moranvl/anaconda3/envs/mindspore/lib/python3.9/site-packages/mindspore/ops/composite/base.py:574/                        return grad_(fn, weights)(*args)/
+      #scope: (Default/nets-SequentialCell)
+      # In file /Users/moranvl/anaconda3/envs/mindspore/lib/python3.9/site-packages/mindspore/nn/layer/container.py:286/        for cell in self.cell_list:/
 }
 # Order:
-#   1: @calculate_policy_loss_on_episode.1149:1163{[0]: 1163, [1]: calculate_policy_loss_on_episode}
-#   2: @calculate_policy_loss_on_episode.1149:1163{[0]: ValueNode<Primitive> TupleGetItem, [1]: 1163, [2]: ValueNode<Int64Imm> 0}
-#   3: @calculate_policy_loss_on_episode.1149:1163{[0]: ValueNode<Primitive> TupleGetItem, [1]: 1163, [2]: ValueNode<Int64Imm> 1}
-#   4: @calculate_policy_loss_on_episode.1149:1163{[0]: ValueNode<HyperMapPy> MetaFuncGraph-hyper_map[ones_like_leaf].1170, [1]: 1163}
-#   5: @calculate_policy_loss_on_episode.1149:1163{[0]: 1163, [1]: 1163}
-#   6: @calculate_policy_loss_on_episode.1149:1163{[0]: ValueNode<Primitive> TupleGetItem, [1]: 1163, [2]: ValueNode<Int64Imm> 0}
-#   7: @calculate_policy_loss_on_episode.1149:1163{[0]: ValueNode<Primitive> Partial, [1]: ValueNode<MultitypeFuncGraph> MetaFuncGraph-env_get.40, [2]: 1163}
-#   8: @calculate_policy_loss_on_episode.1149:1163{[0]: ValueNode<HyperMap> MetaFuncGraph-hyper_map.1171, [1]: 1163, [2]: 1169}
-#   9: @calculate_policy_loss_on_episode.1149:1163{[0]: ValueNode<Primitive> MakeTuple, [1]: 1163, [2]: 1163}
-#  10: @calculate_policy_loss_on_episode.1149:1163{[0]: ValueNode<Primitive> Return, [1]: 1163}
+#   1: @construct.SequentialCell.29:[CNode]47{[0]: ValueNode<FuncGraph> ms_len_with_iterable_check.48, [1]: [CNode]49}
+#   2: @construct.SequentialCell.29:[CNode]46{[0]: ValueNode<FuncGraph> ↵construct.SequentialCell.30, [1]: ValueNode<Int64Imm> 0, [2]: input_data}
+#   3: @construct.SequentialCell.29:[CNode]50{[0]: ValueNode<Primitive> Return, [1]: [CNode]46}
 
 
 subgraph attr:
-defer_inline : 1
-subgraph instance: calculate_policy_loss_on_episode.1141 : 0x14f608218
-# In file /Users/moranvl/Code/Deep-Reinforcement-Learning-Algorithms-with-MindSpore/agents/policy_gradient_agents/REINFORCE.py:128/    def calculate_policy_loss_on_episode(self, total_discounted_reward):/
-subgraph @calculate_policy_loss_on_episode.1141 parent: [subgraph @after_grad.1145](%para11_total_discounted_reward) {
-  %1([CNode]1173) = call @ms_len.1172([Tensor(43)[1, 4], Tensor(43)[1, 4], Tensor(43)[1, 4], Tensor(43)[1, 4], Tensor(43)[1, 4], Tensor(43)[1, 4], Tensor(43)[1, 4], Tensor(43)[1, 4], Tensor(43)[1, 4], Tensor(43)[1, 4], Tensor(43)[1, 4], Tensor(43)[1, 4], Tensor(43)[1, 4], Tensor(43)[1, 4], Tensor(43)[1, 4], Tensor(43)[1, 4], Tensor(43)[1, 4], Tensor(43)[1, 4], Tensor(43)[1, 4], Tensor(43)[1, 4], Tensor(43)[1, 4], Tensor(43)[1, 4], Tensor(43)[1, 4], Tensor(43)[1, 4], Tensor(43)[1, 4], Tensor(43)[1, 4], Tensor(43)[1, 4], Tensor(43)[1, 4], Tensor(43)[1, 4], Tensor(43)[1, 4], Tensor(43)[1, 4], Tensor(43)[1, 4], Tensor(43)[1, 4], Tensor(43)[1, 4], Tensor(43)[1, 4], Tensor(43)[1, 4], Tensor(43)[1, 4], Tensor(43)[1, 4], Tensor(43)[1, 4], Tensor(43)[1, 4], Tensor(43)[1, 4], Tensor(43)[1, 4], Tensor(43)[1, 4], Tensor(43)[1, 4], Tensor(43)[1, 4], Tensor(43)[1, 4], Tensor(43)[1, 4], Tensor(43)[1, 4], Tensor(43)[1, 4], Tensor(43)[1, 4], Tensor(43)[1, 4], Tensor(43)[1, 4], Tensor(43)[1, 4], Tensor(43)[1, 4], Tensor(43)[1, 4], Tensor(43)[1, 4], Tensor(43)[1, 4], Tensor(43)[1, 4], Tensor(43)[1, 4], Tensor(43)[1, 4], Tensor(43)[1, 4], Tensor(43)[1, 4], Tensor(43)[1, 4], Tensor(43)[1, 4], Tensor(43)[1, 4], Tensor(43)[1, 4], Tensor(43)[1, 4], Tensor(43)[1, 4], Tensor(43)[1, 4]])
-      : (<List[Tensor[Float32]*69], ListShape[(1, 4), (1, 4), (1, 4), (1, 4), (1, 4), (1, 4), (1, 4), (1, 4), (1, 4), (1, 4), (1, 4), (1, 4), (1, 4), (1, 4), (1, 4), (1, 4), (1, 4), (1, 4), (1, 4), (1, 4), (1, 4), (1, 4), (1, 4), (1, 4), (1, 4), (1, 4), (1, 4), (1, 4), (1, 4), (1, 4), (1, 4), (1, 4), (1, 4), (1, 4), (1, 4), (1, 4), (1, 4), (1, 4), (1, 4), (1, 4), (1, 4), (1, 4), (1, 4), (1, 4), (1, 4), (1, 4), (1, 4), (1, 4), (1, 4), (1, 4), (1, 4), (1, 4), (1, 4), (1, 4), (1, 4), (1, 4), (1, 4), (1, 4), (1, 4), (1, 4), (1, 4), (1, 4), (1, 4), (1, 4), (1, 4), (1, 4), (1, 4), (1, 4), (1, 4)]>) -> (<Int64, NoShape>)
-      #scope: (Default)
-      # In file /Users/moranvl/Code/Deep-Reinforcement-Learning-Algorithms-with-MindSpore/agents/policy_gradient_agents/REINFORCE.py:131/        if len(self.episode_log_states) != 0:/
-  %2([CNode]1174) = S-Prim-not_equal(%1, I64(0))
+subgraph instance: ↵construct.SequentialCell.30 : 0x114246418
+# In file /Users/moranvl/anaconda3/envs/mindspore/lib/python3.9/site-packages/mindspore/nn/layer/container.py:286/        for cell in self.cell_list:/
+subgraph @↵construct.SequentialCell.30 parent: [subgraph @construct.SequentialCell.29](%para9_, %para10_) {
+  %1([CNode]49) = $(construct.SequentialCell.29):MakeTuple(call @construct.Dense.33, call @construct.ReLU.51, call @construct.Dropout.52, call @construct.Dense.53, call @construct.ReLU.51, call @construct.Dropout.54, call @construct.Dense.55)
+      : (<Func, NoShape>, <Func, NoShape>, <Func, NoShape>, <Func, NoShape>, <Func, NoShape>, <Func, NoShape>, <Func, NoShape>) -> (<Tuple[Func*7], TupleShape(NoShape, NoShape, NoShape, NoShape, NoShape, NoShape, NoShape)>)
+      #scope: (Default/nets-SequentialCell)
+      # In file /Users/moranvl/anaconda3/envs/mindspore/lib/python3.9/site-packages/mindspore/nn/layer/container.py:286/        for cell in self.cell_list:/
+  %2([CNode]47) = $(construct.SequentialCell.29):call @ms_len_with_iterable_check.48(%1)
+      : (<Tuple[Func*7], TupleShape(NoShape, NoShape, NoShape, NoShape, NoShape, NoShape, NoShape)>) -> (<Int64, NoShape>)
+      #scope: (Default/nets-SequentialCell)
+      # In file /Users/moranvl/anaconda3/envs/mindspore/lib/python3.9/site-packages/mindspore/nn/layer/container.py:286/        for cell in self.cell_list:/
+  %3([CNode]56) = MultitypeFuncGraph-less{(String, String), (Number, Tensor), (Tensor, Tensor), (Tensor, Number), (Number, Number), (Tuple, Tuple), (List, List)}(%para9_@[CNode]31, %2)
       : (<Int64, NoShape>, <Int64, NoShape>) -> (<Bool, NoShape>)
-      #scope: (Default)
-      # In file /Users/moranvl/Code/Deep-Reinforcement-Learning-Algorithms-with-MindSpore/agents/policy_gradient_agents/REINFORCE.py:131/        if len(self.episode_log_states) != 0:/
-  %3([CNode]1175) = call @bool_.1144(%2)
-      : (<Bool, NoShape>) -> (<Bool, NoShape>)
-      #scope: (Default)
-      # In file /Users/moranvl/Code/Deep-Reinforcement-Learning-Algorithms-with-MindSpore/agents/policy_gradient_agents/REINFORCE.py:131/        if len(self.episode_log_states) != 0:/
-  %4([CNode]1176) = Switch(%3, call @✓calculate_policy_loss_on_episode.1150, call @✗calculate_policy_loss_on_episode.1177)
+      #scope: (Default/nets-SequentialCell)
+      # In file /Users/moranvl/anaconda3/envs/mindspore/lib/python3.9/site-packages/mindspore/nn/layer/container.py:286/        for cell in self.cell_list:/
+  %4([CNode]57) = Switch(%3, call @↻construct.SequentialCell.32, call @↓construct.SequentialCell.58)
       : (<Bool, NoShape>, <Func, NoShape>, <Func, NoShape>) -> (<Func, NoShape>)
-      #scope: (Default)
-      # In file /Users/moranvl/Code/Deep-Reinforcement-Learning-Algorithms-with-MindSpore/agents/policy_gradient_agents/REINFORCE.py:131/        if len(self.episode_log_states) != 0:/
+      #scope: (Default/nets-SequentialCell)
+      # In file /Users/moranvl/anaconda3/envs/mindspore/lib/python3.9/site-packages/mindspore/nn/layer/container.py:286/        for cell in self.cell_list:/
 
 #------------------------> 3
-  %5([CNode]1178) = %4()
-      #scope: (Default)
-      # In file /Users/moranvl/Code/Deep-Reinforcement-Learning-Algorithms-with-MindSpore/agents/policy_gradient_agents/REINFORCE.py:131/        if len(self.episode_log_states) != 0:/
-  %6([CNode]1180) = call @↓calculate_policy_loss_on_episode.1179(%5)
-      : (<null>) -> (<null>)
-      #scope: (Default)
-      # In file /Users/moranvl/anaconda3/envs/mindspore/lib/python3.9/site-packages/mindspore/ops/composite/base.py:574/                        return grad_(fn, weights)(*args)/
-  Return(%6)
+  %5([CNode]59) = %4()
+      #scope: (Default/nets-SequentialCell)
+      # In file /Users/moranvl/anaconda3/envs/mindspore/lib/python3.9/site-packages/mindspore/nn/layer/container.py:286/        for cell in self.cell_list:/
+  Return(%5)
       : (<null>)
-      #scope: (Default)
-      # In file /Users/moranvl/Code/Deep-Reinforcement-Learning-Algorithms-with-MindSpore/agents/policy_gradient_agents/REINFORCE.py:131/        if len(self.episode_log_states) != 0:/
+      #scope: (Default/nets-SequentialCell)
+      # In file /Users/moranvl/anaconda3/envs/mindspore/lib/python3.9/site-packages/mindspore/nn/layer/container.py:286/        for cell in self.cell_list:/
 }
 # Order:
-#   1: @calculate_policy_loss_on_episode.1141:[CNode]1173{[0]: ValueNode<FuncGraph> ms_len.1172, [1]: ValueNode<ValueList> [Tensor(shape=[1, 4], dtype=Float32, value=
-[[ 3.54875159e-03 -3.33808474e-02  3.45396884e-02 -2.92229317e-02]]), Tensor(shape=[1, 4], dtype=Float32, value=
-[[ 2.88113463e-03  1.61229193e-01  3.39552276e-02 -3.10811251e-01]]), Tensor(shape=[1, 4], dtype=Float32, value=
-[[ 6.10571867e-03 -3.43596563e-02  2.77390033e-02 -7.61615625e-03]]), Tensor(shape=[1, 4], dtype=Float32, value=
-[[ 5.41852554e-03  1.60353720e-01  2.75866799e-02 -2.91419655e-01]]), Tensor(shape=[1, 4], dtype=Float32, value=
-[[ 8.62559956e-03  3.55071694e-01  2.17582881e-02 -5.75276017e-01]]), Tensor(shape=[1, 4], dtype=Float32, value=
-[[ 1.57270338e-02  1.59651577e-01  1.02527672e-02 -2.75818795e-01]]), Tensor(shape=[1, 4], dtype=Float32, value=
-[[ 1.89200658e-02  3.54625762e-01  4.73639136e-03 -5.65250456e-01]]), Tensor(shape=[1, 4], dtype=Float32, value=
-[[ 2.60125808e-02  1.59437686e-01 -6.56861719e-03 -2.71079123e-01]]), Tensor(shape=[1, 4], dtype=Float32, value=
-[[ 2.92013343e-02  3.54652762e-01 -1.19901998e-02 -5.65826535e-01]]), Tensor(shape=[1, 4], dtype=Float32, value=
-[[ 3.62943895e-02  1.59701049e-01 -2.33067311e-02 -2.76945055e-01]]), Tensor(shape=[1, 4], dtype=Float32, value=
-[[ 3.94884087e-02 -3.50807793e-02 -2.88456306e-02  8.29677936e-03]]), Tensor(shape=[1, 4], dtype=Float32, value=
-[[ 3.87867950e-02  1.60442725e-01 -2.86796950e-02 -2.93345928e-01]]), Tensor(shape=[1, 4], dtype=Float32, value=
-[[ 4.19956483e-02 -3.42588313e-02 -3.45466137e-02 -9.84434970e-03]]), Tensor(shape=[1, 4], dtype=Float32, value=
-[[ 4.13104706e-02  1.61341101e-01 -3.47435027e-02 -3.13223869e-01]]), Tensor(shape=[1, 4], dtype=Float32, value=
-[[ 4.45372947e-02 -3.32691260e-02 -4.10079770e-02 -3.16972323e-02]]), Tensor(shape=[1, 4], dtype=Float32, value=
-[[ 4.38719131e-02 -2.27779746e-01 -4.16419245e-02  2.47770429e-01]]), Tensor(shape=[1, 4], dtype=Float32, value=
-[[ 3.93163152e-02 -3.20885815e-02 -3.66865136e-02 -5.77510260e-02]]), Tensor(shape=[1, 4], dtype=Float32, value=
-[[ 3.86745445e-02 -2.26665840e-01 -3.78415361e-02  2.23135039e-01]]), Tensor(shape=[1, 4], dtype=Float32, value=
-[[ 3.41412276e-02 -3.10240258e-02 -3.33788358e-02 -8.12403336e-02]]), Tensor(shape=[1, 4], dtype=Float32, value=
-[[ 3.35207470e-02 -2.25651979e-01 -3.50036398e-02  2.00727433e-01]]), Tensor(shape=[1, 4], dtype=Float32, value=
-[[ 2.90077087e-02 -4.20256287e-01 -3.09890918e-02  4.82166082e-01]]), Tensor(shape=[1, 4], dtype=Float32, value=
-[[ 2.06025820e-02 -2.24710941e-01 -2.13457700e-02  1.79879591e-01]]), Tensor(shape=[1, 4], dtype=Float32, value=
-[[ 1.61083639e-02 -4.19521034e-01 -1.77481789e-02  4.65752989e-01]]), Tensor(shape=[1, 4], dtype=Float32, value=
-[[ 7.71794282e-03 -2.24152863e-01 -8.43311846e-03  1.67529181e-01]]), Tensor(shape=[1, 4], dtype=Float32, value=
-[[ 3.23488563e-03 -4.19153094e-01 -5.08253509e-03  4.57539827e-01]]), Tensor(shape=[1, 4], dtype=Float32, value=
-[[-5.14817610e-03 -2.23959669e-01  4.06826148e-03  1.63259193e-01]]), Tensor(shape=[1, 4], dtype=Float32, value=
-[[-9.62736923e-03 -2.88961865e-02  7.33344536e-03 -1.28137529e-01]]), Tensor(shape=[1, 4], dtype=Float32, value=
-[[-1.02052931e-02 -2.24122420e-01  4.77069477e-03  1.66849956e-01]]), Tensor(shape=[1, 4], dtype=Float32, value=
-[[-1.46877412e-02 -2.90690809e-02  8.10769387e-03 -1.24324143e-01]]), Tensor(shape=[1, 4], dtype=Float32, value=
-[[-1.52691230e-02 -2.24306241e-01  5.62121067e-03  1.70905605e-01]]), Tensor(shape=[1, 4], dtype=Float32, value=
-[[-1.97552480e-02 -2.92651970e-02  9.03932285e-03 -1.19998708e-01]]), Tensor(shape=[1, 4], dtype=Float32, value=
-[[-2.03405526e-02  1.65726081e-01  6.63934881e-03 -4.09816176e-01]]), Tensor(shape=[1, 4], dtype=Float32, value=
-[[-1.70260295e-02 -2.94893626e-02 -1.55697449e-03 -1.15047485e-01]]), Tensor(shape=[1, 4], dtype=Float32, value=
-[[-1.76158175e-02  1.65654868e-01 -3.85792414e-03 -4.08221215e-01]]), Tensor(shape=[1, 4], dtype=Float32, value=
-[[-1.43027203e-02 -2.94121765e-02 -1.20223491e-02 -1.16757065e-01]]), Tensor(shape=[1, 4], dtype=Float32, value=
-[[-1.48909641e-02  1.65879950e-01 -1.43574905e-02 -4.13208574e-01]]), Tensor(shape=[1, 4], dtype=Float32, value=
-[[-1.15733650e-02 -2.90355720e-02 -2.26216614e-02 -1.25086382e-01]]), Tensor(shape=[1, 4], dtype=Float32, value=
-[[-1.21540762e-02 -2.23826259e-01 -2.51233894e-02  1.60374686e-01]]), Tensor(shape=[1, 4], dtype=Float32, value=
-[[-1.66306011e-02 -2.83538103e-02 -2.19158959e-02 -1.40126958e-01]]), Tensor(shape=[1, 4], dtype=Float32, value=
-[[-1.71976779e-02 -2.23155126e-01 -2.47184336e-02  1.45562097e-01]]), Tensor(shape=[1, 4], dtype=Float32, value=
-[[-2.16607805e-02 -2.76880730e-02 -2.18071919e-02 -1.54815406e-01]]), Tensor(shape=[1, 4], dtype=Float32, value=
-[[-2.22145412e-02 -2.22491115e-01 -2.49035005e-02  1.30908877e-01]]), Tensor(shape=[1, 4], dtype=Float32, value=
-[[-2.66643632e-02 -4.17247623e-01 -2.22853236e-02  4.15632218e-01]]), Tensor(shape=[1, 4], dtype=Float32, value=
-[[-3.50093171e-02 -2.21817046e-01 -1.39726792e-02  1.16007760e-01]]), Tensor(shape=[1, 4], dtype=Float32, value=
-[[-3.94456573e-02 -4.16736037e-01 -1.16525237e-02  4.04249877e-01]]), Tensor(shape=[1, 4], dtype=Float32, value=
-[[-4.77803797e-02 -2.21450776e-01 -3.56752612e-03  1.07916117e-01]]), Tensor(shape=[1, 4], dtype=Float32, value=
-[[-5.22093922e-02 -4.16521430e-01 -1.40920386e-03  3.99471372e-01]]), Tensor(shape=[1, 4], dtype=Float32, value=
-[[-6.05398230e-02 -6.11623347e-01  6.58022380e-03  6.91709697e-01]]), Tensor(shape=[1, 4], dtype=Float32, value=
-[[-7.27722868e-02 -4.16593313e-01  2.04144176e-02  4.01105523e-01]]), Tensor(shape=[1, 4], dtype=Float32, value=
-[[-8.11041519e-02 -6.11998796e-01  2.84365267e-02  7.00154066e-01]]), Tensor(shape=[1, 4], dtype=Float32, value=
-[[-9.33441296e-02 -4.17282373e-01  4.24396098e-02  4.16556746e-01]]), Tensor(shape=[1, 4], dtype=Float32, value=
-[[-1.01689778e-01 -6.12979293e-01  5.07707447e-02  7.22311318e-01]]), Tensor(shape=[1, 4], dtype=Float32, value=
-[[-1.13949366e-01 -4.18595016e-01  6.52169734e-02  4.46030766e-01]]), Tensor(shape=[1, 4], dtype=Float32, value=
-[[-1.22321263e-01 -2.24453390e-01  7.41375834e-02  1.74597651e-01]]), Tensor(shape=[1, 4], dtype=Float32, value=
-[[-1.26810327e-01 -4.20553774e-01  7.76295364e-02  4.89716679e-01]]), Tensor(shape=[1, 4], dtype=Float32, value=
-[[-1.35221407e-01 -2.26607874e-01  8.74238685e-02  2.22474158e-01]]), Tensor(shape=[1, 4], dtype=Float32, value=
-[[-1.39753565e-01 -4.22863543e-01  9.18733552e-02  5.41403294e-01]]), Tensor(shape=[1, 4], dtype=Float32, value=
-[[-1.48210838e-01 -2.29144856e-01  1.02701418e-01  2.79023528e-01]]), Tensor(shape=[1, 4], dtype=Float32, value=
-[[-1.52793735e-01 -3.56265046e-02  1.08281896e-01  2.04166826e-02]]), Tensor(shape=[1, 4], dtype=Float32, value=
-[[-1.53506264e-01 -2.32121304e-01  1.08690225e-01  3.45205337e-01]]), Tensor(shape=[1, 4], dtype=Float32, value=
-[[-1.58148691e-01 -3.86998057e-02  1.15594335e-01  8.86772126e-02]]), Tensor(shape=[1, 4], dtype=Float32, value=
-[[-1.58922687e-01 -2.35272601e-01  1.17367879e-01  4.15477723e-01]]), Tensor(shape=[1, 4], dtype=Float32, value=
-[[-1.63628131e-01 -4.19926606e-02  1.25677437e-01  1.61979377e-01]]), Tensor(shape=[1, 4], dtype=Float32, value=
-[[-1.64467990e-01 -2.38668770e-01  1.28917024e-01  4.91518736e-01]]), Tensor(shape=[1, 4], dtype=Float32, value=
-[[-1.69241369e-01 -4.35351014e-01  1.38747394e-01  8.21890593e-01]]), Tensor(shape=[1, 4], dtype=Float32, value=
-[[-1.77948385e-01 -2.42372409e-01  1.55185208e-01  5.75865448e-01]]), Tensor(shape=[1, 4], dtype=Float32, value=
-[[-1.82795838e-01 -4.39290166e-01  1.66702509e-01  9.13134098e-01]]), Tensor(shape=[1, 4], dtype=Float32, value=
-[[-1.91581637e-01 -2.46767789e-01  1.84965193e-01  6.77137733e-01]]), Tensor(shape=[1, 4], dtype=Float32, value=
-[[-1.96516991e-01 -4.43912148e-01  1.98507950e-01  1.02188027e+00]])]}
-#   2: @calculate_policy_loss_on_episode.1141:[CNode]1174{[0]: ValueNode<DoSignaturePrimitive> S-Prim-not_equal, [1]: [CNode]1173, [2]: ValueNode<Int64Imm> 0}
-#   3: @calculate_policy_loss_on_episode.1141:[CNode]1175{[0]: ValueNode<FuncGraph> bool_.1144, [1]: [CNode]1174}
-#   4: @calculate_policy_loss_on_episode.1141:[CNode]1176{[0]: ValueNode<Primitive> Switch, [1]: [CNode]1175, [2]: ValueNode<FuncGraph> ✓calculate_policy_loss_on_episode.1150, [3]: ValueNode<FuncGraph> ✗calculate_policy_loss_on_episode.1177}
-#   5: @calculate_policy_loss_on_episode.1141:[CNode]1178{[0]: [CNode]1176}
-#   6: @calculate_policy_loss_on_episode.1141:[CNode]1180{[0]: ValueNode<FuncGraph> ↓calculate_policy_loss_on_episode.1179, [1]: [CNode]1178}
-#   7: @calculate_policy_loss_on_episode.1141:[CNode]1181{[0]: ValueNode<Primitive> Return, [1]: [CNode]1180}
+#   1: @↵construct.SequentialCell.30:[CNode]56{[0]: ValueNode<MultitypeFuncGraph> MetaFuncGraph-less.60, [1]: @[CNode]31, [2]: [CNode]47}
+#   2: @↵construct.SequentialCell.30:[CNode]57{[0]: ValueNode<Primitive> Switch, [1]: [CNode]56, [2]: ValueNode<FuncGraph> ↻construct.SequentialCell.32, [3]: ValueNode<FuncGraph> ↓construct.SequentialCell.58}
+#   3: @↵construct.SequentialCell.30:[CNode]59{[0]: [CNode]57}
+#   4: @↵construct.SequentialCell.30:[CNode]61{[0]: ValueNode<Primitive> Return, [1]: [CNode]59}
 
 
 subgraph attr:
-subgraph instance: ✓calculate_policy_loss_on_episode.1150 : 0x14f63ce18
-# In file /Users/moranvl/Code/Deep-Reinforcement-Learning-Algorithms-with-MindSpore/agents/policy_gradient_agents/REINFORCE.py:131/        if len(self.episode_log_states) != 0:/
-subgraph @✓calculate_policy_loss_on_episode.1150 parent: [subgraph @calculate_policy_loss_on_episode.1141]() {
+subgraph instance: ↻construct.SequentialCell.32 : 0x114246a18
+# In file /Users/moranvl/anaconda3/envs/mindspore/lib/python3.9/site-packages/mindspore/nn/layer/container.py:286/        for cell in self.cell_list:/
+subgraph @↻construct.SequentialCell.32 parent: [subgraph @↵construct.SequentialCell.30]() {
+  %1([CNode]31) = MultitypeFuncGraph-add{(Number, Tensor), (Number, Number), (Tuple, Tuple), (Tensor, List), (Tuple, Tensor), (Tensor, Tuple), (Tensor, Number), (COOTensor, COOTensor), (List, Tensor), (List, List), (Tensor, Tensor), (String, String), (COOTensor, Tensor), (RowTensor, Tensor), (NoneType, NoneType), (CSRTensor, CSRTensor), (Tensor, COOTensor)}(%para9_@[CNode]31, I64(1))
+      : (<Int64, NoShape>, <Int64, NoShape>) -> (<Int64, NoShape>)
+      #scope: (Default/nets-SequentialCell)
+      # In file /Users/moranvl/anaconda3/envs/mindspore/lib/python3.9/site-packages/mindspore/nn/layer/container.py:286/        for cell in self.cell_list:/
+  %2([CNode]62) = StopGradient(%1)
+      : (<Int64, NoShape>) -> (<Int64, NoShape>)
+      #scope: (Default/nets-SequentialCell)
+      # In file /Users/moranvl/Code/Deep-Reinforcement-Learning-Algorithms-with-MindSpore/agents/Base_Agent.py:451/        x = self.nets(x)/
+  %3([CNode]49) = $(construct.SequentialCell.29):MakeTuple(call @construct.Dense.33, call @construct.ReLU.51, call @construct.Dropout.52, call @construct.Dense.53, call @construct.ReLU.51, call @construct.Dropout.54, call @construct.Dense.55)
+      : (<Func, NoShape>, <Func, NoShape>, <Func, NoShape>, <Func, NoShape>, <Func, NoShape>, <Func, NoShape>, <Func, NoShape>) -> (<Tuple[Func*7], TupleShape(NoShape, NoShape, NoShape, NoShape, NoShape, NoShape, NoShape)>)
+      #scope: (Default/nets-SequentialCell)
+      # In file /Users/moranvl/anaconda3/envs/mindspore/lib/python3.9/site-packages/mindspore/nn/layer/container.py:286/        for cell in self.cell_list:/
+  %4([CNode]64) = call @ms_iter.63(%3)
+      : (<Tuple[Func*7], TupleShape(NoShape, NoShape, NoShape, NoShape, NoShape, NoShape, NoShape)>) -> (<Tuple[Func*7], TupleShape(NoShape, NoShape, NoShape, NoShape, NoShape, NoShape, NoShape)>)
+      #scope: (Default/nets-SequentialCell)
+      # In file /Users/moranvl/anaconda3/envs/mindspore/lib/python3.9/site-packages/mindspore/nn/layer/container.py:286/        for cell in self.cell_list:/
+  %5(cell) = S-Prim-getitem(%4, %para9_@[CNode]31)
+      : (<Tuple[Func*7], TupleShape(NoShape, NoShape, NoShape, NoShape, NoShape, NoShape, NoShape)>, <Int64, NoShape>) -> (<Func, NoShape>)
+      #scope: (Default/nets-SequentialCell)
+      # In file /Users/moranvl/anaconda3/envs/mindspore/lib/python3.9/site-packages/mindspore/nn/layer/container.py:286/        for cell in self.cell_list:/
 
 #------------------------> 4
-  %1(states) = call @vstack.1151([Tensor(43)[1, 4], Tensor(43)[1, 4], Tensor(43)[1, 4], Tensor(43)[1, 4], Tensor(43)[1, 4], Tensor(43)[1, 4], Tensor(43)[1, 4], Tensor(43)[1, 4], Tensor(43)[1, 4], Tensor(43)[1, 4], Tensor(43)[1, 4], Tensor(43)[1, 4], Tensor(43)[1, 4], Tensor(43)[1, 4], Tensor(43)[1, 4], Tensor(43)[1, 4], Tensor(43)[1, 4], Tensor(43)[1, 4], Tensor(43)[1, 4], Tensor(43)[1, 4], Tensor(43)[1, 4], Tensor(43)[1, 4], Tensor(43)[1, 4], Tensor(43)[1, 4], Tensor(43)[1, 4], Tensor(43)[1, 4], Tensor(43)[1, 4], Tensor(43)[1, 4], Tensor(43)[1, 4], Tensor(43)[1, 4], Tensor(43)[1, 4], Tensor(43)[1, 4], Tensor(43)[1, 4], Tensor(43)[1, 4], Tensor(43)[1, 4], Tensor(43)[1, 4], Tensor(43)[1, 4], Tensor(43)[1, 4], Tensor(43)[1, 4], Tensor(43)[1, 4], Tensor(43)[1, 4], Tensor(43)[1, 4], Tensor(43)[1, 4], Tensor(43)[1, 4], Tensor(43)[1, 4], Tensor(43)[1, 4], Tensor(43)[1, 4], Tensor(43)[1, 4], Tensor(43)[1, 4], Tensor(43)[1, 4], Tensor(43)[1, 4], Tensor(43)[1, 4], Tensor(43)[1, 4], Tensor(43)[1, 4], Tensor(43)[1, 4], Tensor(43)[1, 4], Tensor(43)[1, 4], Tensor(43)[1, 4], Tensor(43)[1, 4], Tensor(43)[1, 4], Tensor(43)[1, 4], Tensor(43)[1, 4], Tensor(43)[1, 4], Tensor(43)[1, 4], Tensor(43)[1, 4], Tensor(43)[1, 4], Tensor(43)[1, 4], Tensor(43)[1, 4], Tensor(43)[1, 4]])
-      : (<List[Tensor[Float32]*69], ListShape[(1, 4), (1, 4), (1, 4), (1, 4), (1, 4), (1, 4), (1, 4), (1, 4), (1, 4), (1, 4), (1, 4), (1, 4), (1, 4), (1, 4), (1, 4), (1, 4), (1, 4), (1, 4), (1, 4), (1, 4), (1, 4), (1, 4), (1, 4), (1, 4), (1, 4), (1, 4), (1, 4), (1, 4), (1, 4), (1, 4), (1, 4), (1, 4), (1, 4), (1, 4), (1, 4), (1, 4), (1, 4), (1, 4), (1, 4), (1, 4), (1, 4), (1, 4), (1, 4), (1, 4), (1, 4), (1, 4), (1, 4), (1, 4), (1, 4), (1, 4), (1, 4), (1, 4), (1, 4), (1, 4), (1, 4), (1, 4), (1, 4), (1, 4), (1, 4), (1, 4), (1, 4), (1, 4), (1, 4), (1, 4), (1, 4), (1, 4), (1, 4), (1, 4), (1, 4)]>) -> (<null>)
-      #scope: (Default)
-      # In file /Users/moranvl/Code/Deep-Reinforcement-Learning-Algorithms-with-MindSpore/agents/policy_gradient_agents/REINFORCE.py:132/            states = ops.vstack(self.episode_log_states)/
-  %2([CNode]1183) = call @construct.Default.1182(%1)
-      : (<null>) -> (<null>)
-      #scope: (Default)
-      # In file /Users/moranvl/Code/Deep-Reinforcement-Learning-Algorithms-with-MindSpore/agents/policy_gradient_agents/REINFORCE.py:134/            prob = self.policy(states).gather(actions, axis=1, batch_dims=1)/
-  %3([CNode]1184) = getattr(%2, "gather")
-      : (<null>, <null>) -> (<null>)
-      #scope: (Default)
-      # In file /Users/moranvl/Code/Deep-Reinforcement-Learning-Algorithms-with-MindSpore/agents/policy_gradient_agents/REINFORCE.py:134/            prob = self.policy(states).gather(actions, axis=1, batch_dims=1)/
-  %4([CNode]1185) = call @vstack.1151([Tensor(43)[1, 4], Tensor(43)[1, 4], Tensor(43)[1, 4], Tensor(43)[1, 4], Tensor(43)[1, 4], Tensor(43)[1, 4], Tensor(43)[1, 4], Tensor(43)[1, 4], Tensor(43)[1, 4], Tensor(43)[1, 4], Tensor(43)[1, 4], Tensor(43)[1, 4], Tensor(43)[1, 4], Tensor(43)[1, 4], Tensor(43)[1, 4], Tensor(43)[1, 4], Tensor(43)[1, 4], Tensor(43)[1, 4], Tensor(43)[1, 4], Tensor(43)[1, 4], Tensor(43)[1, 4], Tensor(43)[1, 4], Tensor(43)[1, 4], Tensor(43)[1, 4], Tensor(43)[1, 4], Tensor(43)[1, 4], Tensor(43)[1, 4], Tensor(43)[1, 4], Tensor(43)[1, 4], Tensor(43)[1, 4], Tensor(43)[1, 4], Tensor(43)[1, 4], Tensor(43)[1, 4], Tensor(43)[1, 4], Tensor(43)[1, 4], Tensor(43)[1, 4], Tensor(43)[1, 4], Tensor(43)[1, 4], Tensor(43)[1, 4], Tensor(43)[1, 4], Tensor(43)[1, 4], Tensor(43)[1, 4], Tensor(43)[1, 4], Tensor(43)[1, 4], Tensor(43)[1, 4], Tensor(43)[1, 4], Tensor(43)[1, 4], Tensor(43)[1, 4], Tensor(43)[1, 4], Tensor(43)[1, 4], Tensor(43)[1, 4], Tensor(43)[1, 4], Tensor(43)[1, 4], Tensor(43)[1, 4], Tensor(43)[1, 4], Tensor(43)[1, 4], Tensor(43)[1, 4], Tensor(43)[1, 4], Tensor(43)[1, 4], Tensor(43)[1, 4], Tensor(43)[1, 4], Tensor(43)[1, 4], Tensor(43)[1, 4], Tensor(43)[1, 4], Tensor(43)[1, 4], Tensor(43)[1, 4], Tensor(43)[1, 4], Tensor(43)[1, 4], Tensor(43)[1, 4]])
-      : (<List[Tensor[Float32]*69], ListShape[(1, 4), (1, 4), (1, 4), (1, 4), (1, 4), (1, 4), (1, 4), (1, 4), (1, 4), (1, 4), (1, 4), (1, 4), (1, 4), (1, 4), (1, 4), (1, 4), (1, 4), (1, 4), (1, 4), (1, 4), (1, 4), (1, 4), (1, 4), (1, 4), (1, 4), (1, 4), (1, 4), (1, 4), (1, 4), (1, 4), (1, 4), (1, 4), (1, 4), (1, 4), (1, 4), (1, 4), (1, 4), (1, 4), (1, 4), (1, 4), (1, 4), (1, 4), (1, 4), (1, 4), (1, 4), (1, 4), (1, 4), (1, 4), (1, 4), (1, 4), (1, 4), (1, 4), (1, 4), (1, 4), (1, 4), (1, 4), (1, 4), (1, 4), (1, 4), (1, 4), (1, 4), (1, 4), (1, 4), (1, 4), (1, 4), (1, 4), (1, 4), (1, 4), (1, 4)]>) -> (<null>)
-      #scope: (Default)
-      # In file /Users/moranvl/Code/Deep-Reinforcement-Learning-Algorithms-with-MindSpore/agents/policy_gradient_agents/REINFORCE.py:133/            actions = ops.vstack(self.episode_log_states).long()/
-  %5([CNode]1186) = getattr(%4, "long")
-      : (<null>, <null>) -> (<null>)
-      #scope: (Default)
-      # In file /Users/moranvl/Code/Deep-Reinforcement-Learning-Algorithms-with-MindSpore/agents/policy_gradient_agents/REINFORCE.py:133/            actions = ops.vstack(self.episode_log_states).long()/
-  %6(actions) = %5()
-      #scope: (Default)
-      # In file /Users/moranvl/Code/Deep-Reinforcement-Learning-Algorithms-with-MindSpore/agents/policy_gradient_agents/REINFORCE.py:133/            actions = ops.vstack(self.episode_log_states).long()/
-  %7([CNode]1187) = S-Prim-MakeTuple(%6)
-      : (<null>) -> (<null>)
-      #scope: (Default)
-      # In file /Users/moranvl/Code/Deep-Reinforcement-Learning-Algorithms-with-MindSpore/agents/policy_gradient_agents/REINFORCE.py:134/            prob = self.policy(states).gather(actions, axis=1, batch_dims=1)/
-  %8([CNode]1188) = S-Prim-MakeTuple("axis", "batch_dims")
-      : (<null>, <null>) -> (<null>)
-      #scope: (Default)
-      # In file /Users/moranvl/Code/Deep-Reinforcement-Learning-Algorithms-with-MindSpore/agents/policy_gradient_agents/REINFORCE.py:134/            prob = self.policy(states).gather(actions, axis=1, batch_dims=1)/
-  %9([CNode]1189) = S-Prim-MakeTuple(I64(1), I64(1))
-      : (<null>, <null>) -> (<null>)
-      #scope: (Default)
-      # In file /Users/moranvl/Code/Deep-Reinforcement-Learning-Algorithms-with-MindSpore/agents/policy_gradient_agents/REINFORCE.py:134/            prob = self.policy(states).gather(actions, axis=1, batch_dims=1)/
-  %10([CNode]1190) = S-Prim-make_dict(%8, %9)
-      : (<null>, <null>) -> (<null>)
-      #scope: (Default)
-      # In file /Users/moranvl/Code/Deep-Reinforcement-Learning-Algorithms-with-MindSpore/agents/policy_gradient_agents/REINFORCE.py:134/            prob = self.policy(states).gather(actions, axis=1, batch_dims=1)/
-  %11(prob) = UnpackCall-unpack_call(%3, %7, %10)
-      : (<null>, <null>, <null>) -> (<null>)
-      #scope: (Default)
-      # In file /Users/moranvl/Code/Deep-Reinforcement-Learning-Algorithms-with-MindSpore/agents/policy_gradient_agents/REINFORCE.py:134/            prob = self.policy(states).gather(actions, axis=1, batch_dims=1)/
-  %12([CNode]1191) = getattr(%11, "log")
-      : (<null>, <null>) -> (<null>)
-      #scope: (Default)
-      # In file /Users/moranvl/Code/Deep-Reinforcement-Learning-Algorithms-with-MindSpore/agents/policy_gradient_agents/REINFORCE.py:135/            log_prob = prob.log()/
-  %13(log_prob) = %12()
-      #scope: (Default)
-      # In file /Users/moranvl/Code/Deep-Reinforcement-Learning-Algorithms-with-MindSpore/agents/policy_gradient_agents/REINFORCE.py:135/            log_prob = prob.log()/
-  %14([CNode]1192) = S-Prim-negative(%13)
-      : (<null>) -> (<null>)
-      #scope: (Default)
-      # In file /Users/moranvl/Code/Deep-Reinforcement-Learning-Algorithms-with-MindSpore/agents/policy_gradient_agents/REINFORCE.py:136/            policy_loss = (-log_prob * total_discounted_reward).mean()/
-  %15([CNode]1193) = S-Prim-mul(%14, %para11_total_discounted_reward)
-      : (<null>, <Tensor[Float32], (69, 1)>) -> (<null>)
-      #scope: (Default)
-      # In file /Users/moranvl/Code/Deep-Reinforcement-Learning-Algorithms-with-MindSpore/agents/policy_gradient_agents/REINFORCE.py:136/            policy_loss = (-log_prob * total_discounted_reward).mean()/
-  %16([CNode]1194) = getattr(%15, "mean")
-      : (<null>, <null>) -> (<null>)
-      #scope: (Default)
-      # In file /Users/moranvl/Code/Deep-Reinforcement-Learning-Algorithms-with-MindSpore/agents/policy_gradient_agents/REINFORCE.py:136/            policy_loss = (-log_prob * total_discounted_reward).mean()/
-  %17(policy_loss) = %16()
-      #scope: (Default)
-      # In file /Users/moranvl/Code/Deep-Reinforcement-Learning-Algorithms-with-MindSpore/agents/policy_gradient_agents/REINFORCE.py:136/            policy_loss = (-log_prob * total_discounted_reward).mean()/
-  Return(%17)
-      : (<null>)
-      #scope: (Default)
-      # In file /Users/moranvl/Code/Deep-Reinforcement-Learning-Algorithms-with-MindSpore/agents/policy_gradient_agents/REINFORCE.py:131/        if len(self.episode_log_states) != 0:/
-}
-# Order:
-#   1: @✓calculate_policy_loss_on_episode.1150:states{[0]: ValueNode<FuncGraph> vstack.1151, [1]: ValueNode<ValueList> [Tensor(shape=[1, 4], dtype=Float32, value=
-[[ 3.54875159e-03 -3.33808474e-02  3.45396884e-02 -2.92229317e-02]]), Tensor(shape=[1, 4], dtype=Float32, value=
-[[ 2.88113463e-03  1.61229193e-01  3.39552276e-02 -3.10811251e-01]]), Tensor(shape=[1, 4], dtype=Float32, value=
-[[ 6.10571867e-03 -3.43596563e-02  2.77390033e-02 -7.61615625e-03]]), Tensor(shape=[1, 4], dtype=Float32, value=
-[[ 5.41852554e-03  1.60353720e-01  2.75866799e-02 -2.91419655e-01]]), Tensor(shape=[1, 4], dtype=Float32, value=
-[[ 8.62559956e-03  3.55071694e-01  2.17582881e-02 -5.75276017e-01]]), Tensor(shape=[1, 4], dtype=Float32, value=
-[[ 1.57270338e-02  1.59651577e-01  1.02527672e-02 -2.75818795e-01]]), Tensor(shape=[1, 4], dtype=Float32, value=
-[[ 1.89200658e-02  3.54625762e-01  4.73639136e-03 -5.65250456e-01]]), Tensor(shape=[1, 4], dtype=Float32, value=
-[[ 2.60125808e-02  1.59437686e-01 -6.56861719e-03 -2.71079123e-01]]), Tensor(shape=[1, 4], dtype=Float32, value=
-[[ 2.92013343e-02  3.54652762e-01 -1.19901998e-02 -5.65826535e-01]]), Tensor(shape=[1, 4], dtype=Float32, value=
-[[ 3.62943895e-02  1.59701049e-01 -2.33067311e-02 -2.76945055e-01]]), Tensor(shape=[1, 4], dtype=Float32, value=
-[[ 3.94884087e-02 -3.50807793e-02 -2.88456306e-02  8.29677936e-03]]), Tensor(shape=[1, 4], dtype=Float32, value=
-[[ 3.87867950e-02  1.60442725e-01 -2.86796950e-02 -2.93345928e-01]]), Tensor(shape=[1, 4], dtype=Float32, value=
-[[ 4.19956483e-02 -3.42588313e-02 -3.45466137e-02 -9.84434970e-03]]), Tensor(shape=[1, 4], dtype=Float32, value=
-[[ 4.13104706e-02  1.61341101e-01 -3.47435027e-02 -3.13223869e-01]]), Tensor(shape=[1, 4], dtype=Float32, value=
-[[ 4.45372947e-02 -3.32691260e-02 -4.10079770e-02 -3.16972323e-02]]), Tensor(shape=[1, 4], dtype=Float32, value=
-[[ 4.38719131e-02 -2.27779746e-01 -4.16419245e-02  2.47770429e-01]]), Tensor(shape=[1, 4], dtype=Float32, value=
-[[ 3.93163152e-02 -3.20885815e-02 -3.66865136e-02 -5.77510260e-02]]), Tensor(shape=[1, 4], dtype=Float32, value=
-[[ 3.86745445e-02 -2.26665840e-01 -3.78415361e-02  2.23135039e-01]]), Tensor(shape=[1, 4], dtype=Float32, value=
-[[ 3.41412276e-02 -3.10240258e-02 -3.33788358e-02 -8.12403336e-02]]), Tensor(shape=[1, 4], dtype=Float32, value=
-[[ 3.35207470e-02 -2.25651979e-01 -3.50036398e-02  2.00727433e-01]]), Tensor(shape=[1, 4], dtype=Float32, value=
-[[ 2.90077087e-02 -4.20256287e-01 -3.09890918e-02  4.82166082e-01]]), Tensor(shape=[1, 4], dtype=Float32, value=
-[[ 2.06025820e-02 -2.24710941e-01 -2.13457700e-02  1.79879591e-01]]), Tensor(shape=[1, 4], dtype=Float32, value=
-[[ 1.61083639e-02 -4.19521034e-01 -1.77481789e-02  4.65752989e-01]]), Tensor(shape=[1, 4], dtype=Float32, value=
-[[ 7.71794282e-03 -2.24152863e-01 -8.43311846e-03  1.67529181e-01]]), Tensor(shape=[1, 4], dtype=Float32, value=
-[[ 3.23488563e-03 -4.19153094e-01 -5.08253509e-03  4.57539827e-01]]), Tensor(shape=[1, 4], dtype=Float32, value=
-[[-5.14817610e-03 -2.23959669e-01  4.06826148e-03  1.63259193e-01]]), Tensor(shape=[1, 4], dtype=Float32, value=
-[[-9.62736923e-03 -2.88961865e-02  7.33344536e-03 -1.28137529e-01]]), Tensor(shape=[1, 4], dtype=Float32, value=
-[[-1.02052931e-02 -2.24122420e-01  4.77069477e-03  1.66849956e-01]]), Tensor(shape=[1, 4], dtype=Float32, value=
-[[-1.46877412e-02 -2.90690809e-02  8.10769387e-03 -1.24324143e-01]]), Tensor(shape=[1, 4], dtype=Float32, value=
-[[-1.52691230e-02 -2.24306241e-01  5.62121067e-03  1.70905605e-01]]), Tensor(shape=[1, 4], dtype=Float32, value=
-[[-1.97552480e-02 -2.92651970e-02  9.03932285e-03 -1.19998708e-01]]), Tensor(shape=[1, 4], dtype=Float32, value=
-[[-2.03405526e-02  1.65726081e-01  6.63934881e-03 -4.09816176e-01]]), Tensor(shape=[1, 4], dtype=Float32, value=
-[[-1.70260295e-02 -2.94893626e-02 -1.55697449e-03 -1.15047485e-01]]), Tensor(shape=[1, 4], dtype=Float32, value=
-[[-1.76158175e-02  1.65654868e-01 -3.85792414e-03 -4.08221215e-01]]), Tensor(shape=[1, 4], dtype=Float32, value=
-[[-1.43027203e-02 -2.94121765e-02 -1.20223491e-02 -1.16757065e-01]]), Tensor(shape=[1, 4], dtype=Float32, value=
-[[-1.48909641e-02  1.65879950e-01 -1.43574905e-02 -4.13208574e-01]]), Tensor(shape=[1, 4], dtype=Float32, value=
-[[-1.15733650e-02 -2.90355720e-02 -2.26216614e-02 -1.25086382e-01]]), Tensor(shape=[1, 4], dtype=Float32, value=
-[[-1.21540762e-02 -2.23826259e-01 -2.51233894e-02  1.60374686e-01]]), Tensor(shape=[1, 4], dtype=Float32, value=
-[[-1.66306011e-02 -2.83538103e-02 -2.19158959e-02 -1.40126958e-01]]), Tensor(shape=[1, 4], dtype=Float32, value=
-[[-1.71976779e-02 -2.23155126e-01 -2.47184336e-02  1.45562097e-01]]), Tensor(shape=[1, 4], dtype=Float32, value=
-[[-2.16607805e-02 -2.76880730e-02 -2.18071919e-02 -1.54815406e-01]]), Tensor(shape=[1, 4], dtype=Float32, value=
-[[-2.22145412e-02 -2.22491115e-01 -2.49035005e-02  1.30908877e-01]]), Tensor(shape=[1, 4], dtype=Float32, value=
-[[-2.66643632e-02 -4.17247623e-01 -2.22853236e-02  4.15632218e-01]]), Tensor(shape=[1, 4], dtype=Float32, value=
-[[-3.50093171e-02 -2.21817046e-01 -1.39726792e-02  1.16007760e-01]]), Tensor(shape=[1, 4], dtype=Float32, value=
-[[-3.94456573e-02 -4.16736037e-01 -1.16525237e-02  4.04249877e-01]]), Tensor(shape=[1, 4], dtype=Float32, value=
-[[-4.77803797e-02 -2.21450776e-01 -3.56752612e-03  1.07916117e-01]]), Tensor(shape=[1, 4], dtype=Float32, value=
-[[-5.22093922e-02 -4.16521430e-01 -1.40920386e-03  3.99471372e-01]]), Tensor(shape=[1, 4], dtype=Float32, value=
-[[-6.05398230e-02 -6.11623347e-01  6.58022380e-03  6.91709697e-01]]), Tensor(shape=[1, 4], dtype=Float32, value=
-[[-7.27722868e-02 -4.16593313e-01  2.04144176e-02  4.01105523e-01]]), Tensor(shape=[1, 4], dtype=Float32, value=
-[[-8.11041519e-02 -6.11998796e-01  2.84365267e-02  7.00154066e-01]]), Tensor(shape=[1, 4], dtype=Float32, value=
-[[-9.33441296e-02 -4.17282373e-01  4.24396098e-02  4.16556746e-01]]), Tensor(shape=[1, 4], dtype=Float32, value=
-[[-1.01689778e-01 -6.12979293e-01  5.07707447e-02  7.22311318e-01]]), Tensor(shape=[1, 4], dtype=Float32, value=
-[[-1.13949366e-01 -4.18595016e-01  6.52169734e-02  4.46030766e-01]]), Tensor(shape=[1, 4], dtype=Float32, value=
-[[-1.22321263e-01 -2.24453390e-01  7.41375834e-02  1.74597651e-01]]), Tensor(shape=[1, 4], dtype=Float32, value=
-[[-1.26810327e-01 -4.20553774e-01  7.76295364e-02  4.89716679e-01]]), Tensor(shape=[1, 4], dtype=Float32, value=
-[[-1.35221407e-01 -2.26607874e-01  8.74238685e-02  2.22474158e-01]]), Tensor(shape=[1, 4], dtype=Float32, value=
-[[-1.39753565e-01 -4.22863543e-01  9.18733552e-02  5.41403294e-01]]), Tensor(shape=[1, 4], dtype=Float32, value=
-[[-1.48210838e-01 -2.29144856e-01  1.02701418e-01  2.79023528e-01]]), Tensor(shape=[1, 4], dtype=Float32, value=
-[[-1.52793735e-01 -3.56265046e-02  1.08281896e-01  2.04166826e-02]]), Tensor(shape=[1, 4], dtype=Float32, value=
-[[-1.53506264e-01 -2.32121304e-01  1.08690225e-01  3.45205337e-01]]), Tensor(shape=[1, 4], dtype=Float32, value=
-[[-1.58148691e-01 -3.86998057e-02  1.15594335e-01  8.86772126e-02]]), Tensor(shape=[1, 4], dtype=Float32, value=
-[[-1.58922687e-01 -2.35272601e-01  1.17367879e-01  4.15477723e-01]]), Tensor(shape=[1, 4], dtype=Float32, value=
-[[-1.63628131e-01 -4.19926606e-02  1.25677437e-01  1.61979377e-01]]), Tensor(shape=[1, 4], dtype=Float32, value=
-[[-1.64467990e-01 -2.38668770e-01  1.28917024e-01  4.91518736e-01]]), Tensor(shape=[1, 4], dtype=Float32, value=
-[[-1.69241369e-01 -4.35351014e-01  1.38747394e-01  8.21890593e-01]]), Tensor(shape=[1, 4], dtype=Float32, value=
-[[-1.77948385e-01 -2.42372409e-01  1.55185208e-01  5.75865448e-01]]), Tensor(shape=[1, 4], dtype=Float32, value=
-[[-1.82795838e-01 -4.39290166e-01  1.66702509e-01  9.13134098e-01]]), Tensor(shape=[1, 4], dtype=Float32, value=
-[[-1.91581637e-01 -2.46767789e-01  1.84965193e-01  6.77137733e-01]]), Tensor(shape=[1, 4], dtype=Float32, value=
-[[-1.96516991e-01 -4.43912148e-01  1.98507950e-01  1.02188027e+00]])]}
-#   2: @✓calculate_policy_loss_on_episode.1150:[CNode]1185{[0]: ValueNode<FuncGraph> vstack.1151, [1]: ValueNode<ValueList> [Tensor(shape=[1, 4], dtype=Float32, value=
-[[ 3.54875159e-03 -3.33808474e-02  3.45396884e-02 -2.92229317e-02]]), Tensor(shape=[1, 4], dtype=Float32, value=
-[[ 2.88113463e-03  1.61229193e-01  3.39552276e-02 -3.10811251e-01]]), Tensor(shape=[1, 4], dtype=Float32, value=
-[[ 6.10571867e-03 -3.43596563e-02  2.77390033e-02 -7.61615625e-03]]), Tensor(shape=[1, 4], dtype=Float32, value=
-[[ 5.41852554e-03  1.60353720e-01  2.75866799e-02 -2.91419655e-01]]), Tensor(shape=[1, 4], dtype=Float32, value=
-[[ 8.62559956e-03  3.55071694e-01  2.17582881e-02 -5.75276017e-01]]), Tensor(shape=[1, 4], dtype=Float32, value=
-[[ 1.57270338e-02  1.59651577e-01  1.02527672e-02 -2.75818795e-01]]), Tensor(shape=[1, 4], dtype=Float32, value=
-[[ 1.89200658e-02  3.54625762e-01  4.73639136e-03 -5.65250456e-01]]), Tensor(shape=[1, 4], dtype=Float32, value=
-[[ 2.60125808e-02  1.59437686e-01 -6.56861719e-03 -2.71079123e-01]]), Tensor(shape=[1, 4], dtype=Float32, value=
-[[ 2.92013343e-02  3.54652762e-01 -1.19901998e-02 -5.65826535e-01]]), Tensor(shape=[1, 4], dtype=Float32, value=
-[[ 3.62943895e-02  1.59701049e-01 -2.33067311e-02 -2.76945055e-01]]), Tensor(shape=[1, 4], dtype=Float32, value=
-[[ 3.94884087e-02 -3.50807793e-02 -2.88456306e-02  8.29677936e-03]]), Tensor(shape=[1, 4], dtype=Float32, value=
-[[ 3.87867950e-02  1.60442725e-01 -2.86796950e-02 -2.93345928e-01]]), Tensor(shape=[1, 4], dtype=Float32, value=
-[[ 4.19956483e-02 -3.42588313e-02 -3.45466137e-02 -9.84434970e-03]]), Tensor(shape=[1, 4], dtype=Float32, value=
-[[ 4.13104706e-02  1.61341101e-01 -3.47435027e-02 -3.13223869e-01]]), Tensor(shape=[1, 4], dtype=Float32, value=
-[[ 4.45372947e-02 -3.32691260e-02 -4.10079770e-02 -3.16972323e-02]]), Tensor(shape=[1, 4], dtype=Float32, value=
-[[ 4.38719131e-02 -2.27779746e-01 -4.16419245e-02  2.47770429e-01]]), Tensor(shape=[1, 4], dtype=Float32, value=
-[[ 3.93163152e-02 -3.20885815e-02 -3.66865136e-02 -5.77510260e-02]]), Tensor(shape=[1, 4], dtype=Float32, value=
-[[ 3.86745445e-02 -2.26665840e-01 -3.78415361e-02  2.23135039e-01]]), Tensor(shape=[1, 4], dtype=Float32, value=
-[[ 3.41412276e-02 -3.10240258e-02 -3.33788358e-02 -8.12403336e-02]]), Tensor(shape=[1, 4], dtype=Float32, value=
-[[ 3.35207470e-02 -2.25651979e-01 -3.50036398e-02  2.00727433e-01]]), Tensor(shape=[1, 4], dtype=Float32, value=
-[[ 2.90077087e-02 -4.20256287e-01 -3.09890918e-02  4.82166082e-01]]), Tensor(shape=[1, 4], dtype=Float32, value=
-[[ 2.06025820e-02 -2.24710941e-01 -2.13457700e-02  1.79879591e-01]]), Tensor(shape=[1, 4], dtype=Float32, value=
-[[ 1.61083639e-02 -4.19521034e-01 -1.77481789e-02  4.65752989e-01]]), Tensor(shape=[1, 4], dtype=Float32, value=
-[[ 7.71794282e-03 -2.24152863e-01 -8.43311846e-03  1.67529181e-01]]), Tensor(shape=[1, 4], dtype=Float32, value=
-[[ 3.23488563e-03 -4.19153094e-01 -5.08253509e-03  4.57539827e-01]]), Tensor(shape=[1, 4], dtype=Float32, value=
-[[-5.14817610e-03 -2.23959669e-01  4.06826148e-03  1.63259193e-01]]), Tensor(shape=[1, 4], dtype=Float32, value=
-[[-9.62736923e-03 -2.88961865e-02  7.33344536e-03 -1.28137529e-01]]), Tensor(shape=[1, 4], dtype=Float32, value=
-[[-1.02052931e-02 -2.24122420e-01  4.77069477e-03  1.66849956e-01]]), Tensor(shape=[1, 4], dtype=Float32, value=
-[[-1.46877412e-02 -2.90690809e-02  8.10769387e-03 -1.24324143e-01]]), Tensor(shape=[1, 4], dtype=Float32, value=
-[[-1.52691230e-02 -2.24306241e-01  5.62121067e-03  1.70905605e-01]]), Tensor(shape=[1, 4], dtype=Float32, value=
-[[-1.97552480e-02 -2.92651970e-02  9.03932285e-03 -1.19998708e-01]]), Tensor(shape=[1, 4], dtype=Float32, value=
-[[-2.03405526e-02  1.65726081e-01  6.63934881e-03 -4.09816176e-01]]), Tensor(shape=[1, 4], dtype=Float32, value=
-[[-1.70260295e-02 -2.94893626e-02 -1.55697449e-03 -1.15047485e-01]]), Tensor(shape=[1, 4], dtype=Float32, value=
-[[-1.76158175e-02  1.65654868e-01 -3.85792414e-03 -4.08221215e-01]]), Tensor(shape=[1, 4], dtype=Float32, value=
-[[-1.43027203e-02 -2.94121765e-02 -1.20223491e-02 -1.16757065e-01]]), Tensor(shape=[1, 4], dtype=Float32, value=
-[[-1.48909641e-02  1.65879950e-01 -1.43574905e-02 -4.13208574e-01]]), Tensor(shape=[1, 4], dtype=Float32, value=
-[[-1.15733650e-02 -2.90355720e-02 -2.26216614e-02 -1.25086382e-01]]), Tensor(shape=[1, 4], dtype=Float32, value=
-[[-1.21540762e-02 -2.23826259e-01 -2.51233894e-02  1.60374686e-01]]), Tensor(shape=[1, 4], dtype=Float32, value=
-[[-1.66306011e-02 -2.83538103e-02 -2.19158959e-02 -1.40126958e-01]]), Tensor(shape=[1, 4], dtype=Float32, value=
-[[-1.71976779e-02 -2.23155126e-01 -2.47184336e-02  1.45562097e-01]]), Tensor(shape=[1, 4], dtype=Float32, value=
-[[-2.16607805e-02 -2.76880730e-02 -2.18071919e-02 -1.54815406e-01]]), Tensor(shape=[1, 4], dtype=Float32, value=
-[[-2.22145412e-02 -2.22491115e-01 -2.49035005e-02  1.30908877e-01]]), Tensor(shape=[1, 4], dtype=Float32, value=
-[[-2.66643632e-02 -4.17247623e-01 -2.22853236e-02  4.15632218e-01]]), Tensor(shape=[1, 4], dtype=Float32, value=
-[[-3.50093171e-02 -2.21817046e-01 -1.39726792e-02  1.16007760e-01]]), Tensor(shape=[1, 4], dtype=Float32, value=
-[[-3.94456573e-02 -4.16736037e-01 -1.16525237e-02  4.04249877e-01]]), Tensor(shape=[1, 4], dtype=Float32, value=
-[[-4.77803797e-02 -2.21450776e-01 -3.56752612e-03  1.07916117e-01]]), Tensor(shape=[1, 4], dtype=Float32, value=
-[[-5.22093922e-02 -4.16521430e-01 -1.40920386e-03  3.99471372e-01]]), Tensor(shape=[1, 4], dtype=Float32, value=
-[[-6.05398230e-02 -6.11623347e-01  6.58022380e-03  6.91709697e-01]]), Tensor(shape=[1, 4], dtype=Float32, value=
-[[-7.27722868e-02 -4.16593313e-01  2.04144176e-02  4.01105523e-01]]), Tensor(shape=[1, 4], dtype=Float32, value=
-[[-8.11041519e-02 -6.11998796e-01  2.84365267e-02  7.00154066e-01]]), Tensor(shape=[1, 4], dtype=Float32, value=
-[[-9.33441296e-02 -4.17282373e-01  4.24396098e-02  4.16556746e-01]]), Tensor(shape=[1, 4], dtype=Float32, value=
-[[-1.01689778e-01 -6.12979293e-01  5.07707447e-02  7.22311318e-01]]), Tensor(shape=[1, 4], dtype=Float32, value=
-[[-1.13949366e-01 -4.18595016e-01  6.52169734e-02  4.46030766e-01]]), Tensor(shape=[1, 4], dtype=Float32, value=
-[[-1.22321263e-01 -2.24453390e-01  7.41375834e-02  1.74597651e-01]]), Tensor(shape=[1, 4], dtype=Float32, value=
-[[-1.26810327e-01 -4.20553774e-01  7.76295364e-02  4.89716679e-01]]), Tensor(shape=[1, 4], dtype=Float32, value=
-[[-1.35221407e-01 -2.26607874e-01  8.74238685e-02  2.22474158e-01]]), Tensor(shape=[1, 4], dtype=Float32, value=
-[[-1.39753565e-01 -4.22863543e-01  9.18733552e-02  5.41403294e-01]]), Tensor(shape=[1, 4], dtype=Float32, value=
-[[-1.48210838e-01 -2.29144856e-01  1.02701418e-01  2.79023528e-01]]), Tensor(shape=[1, 4], dtype=Float32, value=
-[[-1.52793735e-01 -3.56265046e-02  1.08281896e-01  2.04166826e-02]]), Tensor(shape=[1, 4], dtype=Float32, value=
-[[-1.53506264e-01 -2.32121304e-01  1.08690225e-01  3.45205337e-01]]), Tensor(shape=[1, 4], dtype=Float32, value=
-[[-1.58148691e-01 -3.86998057e-02  1.15594335e-01  8.86772126e-02]]), Tensor(shape=[1, 4], dtype=Float32, value=
-[[-1.58922687e-01 -2.35272601e-01  1.17367879e-01  4.15477723e-01]]), Tensor(shape=[1, 4], dtype=Float32, value=
-[[-1.63628131e-01 -4.19926606e-02  1.25677437e-01  1.61979377e-01]]), Tensor(shape=[1, 4], dtype=Float32, value=
-[[-1.64467990e-01 -2.38668770e-01  1.28917024e-01  4.91518736e-01]]), Tensor(shape=[1, 4], dtype=Float32, value=
-[[-1.69241369e-01 -4.35351014e-01  1.38747394e-01  8.21890593e-01]]), Tensor(shape=[1, 4], dtype=Float32, value=
-[[-1.77948385e-01 -2.42372409e-01  1.55185208e-01  5.75865448e-01]]), Tensor(shape=[1, 4], dtype=Float32, value=
-[[-1.82795838e-01 -4.39290166e-01  1.66702509e-01  9.13134098e-01]]), Tensor(shape=[1, 4], dtype=Float32, value=
-[[-1.91581637e-01 -2.46767789e-01  1.84965193e-01  6.77137733e-01]]), Tensor(shape=[1, 4], dtype=Float32, value=
-[[-1.96516991e-01 -4.43912148e-01  1.98507950e-01  1.02188027e+00]])]}
-#   3: @✓calculate_policy_loss_on_episode.1150:[CNode]1186{[0]: ValueNode<Primitive> getattr, [1]: [CNode]1185, [2]: ValueNode<StringImm> long}
-#   4: @✓calculate_policy_loss_on_episode.1150:actions{[0]: [CNode]1186}
-#   5: @✓calculate_policy_loss_on_episode.1150:[CNode]1183{[0]: ValueNode<FuncGraph> construct.Default.1182, [1]: states}
-#   6: @✓calculate_policy_loss_on_episode.1150:[CNode]1184{[0]: ValueNode<Primitive> getattr, [1]: [CNode]1183, [2]: ValueNode<StringImm> gather}
-#   7: @✓calculate_policy_loss_on_episode.1150:[CNode]1187{[0]: ValueNode<DoSignaturePrimitive> S-Prim-MakeTuple, [1]: actions}
-#   8: @✓calculate_policy_loss_on_episode.1150:[CNode]1188{[0]: ValueNode<DoSignaturePrimitive> S-Prim-MakeTuple, [1]: ValueNode<StringImm> axis, [2]: ValueNode<StringImm> batch_dims}
-#   9: @✓calculate_policy_loss_on_episode.1150:[CNode]1189{[0]: ValueNode<DoSignaturePrimitive> S-Prim-MakeTuple, [1]: ValueNode<Int64Imm> 1, [2]: ValueNode<Int64Imm> 1}
-#  10: @✓calculate_policy_loss_on_episode.1150:[CNode]1190{[0]: ValueNode<DoSignaturePrimitive> S-Prim-make_dict, [1]: [CNode]1188, [2]: [CNode]1189}
-#  11: @✓calculate_policy_loss_on_episode.1150:prob{[0]: ValueNode<UnpackCall> MetaFuncGraph-unpack_call.1195, [1]: [CNode]1184, [2]: [CNode]1187, [3]: [CNode]1190}
-#  12: @✓calculate_policy_loss_on_episode.1150:[CNode]1191{[0]: ValueNode<Primitive> getattr, [1]: prob, [2]: ValueNode<StringImm> log}
-#  13: @✓calculate_policy_loss_on_episode.1150:log_prob{[0]: [CNode]1191}
-#  14: @✓calculate_policy_loss_on_episode.1150:[CNode]1192{[0]: ValueNode<DoSignaturePrimitive> S-Prim-negative, [1]: log_prob}
-#  15: @✓calculate_policy_loss_on_episode.1150:[CNode]1193{[0]: ValueNode<DoSignaturePrimitive> S-Prim-mul, [1]: [CNode]1192, [2]: total_discounted_reward}
-#  16: @✓calculate_policy_loss_on_episode.1150:[CNode]1194{[0]: ValueNode<Primitive> getattr, [1]: [CNode]1193, [2]: ValueNode<StringImm> mean}
-#  17: @✓calculate_policy_loss_on_episode.1150:policy_loss{[0]: [CNode]1194}
-#  18: @✓calculate_policy_loss_on_episode.1150:[CNode]1196{[0]: ValueNode<Primitive> Return, [1]: policy_loss}
-
-
-subgraph attr:
-subgraph instance: vstack.1151 : 0x14f65ee18
-# In file /Users/moranvl/anaconda3/envs/mindspore/lib/python3.9/site-packages/mindspore/ops/function/math_func.py:6878/def vstack(inputs):/
-subgraph @vstack.1151(%para12_inputs) {
-  %1([CNode]1197) = S-Prim-MakeTuple(ClassType, ClassType)
-      : (<TypeType, NoShape>, <TypeType, NoShape>) -> (<Tuple[TypeType*2], TupleShape(NoShape, NoShape)>)
-      #scope: (Default)
-      # In file /Users/moranvl/anaconda3/envs/mindspore/lib/python3.9/site-packages/mindspore/ops/function/math_func.py:6911/    if not isinstance(inputs, (tuple, list)):/
-  %2([CNode]1198) = S-Prim-isinstance(%para12_inputs, %1)
-      : (<List[Tensor[Float32]*69], ListShape[(1, 4), (1, 4), (1, 4), (1, 4), (1, 4), (1, 4), (1, 4), (1, 4), (1, 4), (1, 4), (1, 4), (1, 4), (1, 4), (1, 4), (1, 4), (1, 4), (1, 4), (1, 4), (1, 4), (1, 4), (1, 4), (1, 4), (1, 4), (1, 4), (1, 4), (1, 4), (1, 4), (1, 4), (1, 4), (1, 4), (1, 4), (1, 4), (1, 4), (1, 4), (1, 4), (1, 4), (1, 4), (1, 4), (1, 4), (1, 4), (1, 4), (1, 4), (1, 4), (1, 4), (1, 4), (1, 4), (1, 4), (1, 4), (1, 4), (1, 4), (1, 4), (1, 4), (1, 4), (1, 4), (1, 4), (1, 4), (1, 4), (1, 4), (1, 4), (1, 4), (1, 4), (1, 4), (1, 4), (1, 4), (1, 4), (1, 4), (1, 4), (1, 4), (1, 4)]>, <Tuple[TypeType*2], TupleShape(NoShape, NoShape)>) -> (<Bool, NoShape>)
-      #scope: (Default)
-      # In file /Users/moranvl/anaconda3/envs/mindspore/lib/python3.9/site-packages/mindspore/ops/function/math_func.py:6911/    if not isinstance(inputs, (tuple, list)):/
-  %3([CNode]1199) = S-Prim-logical_not(%2)
-      : (<Bool, NoShape>) -> (<Bool, NoShape>)
-      #scope: (Default)
-      # In file /Users/moranvl/anaconda3/envs/mindspore/lib/python3.9/site-packages/mindspore/ops/function/math_func.py:6911/    if not isinstance(inputs, (tuple, list)):/
-  %4([CNode]1200) = call @bool_.1144(%3)
-      : (<Bool, NoShape>) -> (<Bool, NoShape>)
-      #scope: (Default)
-      # In file /Users/moranvl/anaconda3/envs/mindspore/lib/python3.9/site-packages/mindspore/ops/function/math_func.py:6911/    if not isinstance(inputs, (tuple, list)):/
-  %5([CNode]1201) = Switch(%4, call @✓vstack.1202, call @✗vstack.1152)
-      : (<Bool, NoShape>, <Func, NoShape>, <Func, NoShape>) -> (<Func, NoShape>)
-      #scope: (Default)
-      # In file /Users/moranvl/anaconda3/envs/mindspore/lib/python3.9/site-packages/mindspore/ops/function/math_func.py:6911/    if not isinstance(inputs, (tuple, list)):/
-
-#------------------------> 5
-  %6([CNode]1203) = %5()
-      #scope: (Default)
-      # In file /Users/moranvl/anaconda3/envs/mindspore/lib/python3.9/site-packages/mindspore/ops/function/math_func.py:6911/    if not isinstance(inputs, (tuple, list)):/
-  Return(%6)
-      : (<null>)
-      #scope: (Default)
-      # In file /Users/moranvl/anaconda3/envs/mindspore/lib/python3.9/site-packages/mindspore/ops/function/math_func.py:6911/    if not isinstance(inputs, (tuple, list)):/
-}
-# Order:
-#   1: @vstack.1151:[CNode]1197{[0]: ValueNode<DoSignaturePrimitive> S-Prim-MakeTuple, [1]: ValueNode<ClassType> class 'tuple', [2]: ValueNode<ClassType> class 'list'}
-#   2: @vstack.1151:[CNode]1198{[0]: ValueNode<DoSignaturePrimitive> S-Prim-isinstance, [1]: inputs, [2]: [CNode]1197}
-#   3: @vstack.1151:[CNode]1199{[0]: ValueNode<DoSignaturePrimitive> S-Prim-logical_not, [1]: [CNode]1198}
-#   4: @vstack.1151:[CNode]1200{[0]: ValueNode<FuncGraph> bool_.1144, [1]: [CNode]1199}
-#   5: @vstack.1151:[CNode]1201{[0]: ValueNode<Primitive> Switch, [1]: [CNode]1200, [2]: ValueNode<FuncGraph> ✓vstack.1202, [3]: ValueNode<FuncGraph> ✗vstack.1152}
-#   6: @vstack.1151:[CNode]1203{[0]: [CNode]1201}
-#   7: @vstack.1151:[CNode]1204{[0]: ValueNode<Primitive> Return, [1]: [CNode]1203}
-
-
-subgraph attr:
-subgraph instance: ✗vstack.1152 : 0x14f65f418
-# In file /Users/moranvl/anaconda3/envs/mindspore/lib/python3.9/site-packages/mindspore/ops/function/math_func.py:6911/    if not isinstance(inputs, (tuple, list)):/
-subgraph @✗vstack.1152 parent: [subgraph @vstack.1151]() {
-
-#------------------------> 6
-  %1([CNode]1205) = call @↓vstack.1153()
-      #scope: (Default)
-      # In file /Users/moranvl/anaconda3/envs/mindspore/lib/python3.9/site-packages/mindspore/ops/function/math_func.py:6911/    if not isinstance(inputs, (tuple, list)):/
-  Return(%1)
-      : (<null>)
-      #scope: (Default)
-      # In file /Users/moranvl/anaconda3/envs/mindspore/lib/python3.9/site-packages/mindspore/ops/function/math_func.py:6911/    if not isinstance(inputs, (tuple, list)):/
-}
-# Order:
-#   1: @✗vstack.1152:[CNode]1205{[0]: ValueNode<FuncGraph> ↓vstack.1153}
-#   2: @✗vstack.1152:[CNode]1206{[0]: ValueNode<Primitive> Return, [1]: [CNode]1205}
-
-
-subgraph attr:
-after_block : 1
-subgraph instance: ↓vstack.1153 : 0x14f647018
-# In file /Users/moranvl/anaconda3/envs/mindspore/lib/python3.9/site-packages/mindspore/ops/function/math_func.py:6911/    if not isinstance(inputs, (tuple, list)):/
-subgraph @↓vstack.1153 parent: [subgraph @vstack.1151]() {
-  %1([CNode]1207) = S-Prim-logical_not(%para12_inputs)
-      : (<List[Tensor[Float32]*69], ListShape[(1, 4), (1, 4), (1, 4), (1, 4), (1, 4), (1, 4), (1, 4), (1, 4), (1, 4), (1, 4), (1, 4), (1, 4), (1, 4), (1, 4), (1, 4), (1, 4), (1, 4), (1, 4), (1, 4), (1, 4), (1, 4), (1, 4), (1, 4), (1, 4), (1, 4), (1, 4), (1, 4), (1, 4), (1, 4), (1, 4), (1, 4), (1, 4), (1, 4), (1, 4), (1, 4), (1, 4), (1, 4), (1, 4), (1, 4), (1, 4), (1, 4), (1, 4), (1, 4), (1, 4), (1, 4), (1, 4), (1, 4), (1, 4), (1, 4), (1, 4), (1, 4), (1, 4), (1, 4), (1, 4), (1, 4), (1, 4), (1, 4), (1, 4), (1, 4), (1, 4), (1, 4), (1, 4), (1, 4), (1, 4), (1, 4), (1, 4), (1, 4), (1, 4), (1, 4)]>) -> (<Bool, NoShape>)
-      #scope: (Default)
-      # In file /Users/moranvl/anaconda3/envs/mindspore/lib/python3.9/site-packages/mindspore/ops/function/math_func.py:6914/    if not inputs:/
-  %2([CNode]1208) = call @bool_.1144(%1)
-      : (<Bool, NoShape>) -> (<Bool, NoShape>)
-      #scope: (Default)
-      # In file /Users/moranvl/anaconda3/envs/mindspore/lib/python3.9/site-packages/mindspore/ops/function/math_func.py:6914/    if not inputs:/
-  %3([CNode]1209) = Switch(%2, call @✓↓vstack.1210, call @✗↓vstack.1154)
-      : (<Bool, NoShape>, <Func, NoShape>, <Func, NoShape>) -> (<Func, NoShape>)
-      #scope: (Default)
-      # In file /Users/moranvl/anaconda3/envs/mindspore/lib/python3.9/site-packages/mindspore/ops/function/math_func.py:6914/    if not inputs:/
-
-#------------------------> 7
-  %4([CNode]1211) = %3()
-      #scope: (Default)
-      # In file /Users/moranvl/anaconda3/envs/mindspore/lib/python3.9/site-packages/mindspore/ops/function/math_func.py:6914/    if not inputs:/
-  Return(%4)
-      : (<null>)
-      #scope: (Default)
-      # In file /Users/moranvl/anaconda3/envs/mindspore/lib/python3.9/site-packages/mindspore/ops/function/math_func.py:6914/    if not inputs:/
-}
-# Order:
-#   1: @↓vstack.1153:[CNode]1207{[0]: ValueNode<DoSignaturePrimitive> S-Prim-logical_not, [1]: inputs}
-#   2: @↓vstack.1153:[CNode]1208{[0]: ValueNode<FuncGraph> bool_.1144, [1]: [CNode]1207}
-#   3: @↓vstack.1153:[CNode]1209{[0]: ValueNode<Primitive> Switch, [1]: [CNode]1208, [2]: ValueNode<FuncGraph> ✓↓vstack.1210, [3]: ValueNode<FuncGraph> ✗↓vstack.1154}
-#   4: @↓vstack.1153:[CNode]1211{[0]: [CNode]1209}
-#   5: @↓vstack.1153:[CNode]1212{[0]: ValueNode<Primitive> Return, [1]: [CNode]1211}
-
-
-subgraph attr:
-subgraph instance: ✗↓vstack.1154 : 0x14f661c18
-# In file /Users/moranvl/anaconda3/envs/mindspore/lib/python3.9/site-packages/mindspore/ops/function/math_func.py:6914/    if not inputs:/
-subgraph @✗↓vstack.1154 parent: [subgraph @vstack.1151]() {
-
-#------------------------> 8
-  %1([CNode]1213) = call @↓↓vstack.1155()
-      #scope: (Default)
-      # In file /Users/moranvl/anaconda3/envs/mindspore/lib/python3.9/site-packages/mindspore/ops/function/math_func.py:6914/    if not inputs:/
-  Return(%1)
-      : (<null>)
-      #scope: (Default)
-      # In file /Users/moranvl/anaconda3/envs/mindspore/lib/python3.9/site-packages/mindspore/ops/function/math_func.py:6914/    if not inputs:/
-}
-# Order:
-#   1: @✗↓vstack.1154:[CNode]1213{[0]: ValueNode<FuncGraph> ↓↓vstack.1155}
-#   2: @✗↓vstack.1154:[CNode]1214{[0]: ValueNode<Primitive> Return, [1]: [CNode]1213}
-
-
-subgraph attr:
-after_block : 1
-subgraph instance: ↓↓vstack.1155 : 0x14f662218
-# In file /Users/moranvl/anaconda3/envs/mindspore/lib/python3.9/site-packages/mindspore/ops/function/math_func.py:6914/    if not inputs:/
-subgraph @↓↓vstack.1155 parent: [subgraph @vstack.1151]() {
-
-#------------------------> 9
-  %1([CNode]1215) = call @↵↓↓vstack.1156(I64(0), ())
-      : (<Int64, NoShape>, <Tuple[], TupleShape()>) -> (<null>)
-      #scope: (Default)
-      # In file /Users/moranvl/Code/Deep-Reinforcement-Learning-Algorithms-with-MindSpore/agents/policy_gradient_agents/REINFORCE.py:133/            actions = ops.vstack(self.episode_log_states).long()/
-  Return(%1)
-      : (<null>)
-      #scope: (Default)
-      # In file /Users/moranvl/anaconda3/envs/mindspore/lib/python3.9/site-packages/mindspore/ops/function/math_func.py:6918/    for tensor in inputs:/
-}
-# Order:
-#   1: @↓↓vstack.1155:[CNode]1216{[0]: ValueNode<FuncGraph> ms_len_with_iterable_check.1217, [1]: inputs}
-#   2: @↓↓vstack.1155:[CNode]1218{[0]: ValueNode<Primitive> Return, [1]: [CNode]1215}
-#   3: @↓↓vstack.1155:[CNode]1215{[0]: ValueNode<FuncGraph> ↵↓↓vstack.1156, [1]: ValueNode<Int64Imm> 0, [2]: ValueNode<ValueTuple> ()}
-
-
-subgraph attr:
-subgraph instance: ↵↓↓vstack.1156 : 0x14f664418
-# In file /Users/moranvl/anaconda3/envs/mindspore/lib/python3.9/site-packages/mindspore/ops/function/math_func.py:6918/    for tensor in inputs:/
-subgraph @↵↓↓vstack.1156 parent: [subgraph @↓↓vstack.1155](%para13_, %para14_) {
-  %1([CNode]1216) = $(↓↓vstack.1155):call @ms_len_with_iterable_check.1217(%para12_inputs)
-      : (<List[Tensor[Float32]*69], ListShape[(1, 4), (1, 4), (1, 4), (1, 4), (1, 4), (1, 4), (1, 4), (1, 4), (1, 4), (1, 4), (1, 4), (1, 4), (1, 4), (1, 4), (1, 4), (1, 4), (1, 4), (1, 4), (1, 4), (1, 4), (1, 4), (1, 4), (1, 4), (1, 4), (1, 4), (1, 4), (1, 4), (1, 4), (1, 4), (1, 4), (1, 4), (1, 4), (1, 4), (1, 4), (1, 4), (1, 4), (1, 4), (1, 4), (1, 4), (1, 4), (1, 4), (1, 4), (1, 4), (1, 4), (1, 4), (1, 4), (1, 4), (1, 4), (1, 4), (1, 4), (1, 4), (1, 4), (1, 4), (1, 4), (1, 4), (1, 4), (1, 4), (1, 4), (1, 4), (1, 4), (1, 4), (1, 4), (1, 4), (1, 4), (1, 4), (1, 4), (1, 4), (1, 4), (1, 4)]>) -> (<Int64, NoShape>)
-      #scope: (Default)
-      # In file /Users/moranvl/anaconda3/envs/mindspore/lib/python3.9/site-packages/mindspore/ops/function/math_func.py:6918/    for tensor in inputs:/
-  %2([CNode]1219) = MultitypeFuncGraph-less{(String, String), (Number, Tensor), (Tensor, Tensor), (Tensor, Number), (Number, Number), (Tuple, Tuple), (List, List)}(%para13_@[CNode]1157, %1)
-      : (<Int64, NoShape>, <Int64, NoShape>) -> (<Bool, NoShape>)
-      #scope: (Default)
-      # In file /Users/moranvl/anaconda3/envs/mindspore/lib/python3.9/site-packages/mindspore/ops/function/math_func.py:6918/    for tensor in inputs:/
-  %3([CNode]1220) = Switch(%2, call @↻↓↓vstack.1158, call @↓↓↓vstack.1221)
-      : (<Bool, NoShape>, <Func, NoShape>, <Func, NoShape>) -> (<Func, NoShape>)
-      #scope: (Default)
-      # In file /Users/moranvl/anaconda3/envs/mindspore/lib/python3.9/site-packages/mindspore/ops/function/math_func.py:6918/    for tensor in inputs:/
-
-#------------------------> 20
-  %4([CNode]1222) = %3()
-      #scope: (Default)
-      # In file /Users/moranvl/anaconda3/envs/mindspore/lib/python3.9/site-packages/mindspore/ops/function/math_func.py:6918/    for tensor in inputs:/
-  Return(%4)
-      : (<null>)
-      #scope: (Default)
-      # In file /Users/moranvl/anaconda3/envs/mindspore/lib/python3.9/site-packages/mindspore/ops/function/math_func.py:6918/    for tensor in inputs:/
-}
-# Order:
-#   1: @↵↓↓vstack.1156:[CNode]1219{[0]: ValueNode<MultitypeFuncGraph> MetaFuncGraph-less.1223, [1]: @[CNode]1157, [2]: [CNode]1216}
-#   2: @↵↓↓vstack.1156:[CNode]1220{[0]: ValueNode<Primitive> Switch, [1]: [CNode]1219, [2]: ValueNode<FuncGraph> ↻↓↓vstack.1158, [3]: ValueNode<FuncGraph> ↓↓↓vstack.1221}
-#   3: @↵↓↓vstack.1156:[CNode]1222{[0]: [CNode]1220}
-#   4: @↵↓↓vstack.1156:[CNode]1224{[0]: ValueNode<Primitive> Return, [1]: [CNode]1222}
-
-
-subgraph attr:
-subgraph instance: ↻↓↓vstack.1158 : 0x14f666a18
-# In file /Users/moranvl/anaconda3/envs/mindspore/lib/python3.9/site-packages/mindspore/ops/function/math_func.py:6918/    for tensor in inputs:/
-subgraph @↻↓↓vstack.1158 parent: [subgraph @↵↓↓vstack.1156]() {
-  %1([CNode]1157) = MultitypeFuncGraph-add{(Number, Tensor), (Number, Number), (Tuple, Tuple), (Tensor, List), (Tuple, Tensor), (Tensor, Tuple), (Tensor, Number), (COOTensor, COOTensor), (List, Tensor), (List, List), (Tensor, Tensor), (String, String), (COOTensor, Tensor), (RowTensor, Tensor), (NoneType, NoneType), (CSRTensor, CSRTensor), (Tensor, COOTensor)}(%para13_@[CNode]1157, I64(1))
-      : (<Int64, NoShape>, <Int64, NoShape>) -> (<Int64, NoShape>)
-      #scope: (Default)
-      # In file /Users/moranvl/anaconda3/envs/mindspore/lib/python3.9/site-packages/mindspore/ops/function/math_func.py:6918/    for tensor in inputs:/
-  %2([CNode]1225) = StopGradient(%1)
-      : (<Int64, NoShape>) -> (<Int64, NoShape>)
-      #scope: (Default)
-      # In file /Users/moranvl/Code/Deep-Reinforcement-Learning-Algorithms-with-MindSpore/agents/policy_gradient_agents/REINFORCE.py:133/            actions = ops.vstack(self.episode_log_states).long()/
-  %3([CNode]1226) = call @ms_iter.1143(%para12_inputs)
-      : (<List[Tensor[Float32]*69], ListShape[(1, 4), (1, 4), (1, 4), (1, 4), (1, 4), (1, 4), (1, 4), (1, 4), (1, 4), (1, 4), (1, 4), (1, 4), (1, 4), (1, 4), (1, 4), (1, 4), (1, 4), (1, 4), (1, 4), (1, 4), (1, 4), (1, 4), (1, 4), (1, 4), (1, 4), (1, 4), (1, 4), (1, 4), (1, 4), (1, 4), (1, 4), (1, 4), (1, 4), (1, 4), (1, 4), (1, 4), (1, 4), (1, 4), (1, 4), (1, 4), (1, 4), (1, 4), (1, 4), (1, 4), (1, 4), (1, 4), (1, 4), (1, 4), (1, 4), (1, 4), (1, 4), (1, 4), (1, 4), (1, 4), (1, 4), (1, 4), (1, 4), (1, 4), (1, 4), (1, 4), (1, 4), (1, 4), (1, 4), (1, 4), (1, 4), (1, 4), (1, 4), (1, 4), (1, 4)]>) -> (<List[Tensor[Float32]*69], ListShape[(1, 4), (1, 4), (1, 4), (1, 4), (1, 4), (1, 4), (1, 4), (1, 4), (1, 4), (1, 4), (1, 4), (1, 4), (1, 4), (1, 4), (1, 4), (1, 4), (1, 4), (1, 4), (1, 4), (1, 4), (1, 4), (1, 4), (1, 4), (1, 4), (1, 4), (1, 4), (1, 4), (1, 4), (1, 4), (1, 4), (1, 4), (1, 4), (1, 4), (1, 4), (1, 4), (1, 4), (1, 4), (1, 4), (1, 4), (1, 4), (1, 4), (1, 4), (1, 4), (1, 4), (1, 4), (1, 4), (1, 4), (1, 4), (1, 4), (1, 4), (1, 4), (1, 4), (1, 4), (1, 4), (1, 4), (1, 4), (1, 4), (1, 4), (1, 4), (1, 4), (1, 4), (1, 4), (1, 4), (1, 4), (1, 4), (1, 4), (1, 4), (1, 4), (1, 4)]>)
-      #scope: (Default)
-      # In file /Users/moranvl/anaconda3/envs/mindspore/lib/python3.9/site-packages/mindspore/ops/function/math_func.py:6918/    for tensor in inputs:/
-  %4(фtensor) = S-Prim-getitem(%3, %para13_@[CNode]1157)
-      : (<List[Tensor[Float32]*69], ListShape[(1, 4), (1, 4), (1, 4), (1, 4), (1, 4), (1, 4), (1, 4), (1, 4), (1, 4), (1, 4), (1, 4), (1, 4), (1, 4), (1, 4), (1, 4), (1, 4), (1, 4), (1, 4), (1, 4), (1, 4), (1, 4), (1, 4), (1, 4), (1, 4), (1, 4), (1, 4), (1, 4), (1, 4), (1, 4), (1, 4), (1, 4), (1, 4), (1, 4), (1, 4), (1, 4), (1, 4), (1, 4), (1, 4), (1, 4), (1, 4), (1, 4), (1, 4), (1, 4), (1, 4), (1, 4), (1, 4), (1, 4), (1, 4), (1, 4), (1, 4), (1, 4), (1, 4), (1, 4), (1, 4), (1, 4), (1, 4), (1, 4), (1, 4), (1, 4), (1, 4), (1, 4), (1, 4), (1, 4), (1, 4), (1, 4), (1, 4), (1, 4), (1, 4), (1, 4)]>, <Int64, NoShape>) -> (<Tensor[Float32], (1, 4)>)
-      #scope: (Default)
-      # In file /Users/moranvl/anaconda3/envs/mindspore/lib/python3.9/site-packages/mindspore/ops/function/math_func.py:6929/            tensor = P.Reshape()(tensor, tuple(shape))/
-  %5([CNode]1227) = S-Prim-isinstance(%4, ClassType)
-      : (<Tensor[Float32], (1, 4)>, <TypeType, NoShape>) -> (<Bool, NoShape>)
-      #scope: (Default)
-      # In file /Users/moranvl/anaconda3/envs/mindspore/lib/python3.9/site-packages/mindspore/ops/function/math_func.py:6919/        if not isinstance(tensor, Tensor):/
-  %6([CNode]1228) = S-Prim-logical_not(%5)
-      : (<Bool, NoShape>) -> (<Bool, NoShape>)
-      #scope: (Default)
-      # In file /Users/moranvl/anaconda3/envs/mindspore/lib/python3.9/site-packages/mindspore/ops/function/math_func.py:6919/        if not isinstance(tensor, Tensor):/
-  %7([CNode]1229) = call @bool_.1144(%6)
-      : (<Bool, NoShape>) -> (<Bool, NoShape>)
-      #scope: (Default)
-      # In file /Users/moranvl/anaconda3/envs/mindspore/lib/python3.9/site-packages/mindspore/ops/function/math_func.py:6919/        if not isinstance(tensor, Tensor):/
-  %8([CNode]1230) = Switch(%7, call @✓↻↓↓vstack.1231, call @✗↻↓↓vstack.1159)
-      : (<Bool, NoShape>, <Func, NoShape>, <Func, NoShape>) -> (<Func, NoShape>)
-      #scope: (Default)
-      # In file /Users/moranvl/anaconda3/envs/mindspore/lib/python3.9/site-packages/mindspore/ops/function/math_func.py:6919/        if not isinstance(tensor, Tensor):/
-
-#------------------------> 21
-  %9([CNode]1232) = %8()
-      #scope: (Default)
-      # In file /Users/moranvl/anaconda3/envs/mindspore/lib/python3.9/site-packages/mindspore/ops/function/math_func.py:6919/        if not isinstance(tensor, Tensor):/
-  %10([CNode]1233) = Depend[side_effect_propagate=I64(1)](%9, %2)
+  %6(input_data) = %5(%para10_фinput_data)
+      : (<Tensor[Float32], (256, 2)>) -> (<null>)
+      #scope: (Default/nets-SequentialCell)
+      # In file /Users/moranvl/anaconda3/envs/mindspore/lib/python3.9/site-packages/mindspore/nn/layer/container.py:287/            input_data = cell(input_data)/
+  %7([CNode]65) = call @↵construct.SequentialCell.30(%1, %6)
+      : (<Int64, NoShape>, <null>) -> (<null>)
+      #scope: (Default/nets-SequentialCell)
+      # In file /Users/moranvl/anaconda3/envs/mindspore/lib/python3.9/site-packages/mindspore/nn/layer/container.py:286/        for cell in self.cell_list:/
+  %8([CNode]66) = Depend[side_effect_propagate=I64(1)](%7, %2)
       : (<null>, <Int64, NoShape>) -> (<null>)
-      #scope: (Default)
-      # In file /Users/moranvl/Code/Deep-Reinforcement-Learning-Algorithms-with-MindSpore/agents/policy_gradient_agents/REINFORCE.py:133/            actions = ops.vstack(self.episode_log_states).long()/
-  Return(%10)
-      : (<null>)
-      #scope: (Default)
-      # In file /Users/moranvl/anaconda3/envs/mindspore/lib/python3.9/site-packages/mindspore/ops/function/math_func.py:6919/        if not isinstance(tensor, Tensor):/
-}
-# Order:
-#   1: @↻↓↓vstack.1158:[CNode]1226{[0]: ValueNode<FuncGraph> ms_iter.1143, [1]: inputs}
-#   2: @↻↓↓vstack.1158:фtensor{[0]: ValueNode<DoSignaturePrimitive> S-Prim-getitem, [1]: [CNode]1226, [2]: @[CNode]1157}
-#   3: @↻↓↓vstack.1158:[CNode]1157{[0]: ValueNode<MultitypeFuncGraph> MetaFuncGraph-add.25, [1]: @[CNode]1157, [2]: ValueNode<Int64Imm> 1}
-#   4: @↻↓↓vstack.1158:[CNode]1227{[0]: ValueNode<DoSignaturePrimitive> S-Prim-isinstance, [1]: фtensor, [2]: ValueNode<ClassType> class 'mindspore.common.tensor.Tensor'}
-#   5: @↻↓↓vstack.1158:[CNode]1228{[0]: ValueNode<DoSignaturePrimitive> S-Prim-logical_not, [1]: [CNode]1227}
-#   6: @↻↓↓vstack.1158:[CNode]1229{[0]: ValueNode<FuncGraph> bool_.1144, [1]: [CNode]1228}
-#   7: @↻↓↓vstack.1158:[CNode]1230{[0]: ValueNode<Primitive> Switch, [1]: [CNode]1229, [2]: ValueNode<FuncGraph> ✓↻↓↓vstack.1231, [3]: ValueNode<FuncGraph> ✗↻↓↓vstack.1159}
-#   8: @↻↓↓vstack.1158:[CNode]1232{[0]: [CNode]1230}
-#   9: @↻↓↓vstack.1158:[CNode]1234{[0]: ValueNode<Primitive> Return, [1]: [CNode]1233}
-
-
-subgraph attr:
-subgraph instance: ✗↻↓↓vstack.1159 : 0x14f667818
-# In file /Users/moranvl/anaconda3/envs/mindspore/lib/python3.9/site-packages/mindspore/ops/function/math_func.py:6919/        if not isinstance(tensor, Tensor):/
-subgraph @✗↻↓↓vstack.1159 parent: [subgraph @↻↓↓vstack.1158]() {
-
-#------------------------> 22
-  %1([CNode]1235) = call @↓↻↓↓vstack.1160()
-      #scope: (Default)
-      # In file /Users/moranvl/anaconda3/envs/mindspore/lib/python3.9/site-packages/mindspore/ops/function/math_func.py:6919/        if not isinstance(tensor, Tensor):/
-  Return(%1)
-      : (<null>)
-      #scope: (Default)
-      # In file /Users/moranvl/anaconda3/envs/mindspore/lib/python3.9/site-packages/mindspore/ops/function/math_func.py:6919/        if not isinstance(tensor, Tensor):/
-}
-# Order:
-#   1: @✗↻↓↓vstack.1159:[CNode]1235{[0]: ValueNode<FuncGraph> ↓↻↓↓vstack.1160}
-#   2: @✗↻↓↓vstack.1159:[CNode]1236{[0]: ValueNode<Primitive> Return, [1]: [CNode]1235}
-
-
-subgraph attr:
-after_block : 1
-subgraph instance: ↓↻↓↓vstack.1160 : 0x14f668618
-# In file /Users/moranvl/anaconda3/envs/mindspore/lib/python3.9/site-packages/mindspore/ops/function/math_func.py:6919/        if not isinstance(tensor, Tensor):/
-subgraph @↓↻↓↓vstack.1160 parent: [subgraph @↻↓↓vstack.1158]() {
-  %1([CNode]1226) = $(↻↓↓vstack.1158):call @ms_iter.1143(%para12_inputs)
-      : (<List[Tensor[Float32]*69], ListShape[(1, 4), (1, 4), (1, 4), (1, 4), (1, 4), (1, 4), (1, 4), (1, 4), (1, 4), (1, 4), (1, 4), (1, 4), (1, 4), (1, 4), (1, 4), (1, 4), (1, 4), (1, 4), (1, 4), (1, 4), (1, 4), (1, 4), (1, 4), (1, 4), (1, 4), (1, 4), (1, 4), (1, 4), (1, 4), (1, 4), (1, 4), (1, 4), (1, 4), (1, 4), (1, 4), (1, 4), (1, 4), (1, 4), (1, 4), (1, 4), (1, 4), (1, 4), (1, 4), (1, 4), (1, 4), (1, 4), (1, 4), (1, 4), (1, 4), (1, 4), (1, 4), (1, 4), (1, 4), (1, 4), (1, 4), (1, 4), (1, 4), (1, 4), (1, 4), (1, 4), (1, 4), (1, 4), (1, 4), (1, 4), (1, 4), (1, 4), (1, 4), (1, 4), (1, 4)]>) -> (<List[Tensor[Float32]*69], ListShape[(1, 4), (1, 4), (1, 4), (1, 4), (1, 4), (1, 4), (1, 4), (1, 4), (1, 4), (1, 4), (1, 4), (1, 4), (1, 4), (1, 4), (1, 4), (1, 4), (1, 4), (1, 4), (1, 4), (1, 4), (1, 4), (1, 4), (1, 4), (1, 4), (1, 4), (1, 4), (1, 4), (1, 4), (1, 4), (1, 4), (1, 4), (1, 4), (1, 4), (1, 4), (1, 4), (1, 4), (1, 4), (1, 4), (1, 4), (1, 4), (1, 4), (1, 4), (1, 4), (1, 4), (1, 4), (1, 4), (1, 4), (1, 4), (1, 4), (1, 4), (1, 4), (1, 4), (1, 4), (1, 4), (1, 4), (1, 4), (1, 4), (1, 4), (1, 4), (1, 4), (1, 4), (1, 4), (1, 4), (1, 4), (1, 4), (1, 4), (1, 4), (1, 4), (1, 4)]>)
-      #scope: (Default)
-      # In file /Users/moranvl/anaconda3/envs/mindspore/lib/python3.9/site-packages/mindspore/ops/function/math_func.py:6918/    for tensor in inputs:/
-  %2(фtensor) = $(↻↓↓vstack.1158):S-Prim-getitem(%1, %para13_@[CNode]1157)
-      : (<List[Tensor[Float32]*69], ListShape[(1, 4), (1, 4), (1, 4), (1, 4), (1, 4), (1, 4), (1, 4), (1, 4), (1, 4), (1, 4), (1, 4), (1, 4), (1, 4), (1, 4), (1, 4), (1, 4), (1, 4), (1, 4), (1, 4), (1, 4), (1, 4), (1, 4), (1, 4), (1, 4), (1, 4), (1, 4), (1, 4), (1, 4), (1, 4), (1, 4), (1, 4), (1, 4), (1, 4), (1, 4), (1, 4), (1, 4), (1, 4), (1, 4), (1, 4), (1, 4), (1, 4), (1, 4), (1, 4), (1, 4), (1, 4), (1, 4), (1, 4), (1, 4), (1, 4), (1, 4), (1, 4), (1, 4), (1, 4), (1, 4), (1, 4), (1, 4), (1, 4), (1, 4), (1, 4), (1, 4), (1, 4), (1, 4), (1, 4), (1, 4), (1, 4), (1, 4), (1, 4), (1, 4), (1, 4)]>, <Int64, NoShape>) -> (<Tensor[Float32], (1, 4)>)
-      #scope: (Default)
-      # In file /Users/moranvl/anaconda3/envs/mindspore/lib/python3.9/site-packages/mindspore/ops/function/math_func.py:6929/            tensor = P.Reshape()(tensor, tuple(shape))/
-  %3([CNode]1237) = getattr(%2, "ndim")
-      : (<Tensor[Float32], (1, 4)>, <String, NoShape>) -> (<Int64, NoShape>)
-      #scope: (Default)
-      # In file /Users/moranvl/anaconda3/envs/mindspore/lib/python3.9/site-packages/mindspore/ops/function/math_func.py:6922/        if tensor.ndim <= 1:/
-  %4([CNode]1238) = S-Prim-less_equal(%3, I64(1))
-      : (<Int64, NoShape>, <Int64, NoShape>) -> (<Bool, NoShape>)
-      #scope: (Default)
-      # In file /Users/moranvl/anaconda3/envs/mindspore/lib/python3.9/site-packages/mindspore/ops/function/math_func.py:6922/        if tensor.ndim <= 1:/
-  %5([CNode]1239) = call @bool_.1144(%4)
-      : (<Bool, NoShape>) -> (<Bool, NoShape>)
-      #scope: (Default)
-      # In file /Users/moranvl/anaconda3/envs/mindspore/lib/python3.9/site-packages/mindspore/ops/function/math_func.py:6922/        if tensor.ndim <= 1:/
-  %6([CNode]1240) = Switch(%5, call @✓↓↻↓↓vstack.1241, call @✗↓↻↓↓vstack.1242)
-      : (<Bool, NoShape>, <Func, NoShape>, <Func, NoShape>) -> (<Func, NoShape>)
-      #scope: (Default)
-      # In file /Users/moranvl/anaconda3/envs/mindspore/lib/python3.9/site-packages/mindspore/ops/function/math_func.py:6922/        if tensor.ndim <= 1:/
-  %7([CNode]1243) = %6()
-      #scope: (Default)
-      # In file /Users/moranvl/anaconda3/envs/mindspore/lib/python3.9/site-packages/mindspore/ops/function/math_func.py:6922/        if tensor.ndim <= 1:/
-
-#------------------------> 23
-  %8([CNode]1244) = call @↓↓↻↓↓vstack.1161(%7)
-      : (<Tensor[Float32], (1, 4)>) -> (<null>)
-      #scope: (Default)
-      # In file /Users/moranvl/Code/Deep-Reinforcement-Learning-Algorithms-with-MindSpore/agents/policy_gradient_agents/REINFORCE.py:133/            actions = ops.vstack(self.episode_log_states).long()/
+      #scope: (Default/nets-SequentialCell)
+      # In file /Users/moranvl/Code/Deep-Reinforcement-Learning-Algorithms-with-MindSpore/agents/Base_Agent.py:451/        x = self.nets(x)/
   Return(%8)
       : (<null>)
-      #scope: (Default)
-      # In file /Users/moranvl/anaconda3/envs/mindspore/lib/python3.9/site-packages/mindspore/ops/function/math_func.py:6922/        if tensor.ndim <= 1:/
+      #scope: (Default/nets-SequentialCell)
+      # In file /Users/moranvl/anaconda3/envs/mindspore/lib/python3.9/site-packages/mindspore/nn/layer/container.py:286/        for cell in self.cell_list:/
 }
 # Order:
-#   1: @↓↻↓↓vstack.1160:[CNode]1237{[0]: ValueNode<Primitive> getattr, [1]: фtensor, [2]: ValueNode<StringImm> ndim}
-#   2: @↓↻↓↓vstack.1160:[CNode]1238{[0]: ValueNode<DoSignaturePrimitive> S-Prim-less_equal, [1]: [CNode]1237, [2]: ValueNode<Int64Imm> 1}
-#   3: @↓↻↓↓vstack.1160:[CNode]1239{[0]: ValueNode<FuncGraph> bool_.1144, [1]: [CNode]1238}
-#   4: @↓↻↓↓vstack.1160:[CNode]1240{[0]: ValueNode<Primitive> Switch, [1]: [CNode]1239, [2]: ValueNode<FuncGraph> ✓↓↻↓↓vstack.1241, [3]: ValueNode<FuncGraph> ✗↓↻↓↓vstack.1242}
-#   5: @↓↻↓↓vstack.1160:[CNode]1243{[0]: [CNode]1240}
-#   6: @↓↻↓↓vstack.1160:[CNode]1244{[0]: ValueNode<FuncGraph> ↓↓↻↓↓vstack.1161, [1]: [CNode]1243}
-#   7: @↓↻↓↓vstack.1160:[CNode]1245{[0]: ValueNode<Primitive> Return, [1]: [CNode]1244}
+#   1: @↻construct.SequentialCell.32:[CNode]64{[0]: ValueNode<FuncGraph> ms_iter.63, [1]: [CNode]49}
+#   2: @↻construct.SequentialCell.32:cell{[0]: ValueNode<DoSignaturePrimitive> S-Prim-getitem, [1]: [CNode]64, [2]: @[CNode]31}
+#   3: @↻construct.SequentialCell.32:[CNode]31{[0]: ValueNode<MultitypeFuncGraph> MetaFuncGraph-add.67, [1]: @[CNode]31, [2]: ValueNode<Int64Imm> 1}
+#   4: @↻construct.SequentialCell.32:input_data{[0]: cell, [1]: фinput_data}
+#   5: @↻construct.SequentialCell.32:[CNode]65{[0]: ValueNode<FuncGraph> ↵construct.SequentialCell.30, [1]: [CNode]31, [2]: input_data}
+#   6: @↻construct.SequentialCell.32:[CNode]68{[0]: ValueNode<Primitive> Return, [1]: [CNode]66}
+
+
+subgraph attr:
+subgraph instance: construct.Dense.33 : 0x114233618
+# In file /Users/moranvl/anaconda3/envs/mindspore/lib/python3.9/site-packages/mindspore/nn/layer/basic.py:590/    def construct(self, x):/
+subgraph @construct.Dense.33 parent: [subgraph @construct.Default.26](%para11_x) {
+
+#------------------------> 5
+  %1([CNode]69) = call @L-construct.Dense.34(%para11_x, %para2_nets.0.bias, %para3_nets.0.weight)
+      : (<Tensor[Float32], (256, 2)>, <Ref[Tensor[Float32]], (20)>, <Ref[Tensor[Float32]], (20, 1)>) -> (<null>)
+      #scope: (Default)
+  Return(%1)
+      : (<null>)
+      #scope: (Default/nets-SequentialCell/0-Dense)
+      # In file /Users/moranvl/anaconda3/envs/mindspore/lib/python3.9/site-packages/mindspore/nn/layer/basic.py:593/        if len(x_shape) != 2:/
+}
+# Order:
+#   1: @construct.Dense.33:[CNode]69{[0]: ValueNode<FuncGraph> L-construct.Dense.34, [1]: x, [2]: nets.0.bias, [3]: nets.0.weight}
+#   2: @construct.Dense.33:[CNode]70{[0]: ValueNode<Primitive> Return, [1]: [CNode]69}
+
+
+subgraph attr:
+subgraph instance: L-construct.Dense.34 : 0x114276818
+# In file /Users/moranvl/anaconda3/envs/mindspore/lib/python3.9/site-packages/mindspore/nn/layer/basic.py:590/    def construct(self, x):/
+subgraph @L-construct.Dense.34(%para12_x, %para13_, %para14_) {
+  %1(фx_shape) = S-Prim-Shape(%para12_x)
+      : (<Tensor[Float32], (256, 2)>) -> (<Tuple[Int64*2], TupleShape(NoShape, NoShape)>)
+      #scope: (Default/nets-SequentialCell/0-Dense)
+      # In file /Users/moranvl/anaconda3/envs/mindspore/lib/python3.9/site-packages/mindspore/nn/layer/basic.py:600/        if len(x_shape) != 2:/
+  %2([CNode]71) = S-Prim-check_dense_input_shape[constexpr_prim=Bool(1)](%1, "Dense")
+      : (<Tuple[Int64*2], TupleShape(NoShape, NoShape)>, <String, NoShape>) -> (<None, NoShape>)
+      #scope: (Default/nets-SequentialCell/0-Dense)
+      # In file /Users/moranvl/anaconda3/envs/mindspore/lib/python3.9/site-packages/mindspore/nn/layer/basic.py:592/        check_dense_input_shape(x_shape, self.cls_name)/
+  %3([CNode]72) = StopGradient(%2)
+      : (<None, NoShape>) -> (<None, NoShape>)
+      #scope: (Default/nets-SequentialCell/0-Dense)
+      # In file /Users/moranvl/anaconda3/envs/mindspore/lib/python3.9/site-packages/mindspore/nn/layer/container.py:286/        for cell in self.cell_list:/
+  %4([CNode]74) = call @L-ms_len.73(%1)
+      : (<Tuple[Int64*2], TupleShape(NoShape, NoShape)>) -> (<Int64, NoShape>)
+      #scope: (Default/nets-SequentialCell/0-Dense)
+      # In file /Users/moranvl/anaconda3/envs/mindspore/lib/python3.9/site-packages/mindspore/nn/layer/basic.py:593/        if len(x_shape) != 2:/
+  %5([CNode]75) = S-Prim-not_equal(%4, I64(2))
+      : (<Int64, NoShape>, <Int64, NoShape>) -> (<Bool, NoShape>)
+      #scope: (Default/nets-SequentialCell/0-Dense)
+      # In file /Users/moranvl/anaconda3/envs/mindspore/lib/python3.9/site-packages/mindspore/nn/layer/basic.py:593/        if len(x_shape) != 2:/
+  %6([CNode]77) = call @L-bool_.76(%5)
+      : (<Bool, NoShape>) -> (<Bool, NoShape>)
+      #scope: (Default/nets-SequentialCell/0-Dense)
+      # In file /Users/moranvl/anaconda3/envs/mindspore/lib/python3.9/site-packages/mindspore/nn/layer/basic.py:593/        if len(x_shape) != 2:/
+  %7([CNode]78) = Switch(%6, call @L-✓construct.Dense.79, call @L-✗construct.Dense.80)
+      : (<Bool, NoShape>, <Func, NoShape>, <Func, NoShape>) -> (<Func, NoShape>)
+      #scope: (Default/nets-SequentialCell/0-Dense)
+      # In file /Users/moranvl/anaconda3/envs/mindspore/lib/python3.9/site-packages/mindspore/nn/layer/basic.py:593/        if len(x_shape) != 2:/
+  %8([CNode]81) = %7()
+      #scope: (Default/nets-SequentialCell/0-Dense)
+      # In file /Users/moranvl/anaconda3/envs/mindspore/lib/python3.9/site-packages/mindspore/nn/layer/basic.py:593/        if len(x_shape) != 2:/
+
+#------------------------> 6
+  %9([CNode]82) = call @L-↓construct.Dense.35(%8)
+      : (<Tensor[Float32], (256, 2)>) -> (<null>)
+      #scope: (Default/nets-SequentialCell)
+      # In file /Users/moranvl/anaconda3/envs/mindspore/lib/python3.9/site-packages/mindspore/nn/layer/container.py:286/        for cell in self.cell_list:/
+  %10([CNode]83) = Depend[side_effect_propagate=I64(1)](%9, %3)
+      : (<null>, <None, NoShape>) -> (<null>)
+      #scope: (Default/nets-SequentialCell)
+      # In file /Users/moranvl/anaconda3/envs/mindspore/lib/python3.9/site-packages/mindspore/nn/layer/container.py:286/        for cell in self.cell_list:/
+  Return(%10)
+      : (<null>)
+      #scope: (Default/nets-SequentialCell/0-Dense)
+      # In file /Users/moranvl/anaconda3/envs/mindspore/lib/python3.9/site-packages/mindspore/nn/layer/basic.py:593/        if len(x_shape) != 2:/
+}
+# Order:
+#   1: @L-construct.Dense.34:фx_shape{[0]: ValueNode<DoSignaturePrimitive> S-Prim-Shape, [1]: x}
+#   2: @L-construct.Dense.34:[CNode]71{[0]: ValueNode<DoSignaturePrimitive> S-Prim-check_dense_input_shape, [1]: фx_shape, [2]: ValueNode<StringImm> Dense}
+#   3: @L-construct.Dense.34:[CNode]74{[0]: ValueNode<FuncGraph> L-ms_len.73, [1]: фx_shape}
+#   4: @L-construct.Dense.34:[CNode]75{[0]: ValueNode<DoSignaturePrimitive> S-Prim-not_equal, [1]: [CNode]74, [2]: ValueNode<Int64Imm> 2}
+#   5: @L-construct.Dense.34:[CNode]77{[0]: ValueNode<FuncGraph> L-bool_.76, [1]: [CNode]75}
+#   6: @L-construct.Dense.34:[CNode]78{[0]: ValueNode<Primitive> Switch, [1]: [CNode]77, [2]: ValueNode<FuncGraph> L-✓construct.Dense.79, [3]: ValueNode<FuncGraph> L-✗construct.Dense.80}
+#   7: @L-construct.Dense.34:[CNode]81{[0]: [CNode]78}
+#   8: @L-construct.Dense.34:[CNode]82{[0]: ValueNode<FuncGraph> L-↓construct.Dense.35, [1]: [CNode]81}
+#   9: @L-construct.Dense.34:[CNode]83{[0]: ValueNode<Primitive> Depend, [1]: [CNode]82, [2]: [CNode]72}
+#  10: @L-construct.Dense.34:[CNode]70{[0]: ValueNode<Primitive> Return, [1]: [CNode]83}
 
 
 subgraph attr:
 after_block : 1
-subgraph instance: ↓↓↻↓↓vstack.1161 : 0x14f671418
-# In file /Users/moranvl/anaconda3/envs/mindspore/lib/python3.9/site-packages/mindspore/ops/function/math_func.py:6922/        if tensor.ndim <= 1:/
-subgraph @↓↓↻↓↓vstack.1161 parent: [subgraph @↻↓↓vstack.1158](%para15_) {
-  %1([CNode]1157) = $(↻↓↓vstack.1158):MultitypeFuncGraph-add{(Number, Tensor), (Number, Number), (Tuple, Tuple), (Tensor, List), (Tuple, Tensor), (Tensor, Tuple), (Tensor, Number), (COOTensor, COOTensor), (List, Tensor), (List, List), (Tensor, Tensor), (String, String), (COOTensor, Tensor), (RowTensor, Tensor), (NoneType, NoneType), (CSRTensor, CSRTensor), (Tensor, COOTensor)}(%para13_@[CNode]1157, I64(1))
-      : (<Int64, NoShape>, <Int64, NoShape>) -> (<Int64, NoShape>)
-      #scope: (Default)
-      # In file /Users/moranvl/anaconda3/envs/mindspore/lib/python3.9/site-packages/mindspore/ops/function/math_func.py:6918/    for tensor in inputs:/
-  %2([CNode]1246) = S-Prim-MakeTuple(%para15_фtensor)
-      : (<Tensor[Float32], (1, 4)>) -> (<Tuple[Tensor[Float32]], TupleShape((1, 4))>)
-      #scope: (Default)
-      # In file /Users/moranvl/anaconda3/envs/mindspore/lib/python3.9/site-packages/mindspore/ops/function/math_func.py:6930/        trans_tup += (tensor,)/
+subgraph instance: L-↓construct.Dense.35 : 0x114269818
+# In file /Users/moranvl/anaconda3/envs/mindspore/lib/python3.9/site-packages/mindspore/nn/layer/basic.py:593/        if len(x_shape) != 2:/
+subgraph @L-↓construct.Dense.35 parent: [subgraph @L-construct.Dense.34](%para15_) {
+  %1([CNode]84) = call @L-bool_.76(Bool(1))
+      : (<Bool, NoShape>) -> (<Bool, NoShape>)
+      #scope: (Default/nets-SequentialCell/0-Dense)
+      # In file /Users/moranvl/anaconda3/envs/mindspore/lib/python3.9/site-packages/mindspore/nn/layer/basic.py:596/        if self.has_bias:/
+  %2([CNode]85) = Switch(%1, call @L-✓↓construct.Dense.36, call @L-✗↓construct.Dense.86)
+      : (<Bool, NoShape>, <Func, NoShape>, <Func, NoShape>) -> (<Func, NoShape>)
+      #scope: (Default/nets-SequentialCell/0-Dense)
+      # In file /Users/moranvl/anaconda3/envs/mindspore/lib/python3.9/site-packages/mindspore/nn/layer/basic.py:596/        if self.has_bias:/
 
-#------------------------> 24
-  %3(trans_tup) = S-Prim-add(%para14_фtrans_tup, %2)
-      : (<Tuple[], TupleShape()>, <Tuple[Tensor[Float32]], TupleShape((1, 4))>) -> (<Tuple[Tensor[Float32]], TupleShape((1, 4))>)
-      #scope: (Default)
-      # In file /Users/moranvl/anaconda3/envs/mindspore/lib/python3.9/site-packages/mindspore/ops/function/math_func.py:6930/        trans_tup += (tensor,)/
-
-#------------------------> 19
-  %4([CNode]1247) = call @↵↓↓vstack.1156(%1, %3)
-      : (<Int64, NoShape>, <Tuple[Tensor[Float32]], TupleShape((1, 4))>) -> (<null>)
-      #scope: (Default)
-      # In file /Users/moranvl/Code/Deep-Reinforcement-Learning-Algorithms-with-MindSpore/agents/policy_gradient_agents/REINFORCE.py:133/            actions = ops.vstack(self.episode_log_states).long()/
+#------------------------> 7
+  %3([CNode]87) = %2()
+      #scope: (Default/nets-SequentialCell/0-Dense)
+      # In file /Users/moranvl/anaconda3/envs/mindspore/lib/python3.9/site-packages/mindspore/nn/layer/basic.py:596/        if self.has_bias:/
+  %4([CNode]89) = call @L-↓↓construct.Dense.88(%3)
+      : (<null>) -> (<null>)
+      #scope: (Default/nets-SequentialCell)
+      # In file /Users/moranvl/anaconda3/envs/mindspore/lib/python3.9/site-packages/mindspore/nn/layer/container.py:286/        for cell in self.cell_list:/
   Return(%4)
       : (<null>)
-      #scope: (Default)
-      # In file /Users/moranvl/anaconda3/envs/mindspore/lib/python3.9/site-packages/mindspore/ops/function/math_func.py:6918/    for tensor in inputs:/
+      #scope: (Default/nets-SequentialCell/0-Dense)
+      # In file /Users/moranvl/anaconda3/envs/mindspore/lib/python3.9/site-packages/mindspore/nn/layer/basic.py:596/        if self.has_bias:/
 }
 # Order:
-#   1: @↓↓↻↓↓vstack.1161:[CNode]1246{[0]: ValueNode<DoSignaturePrimitive> S-Prim-MakeTuple, [1]: фtensor}
-#   2: @↓↓↻↓↓vstack.1161:trans_tup{[0]: ValueNode<DoSignaturePrimitive> S-Prim-add, [1]: фtrans_tup, [2]: [CNode]1246}
-#   3: @↓↓↻↓↓vstack.1161:[CNode]1248{[0]: ValueNode<Primitive> Return, [1]: [CNode]1247}
-#   4: @↓↓↻↓↓vstack.1161:[CNode]1247{[0]: ValueNode<FuncGraph> ↵↓↓vstack.1156, [1]: [CNode]1157, [2]: trans_tup}
+#   1: @L-↓construct.Dense.35:x{[0]: ValueNode<DoSignaturePrimitive> S-Prim-MatMul, [1]: фx, [2]: L-nets.0.weight}
+#   2: @L-↓construct.Dense.35:[CNode]84{[0]: ValueNode<FuncGraph> L-bool_.76, [1]: ValueNode<BoolImm> true}
+#   3: @L-↓construct.Dense.35:[CNode]85{[0]: ValueNode<Primitive> Switch, [1]: [CNode]84, [2]: ValueNode<FuncGraph> L-✓↓construct.Dense.36, [3]: ValueNode<FuncGraph> L-✗↓construct.Dense.86}
+#   4: @L-↓construct.Dense.35:[CNode]87{[0]: [CNode]85}
+#   5: @L-↓construct.Dense.35:[CNode]89{[0]: ValueNode<FuncGraph> L-↓↓construct.Dense.88, [1]: [CNode]87}
+#   6: @L-↓construct.Dense.35:[CNode]90{[0]: ValueNode<Primitive> Return, [1]: [CNode]89}
+
+
+subgraph attr:
+subgraph instance: L-✓↓construct.Dense.36 : 0x11426a418
+# In file /Users/moranvl/anaconda3/envs/mindspore/lib/python3.9/site-packages/mindspore/nn/layer/basic.py:596/        if self.has_bias:/
+subgraph @L-✓↓construct.Dense.36 parent: [subgraph @L-↓construct.Dense.35]() {
+
+#------------------------> 8
+  %1(x) = $(L-↓construct.Dense.35):S-Prim-MatMul[output_names=["output"], transpose_a=Bool(0), input_names=["x1", "x2"], transpose_x2=Bool(1), transpose_x1=Bool(0), transpose_b=Bool(1)](%para15_фx, %para14_L-nets.0.weight)
+      : (<Tensor[Float32], (256, 2)>, <Ref[Tensor[Float32]], (20, 1)>) -> (<null>)
+      #scope: (Default/nets-SequentialCell/0-Dense)
+      # In file /Users/moranvl/anaconda3/envs/mindspore/lib/python3.9/site-packages/mindspore/nn/layer/basic.py:595/        x = self.matmul(x, self.weight)/
+  %2(x) = S-Prim-BiasAdd[output_names=["output"], format="NCHW", input_names=["x", "b"]](%1, %para13_L-nets.0.bias)
+      : (<null>, <Ref[Tensor[Float32]], (20)>) -> (<null>)
+      #scope: (Default/nets-SequentialCell/0-Dense)
+      # In file /Users/moranvl/anaconda3/envs/mindspore/lib/python3.9/site-packages/mindspore/nn/layer/basic.py:597/            x = self.bias_add(x, self.bias)/
+  Return(%2)
+      : (<null>)
+      #scope: (Default/nets-SequentialCell/0-Dense)
+      # In file /Users/moranvl/anaconda3/envs/mindspore/lib/python3.9/site-packages/mindspore/nn/layer/basic.py:596/        if self.has_bias:/
+}
+# Order:
+#   1: @L-✓↓construct.Dense.36:x{[0]: ValueNode<DoSignaturePrimitive> S-Prim-BiasAdd, [1]: x, [2]: L-nets.0.bias}
+#   2: @L-✓↓construct.Dense.36:[CNode]91{[0]: ValueNode<Primitive> Return, [1]: x}
 
 
 #===============================================================================
-# num of function graphs in stack: 15/26 (Ignored 11 internal frames).
+# num of function graphs in stack: 9/10 (Ignored 1 internal frames).

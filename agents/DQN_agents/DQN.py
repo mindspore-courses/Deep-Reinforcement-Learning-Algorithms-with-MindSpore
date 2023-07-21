@@ -2,6 +2,7 @@
 DQN
 """
 # pylint: disable=C0103
+# pylint: disable=W1201
 from collections import Counter
 from mindspore import nn
 import mindspore as ms
@@ -79,7 +80,7 @@ class DQN(Base_Agent):
             }
         )
         # self.logger.info("Q values {} -- Action chosen {}".format(action_values, action))
-        self.logger.info("Q values %f -- Action chosen %f", action_values, action)
+        self.logger.info("Q values" + str(action_values) + " -- Action chosen "+ str(action))
         return action
 
     def learn(self, experiences=None):
@@ -96,7 +97,7 @@ class DQN(Base_Agent):
         actions_list = [action_X.numpy().item() for action_X in actions]
 
         # self.logger.info("Action counts {}".format(Counter(actions_list)))
-        self.logger.info("Action counts %f", Counter(actions_list))
+        self.logger.info("Action counts " + str(Counter(actions_list)))
         self.take_optimisation_step(
             optimizer=self.q_network_optimizer, grads=grads,
             clipping_norm=self.hyperparameters["gradient_clipping_norm"]
