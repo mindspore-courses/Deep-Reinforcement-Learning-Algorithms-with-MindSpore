@@ -7,9 +7,9 @@ from os.path import dirname, abspath
 import gym
 # from agents.DQN_agents.Dueling_DDQN import Dueling_DDQN
 # from agents.actor_critic_agents.SAC_Discrete import SAC_Discrete
-# from agents.policy_gradient_agents.PPO import PPO
+from agents.policy_gradient_agents.PPO import PPO
 from agents.Trainer import Trainer
-from agents.policy_gradient_agents.REINFORCE import REINFORCE
+# from agents.policy_gradient_agents.REINFORCE import REINFORCE
 from utilities.data_structures.Config import Config
 # from agents.DQN_agents.DDQN import DDQN
 # from agents.DQN_agents.DDQN_With_Prioritised_Experience_Replay import DDQN_With_Prioritised_Experience_Replay
@@ -83,7 +83,8 @@ config.hyperparameters = {
         "mu": 0.0,  # only required for continuous action games
         "theta": 0.0,  # only required for continuous action games
         "sigma": 0.0,  # only required for continuous action games
-        "epsilon_decay_rate_denominator": 1.0,
+        # "epsilon_decay_rate_denominator": 1.0,
+        "epsilon_decay_rate_denominator": 20.0,
         "clip_rewards": False
     },
 
@@ -140,6 +141,6 @@ if __name__ == "__main__":
     # AGENTS = [SAC_Discrete, DDQN, Dueling_DDQN, DQN, DQN_With_Fixed_Q_Targets,
     #           DDQN_With_Prioritised_Experience_Replay, A2C, PPO]
     # ms.set_context(mode=ms.GRAPH_MODE)
-    AGENTS = [REINFORCE]
+    AGENTS = [PPO]
     trainer = Trainer(config, AGENTS)
     trainer.run_games_for_agents()

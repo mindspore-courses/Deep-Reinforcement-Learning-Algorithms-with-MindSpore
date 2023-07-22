@@ -86,6 +86,7 @@ class PPO(Base_Agent):
                 self.policy_old, all_states, all_actions
             )
             # all_ratio_of_policy_probabilities = self.calculate_all_ratio_of_policy_probabilities()
+            self.calculate_loss(all_discounted_returns, all_states, all_actions, old_policy_distribution_log_prob)
             _, grads = self.calculate_loss_grad_fn(
                 all_discounted_returns, all_states, all_actions, old_policy_distribution_log_prob
             )
@@ -95,7 +96,7 @@ class PPO(Base_Agent):
         """Calculates the cumulative discounted return for each episode which we will then use in a learning
         iteration"""
         all_discounted_returns = []
-        for episode, many_episode_states_element in range(len(self.many_episode_states)):
+        for episode, many_episode_states_element in enumerate(self.many_episode_states):
             discounted_returns = [0]
             for ix in range(len(many_episode_states_element)):
                 return_value = self.many_episode_rewards[episode][-(ix + 1)] + \

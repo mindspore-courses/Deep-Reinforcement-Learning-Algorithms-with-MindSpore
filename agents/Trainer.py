@@ -1,11 +1,13 @@
 """
-Trainer
+Trainer, pylint 误报
 """
+# pylint: disable=W0611
 import copy
 import random
 import pickle
 import os
 import gym
+from gym.wrappers import FlattenDictWrapper
 import numpy as np
 import matplotlib.pyplot as plt
 
@@ -118,8 +120,9 @@ class Trainer:
             if self.environment_has_changeable_goals(agent_config.environment) and \
                     self.agent_cant_handle_changeable_goals_without_flattening(agent_name):
                 print(f"Flattening changeable-goal environment for agent {agent_name}")
-                agent_config.environment = gym.wrappers.FlattenDictWrapper(agent_config.environment,
-                                                                           dict_keys=["observation", "desired_goal"])
+                agent_config.environment = gym.wrappers.FlattenDictWrapper(
+                    agent_config.environment, dict_keys=["observation", "desired_goal"]
+                )
 
             if self.config.randomise_random_seed:
                 agent_config.seed = random.randint(0, 2 ** 32 - 2)

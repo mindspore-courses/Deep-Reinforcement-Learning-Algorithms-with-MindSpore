@@ -33,6 +33,7 @@ def create_actor_distribution(action_types, actor_output, action_size):
         assert actor_output.shape[1] == action_size, "Actor output the wrong size"
         # action_distribution = Categorical(actor_output)  # this creates a distribution to sample from
         actor_output = ms.numpy.clip(actor_output, xmin=eps, xmax=1-eps)
+        actor_output /= actor_output.sum(axis=1).unsqueeze(-1)
         action_distribution = msd.Categorical(actor_output)  # mindspore: this creates a distribution to sample from
     else:
         assert actor_output.shape[1] == action_size * 2, "Actor output the wrong size"
