@@ -4,7 +4,7 @@ TODO: mojoco
 """
 import gym
 from agents.Trainer import Trainer
-from agents.actor_critic_agents.DDPG import DDPG
+# from agents.actor_critic_agents.DDPG import DDPG
 from agents.hierarchical_agents.HIRO import HIRO
 from utilities.data_structures.Config import Config
 config = Config()

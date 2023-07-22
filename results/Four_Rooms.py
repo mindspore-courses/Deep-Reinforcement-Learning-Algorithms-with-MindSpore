@@ -3,8 +3,8 @@ Four Rooms
 """
 # from agents.DQN_agents.DDQN import DDQN
 from agents.hierarchical_agents.SNN_HRL import SNN_HRL
-from environments.Four_Rooms_Environment import Four_Rooms_Environment
 from agents.Trainer import Trainer
+from environments.Four_Rooms_Environment import Four_Rooms_Environment
 from utilities.data_structures.Config import Config
 
 config = Config()
@@ -17,7 +17,10 @@ num_possible_states = (height * width) ** (1 + 1*random_goal_place)
 embedding_dimensions = [[num_possible_states, 20]]
 print("Num possible states ", num_possible_states)
 
-config.environment = Four_Rooms_Environment(height, width, stochastic_actions_probability=0.0, random_start_user_place=True, random_goal_place=random_goal_place)
+config.environment = Four_Rooms_Environment(
+    height, width, stochastic_actions_probability=0.0, random_start_user_place=True,
+    random_goal_place=random_goal_place
+)
 
 config.num_episodes_to_run = 1000
 config.file_to_save_data_results = "results/data_and_graphs/Four_Rooms.pkl"
@@ -47,7 +50,6 @@ config.hyperparameters = {
         "update_every_n_steps": 1,
         "epsilon_decay_rate_denominator": 10,
         "discount_rate": 0.99,
-        "learning_iterations": 1,
         "tau": 0.01,
         "exploration_cycle_episodes_length": None,
         "learning_iterations": 1,
