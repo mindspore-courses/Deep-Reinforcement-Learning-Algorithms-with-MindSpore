@@ -74,16 +74,20 @@ class h_DQN(Base_Agent):
         episode_intrinsic_rewards = []
         while not self.episode_over:
             episode_intrinsic_rewards = []
-            self.meta_controller_state = self.environment.state
+            try:
+                state = self.environment.state
+            except AttributeError:
+                state = self.environment.env.state
+            self.meta_controller_state = state
             self.sub_goal = self.meta_controller.pick_action(state=self.meta_controller_state)
             self.goals_seen.append(self.sub_goal)
             self.sub_goal_achieved = False
 
-            if isinstance(self.environment.state, np.ndarray):
-                temp_state = (self.environment.state, np.array([self.sub_goal]))
+            if isinstance(state, np.ndarray):
+                temp_state = (state, np.array([self.sub_goal]))
             else:
                 temp_state = (
-                    np.array(self.environment.state).reshape(np.array([self.sub_goal]).shape),
+                    np.array(state).reshape(np.array([self.sub_goal]).shape),
                     np.array([self.sub_goal])
                 )
             self.state = np.concatenate(temp_state)
@@ -135,17 +139,28 @@ class h_DQN(Base_Agent):
 
     def update_data(self):
         """Updates stored data for controller and meta-controller. It must occur in the order shown"""
-        self.episode_over = self.environment.done
+        try:
+            self.episode_over = self.environment.done
+        except AttributeError:
+            self.episode_over = self.done
         self.update_controller_data()
         self.update_meta_controller_data()
 
     def update_controller_data(self):
         """Gets the next state, reward and done information from the environment"""
         # next state
-        environment_next_state = self.environment.s
-        environment_next_state = environment_next_state.reshape(-1)
+        try:
+            environment_next_state = self.environment.s
+            environment_next_state = environment_next_state.reshape(-1)
+        except AttributeError:
+            environment_next_state = self.next_state
+            environment_next_state = np.expand_dims(environment_next_state, 0)
+
         assert environment_next_state.shape[0] == 1
-        self.next_state = np.concatenate((environment_next_state, np.array([self.sub_goal])))
+        if len(environment_next_state.shape) == 2:
+            self.next_state = np.concatenate((environment_next_state, np.array([[self.sub_goal]])), 1)
+        else:
+            self.next_state = np.concatenate((environment_next_state, np.array([self.sub_goal])))
         self.sub_goal_achieved = environment_next_state[0] == self.sub_goal
         self.reward = 1.0 * self.sub_goal_achieved
         self.done = self.sub_goal_achieved or self.episode_over

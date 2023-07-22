@@ -1,8 +1,8 @@
 """
 Long Corridor
 """
-# from agents.hierarchical_agents.SNN_HRL import SNN_HRL
 from agents.Trainer import Trainer
+# from agents.hierarchical_agents.SNN_HRL import SNN_HRL
 from agents.hierarchical_agents.h_DQN import h_DQN
 from utilities.data_structures.Config import Config
 # from agents.DQN_agents.DQN import DQN
@@ -82,9 +82,9 @@ config.hyperparameters = {
             "regularisation_weight": 1.5,
             "visitations_decay": 0.99,
             "episodes_for_pretraining": 2000,
-            # "batch_size": 256,
+            "batch_size": 256,
             # "learning_rate": 0.01,
-            # "buffer_size": 40000,
+            "buffer_size": 40000,
             # "linear_hidden_units": [20, 10],
             # "final_layer_activation": "None",
             # "columns_of_data_to_be_embedded": [0, 1],
@@ -98,30 +98,35 @@ config.hyperparameters = {
             # "discount_rate": 0.999,
             # "learning_iterations": 1
 
-
-            "learning_rate": 0.05,
-            "linear_hidden_units": [20, 20],
+            # "learning_rate": 0.05,
+            "learning_rate": 0.005,
+            # "linear_hidden_units": [20, 20],
+            "linear_hidden_units": [128, 128],
             "final_layer_activation": "SOFTMAX",
             "learning_iterations_per_round": 5,
             "discount_rate": 0.99,
             "batch_norm": False,
             "clip_epsilon": 0.1,
             "episodes_per_learning_round": 4,
-            "normalise_rewards": True,
+            # "normalise_rewards": True,
+            "normalise_rewards": False,
             "gradient_clipping_norm": 7.0,
             "mu": 0.0,  # only required for continuous action games
             "theta": 0.0,  # only required for continuous action games
             "sigma": 0.0,  # only required for continuous action games
-            "epsilon_decay_rate_denominator": 1.0
-
-
-
-    },
+            "epsilon_decay_rate_denominator": 1.0,
+            "clip_rewards": False,
+            "update_every_n_steps": 1,
+            "learning_iterations": 1,
+            "tau": 0.01
+        },
 
         "MANAGER": {
             "timesteps_before_changing_skill": 4,
-            "linear_hidden_units": [10, 5],
-            "learning_rate": 0.01,
+            # "linear_hidden_units": [10, 5],
+            # "learning_rate": 0.01,
+            "linear_hidden_units": [128, 128],
+            "learning_rate": 0.001,
             "buffer_size": 40000,
             "batch_size": 256,
             "final_layer_activation": "None",
@@ -133,14 +138,14 @@ config.hyperparameters = {
             "update_every_n_steps": 1,
             "epsilon_decay_rate_denominator": 1000,
             "discount_rate": 0.999,
-            "learning_iterations": 1
-
-        }
+            "learning_iterations": 1,
+            "clip_rewards": False,
+            "tau": 0.01
+        },
 
     }
 
 }
-
 
 if __name__ == "__main__":
     config.hyperparameters["DQN_Agents"] = config.hyperparameters["h_DQN"]["META_CONTROLLER"]

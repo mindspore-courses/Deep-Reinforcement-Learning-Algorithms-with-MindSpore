@@ -117,7 +117,7 @@ class HER_Base:
                       self.episode_observations]
         new_next_states = [self.create_state_from_observation_and_desired_goal(observation, new_goal) for observation in
                            self.episode_next_observations]
-        new_rewards = [self.environment.compute_reward(next_achieved_goal, new_goal, None) for next_achieved_goal in
+        new_rewards = [self.environment.compute_reward(next_achieved_goal, new_goal) for next_achieved_goal in
                        self.episode_next_achieved_goals]
 
         if self.hyperparameters["clip_rewards"]:

@@ -4,23 +4,24 @@
 # ===============================================================================
 
 subgraph attr:
-subgraph instance: construct.Default.26 : 0x11422e418
+training : 0
+subgraph instance: construct.Default.12 : 0x145047018
 # In file /Users/moranvl/Code/Deep-Reinforcement-Learning-Algorithms-with-MindSpore/agents/Base_Agent.py:450/    def construct(self, x):/
-subgraph @construct.Default.26(%para1_x, %para2_nets.0.bias, %para3_nets.0.weight, %para4_nets.3.bias, %para5_nets.3.weight, %para6_nets.6.bias, %para7_nets.6.weight) {
-  %1([CNode]38) = call @bool_.37(())
+subgraph @construct.Default.12(%para1_x, %para2_nets.0.bias, %para3_nets.0.weight, %para4_nets.3.bias, %para5_nets.3.weight, %para6_nets.6.bias, %para7_nets.6.weight) {
+  %1([CNode]24) = call @bool_.23(())
       : (<Tuple[], TupleShape()>) -> (<Bool, NoShape>)
       #scope: (Default)
       # In file /Users/moranvl/Code/Deep-Reinforcement-Learning-Algorithms-with-MindSpore/agents/Base_Agent.py:452/        if self.y_range:/
-  %2([CNode]39) = Switch(%1, call @✓construct.Default.40, call @✗construct.Default.28)
+  %2([CNode]25) = Switch(%1, call @✓construct.Default.26, call @✗construct.Default.14)
       : (<Bool, NoShape>, <Func, NoShape>, <Func, NoShape>) -> (<Func, NoShape>)
       #scope: (Default)
       # In file /Users/moranvl/Code/Deep-Reinforcement-Learning-Algorithms-with-MindSpore/agents/Base_Agent.py:452/        if self.y_range:/
 
 #------------------------> 0
-  %3([CNode]41) = %2()
+  %3([CNode]27) = %2()
       #scope: (Default)
       # In file /Users/moranvl/Code/Deep-Reinforcement-Learning-Algorithms-with-MindSpore/agents/Base_Agent.py:452/        if self.y_range:/
-  %4([CNode]43) = call @↓construct.Default.42(%3)
+  %4([CNode]29) = call @↓construct.Default.28(%3)
       : (<null>) -> (<null>)
       #scope: (Default)
   Return(%4)
@@ -29,22 +30,23 @@ subgraph @construct.Default.26(%para1_x, %para2_nets.0.bias, %para3_nets.0.weigh
       # In file /Users/moranvl/Code/Deep-Reinforcement-Learning-Algorithms-with-MindSpore/agents/Base_Agent.py:452/        if self.y_range:/
 }
 # Order:
-#   1: @construct.Default.26:x{[0]: ValueNode<FuncGraph> construct.SequentialCell.29, [1]: x}
-#   2: @construct.Default.26:[CNode]38{[0]: ValueNode<FuncGraph> bool_.37, [1]: ValueNode<ValueTuple> ()}
-#   3: @construct.Default.26:[CNode]39{[0]: ValueNode<Primitive> Switch, [1]: [CNode]38, [2]: ValueNode<FuncGraph> ✓construct.Default.40, [3]: ValueNode<FuncGraph> ✗construct.Default.28}
-#   4: @construct.Default.26:[CNode]41{[0]: [CNode]39}
-#   5: @construct.Default.26:[CNode]43{[0]: ValueNode<FuncGraph> ↓construct.Default.42, [1]: [CNode]41}
-#   6: @construct.Default.26:[CNode]44{[0]: ValueNode<Primitive> Return, [1]: [CNode]43}
+#   1: @construct.Default.12:x{[0]: ValueNode<FuncGraph> construct.SequentialCell.15, [1]: x}
+#   2: @construct.Default.12:[CNode]24{[0]: ValueNode<FuncGraph> bool_.23, [1]: ValueNode<ValueTuple> ()}
+#   3: @construct.Default.12:[CNode]25{[0]: ValueNode<Primitive> Switch, [1]: [CNode]24, [2]: ValueNode<FuncGraph> ✓construct.Default.26, [3]: ValueNode<FuncGraph> ✗construct.Default.14}
+#   4: @construct.Default.12:[CNode]27{[0]: [CNode]25}
+#   5: @construct.Default.12:[CNode]29{[0]: ValueNode<FuncGraph> ↓construct.Default.28, [1]: [CNode]27}
+#   6: @construct.Default.12:[CNode]30{[0]: ValueNode<Primitive> Return, [1]: [CNode]29}
 
 
 subgraph attr:
-subgraph instance: ✗construct.Default.28 : 0x11422ea18
+training : 0
+subgraph instance: ✗construct.Default.14 : 0x145054218
 # In file /Users/moranvl/Code/Deep-Reinforcement-Learning-Algorithms-with-MindSpore/agents/Base_Agent.py:452/        if self.y_range:/
-subgraph @✗construct.Default.28 parent: [subgraph @construct.Default.26]() {
+subgraph @✗construct.Default.14 parent: [subgraph @construct.Default.12]() {
 
 #------------------------> 1
-  %1(x) = $(construct.Default.26):call @construct.SequentialCell.29(%para1_x)
-      : (<Tensor[Float32], (256, 2)>) -> (<null>)
+  %1(x) = $(construct.Default.12):call @construct.SequentialCell.15(%para1_x)
+      : (<Tensor[Float32], (1, 5)>) -> (<null>)
       #scope: (Default)
       # In file /Users/moranvl/Code/Deep-Reinforcement-Learning-Algorithms-with-MindSpore/agents/Base_Agent.py:451/        x = self.nets(x)/
   Return(%1)
@@ -53,17 +55,18 @@ subgraph @✗construct.Default.28 parent: [subgraph @construct.Default.26]() {
       # In file /Users/moranvl/Code/Deep-Reinforcement-Learning-Algorithms-with-MindSpore/agents/Base_Agent.py:452/        if self.y_range:/
 }
 # Order:
-#   1: @✗construct.Default.28:[CNode]45{[0]: ValueNode<Primitive> Return, [1]: x}
+#   1: @✗construct.Default.14:[CNode]31{[0]: ValueNode<Primitive> Return, [1]: x}
 
 
 subgraph attr:
-subgraph instance: construct.SequentialCell.29 : 0x114234e18
+training : 0
+subgraph instance: construct.SequentialCell.15 : 0x145056e18
 # In file /Users/moranvl/anaconda3/envs/mindspore/lib/python3.9/site-packages/mindspore/nn/layer/container.py:285/    def construct(self, input_data):/
-subgraph @construct.SequentialCell.29 parent: [subgraph @construct.Default.26](%para8_input_data) {
+subgraph @construct.SequentialCell.15 parent: [subgraph @construct.Default.12](%para8_input_data) {
 
 #------------------------> 2
-  %1([CNode]46) = call @↵construct.SequentialCell.30(I64(0), %para8_input_data)
-      : (<Int64, NoShape>, <Tensor[Float32], (256, 2)>) -> (<null>)
+  %1([CNode]32) = call @↵construct.SequentialCell.16(I64(0), %para8_input_data)
+      : (<Int64, NoShape>, <Tensor[Float32], (1, 5)>) -> (<null>)
       #scope: (Default/nets-SequentialCell)
       # In file /Users/moranvl/anaconda3/envs/mindspore/lib/python3.9/site-packages/mindspore/nn/layer/container.py:286/        for cell in self.cell_list:/
   Return(%1)
@@ -72,34 +75,35 @@ subgraph @construct.SequentialCell.29 parent: [subgraph @construct.Default.26](%
       # In file /Users/moranvl/anaconda3/envs/mindspore/lib/python3.9/site-packages/mindspore/nn/layer/container.py:286/        for cell in self.cell_list:/
 }
 # Order:
-#   1: @construct.SequentialCell.29:[CNode]47{[0]: ValueNode<FuncGraph> ms_len_with_iterable_check.48, [1]: [CNode]49}
-#   2: @construct.SequentialCell.29:[CNode]46{[0]: ValueNode<FuncGraph> ↵construct.SequentialCell.30, [1]: ValueNode<Int64Imm> 0, [2]: input_data}
-#   3: @construct.SequentialCell.29:[CNode]50{[0]: ValueNode<Primitive> Return, [1]: [CNode]46}
+#   1: @construct.SequentialCell.15:[CNode]33{[0]: ValueNode<FuncGraph> ms_len_with_iterable_check.34, [1]: [CNode]35}
+#   2: @construct.SequentialCell.15:[CNode]32{[0]: ValueNode<FuncGraph> ↵construct.SequentialCell.16, [1]: ValueNode<Int64Imm> 0, [2]: input_data}
+#   3: @construct.SequentialCell.15:[CNode]36{[0]: ValueNode<Primitive> Return, [1]: [CNode]32}
 
 
 subgraph attr:
-subgraph instance: ↵construct.SequentialCell.30 : 0x114246418
+training : 0
+subgraph instance: ↵construct.SequentialCell.16 : 0x145063418
 # In file /Users/moranvl/anaconda3/envs/mindspore/lib/python3.9/site-packages/mindspore/nn/layer/container.py:286/        for cell in self.cell_list:/
-subgraph @↵construct.SequentialCell.30 parent: [subgraph @construct.SequentialCell.29](%para9_, %para10_) {
-  %1([CNode]49) = $(construct.SequentialCell.29):MakeTuple(call @construct.Dense.33, call @construct.ReLU.51, call @construct.Dropout.52, call @construct.Dense.53, call @construct.ReLU.51, call @construct.Dropout.54, call @construct.Dense.55)
+subgraph @↵construct.SequentialCell.16 parent: [subgraph @construct.SequentialCell.15](%para9_, %para10_) {
+  %1([CNode]35) = $(construct.SequentialCell.15):MakeTuple(call @construct.Dense.19, call @construct.ReLU.37, call @construct.Dropout.38, call @construct.Dense.39, call @construct.ReLU.37, call @construct.Dropout.40, call @construct.Dense.41)
       : (<Func, NoShape>, <Func, NoShape>, <Func, NoShape>, <Func, NoShape>, <Func, NoShape>, <Func, NoShape>, <Func, NoShape>) -> (<Tuple[Func*7], TupleShape(NoShape, NoShape, NoShape, NoShape, NoShape, NoShape, NoShape)>)
       #scope: (Default/nets-SequentialCell)
       # In file /Users/moranvl/anaconda3/envs/mindspore/lib/python3.9/site-packages/mindspore/nn/layer/container.py:286/        for cell in self.cell_list:/
-  %2([CNode]47) = $(construct.SequentialCell.29):call @ms_len_with_iterable_check.48(%1)
+  %2([CNode]33) = $(construct.SequentialCell.15):call @ms_len_with_iterable_check.34(%1)
       : (<Tuple[Func*7], TupleShape(NoShape, NoShape, NoShape, NoShape, NoShape, NoShape, NoShape)>) -> (<Int64, NoShape>)
       #scope: (Default/nets-SequentialCell)
       # In file /Users/moranvl/anaconda3/envs/mindspore/lib/python3.9/site-packages/mindspore/nn/layer/container.py:286/        for cell in self.cell_list:/
-  %3([CNode]56) = MultitypeFuncGraph-less{(String, String), (Number, Tensor), (Tensor, Tensor), (Tensor, Number), (Number, Number), (Tuple, Tuple), (List, List)}(%para9_@[CNode]31, %2)
+  %3([CNode]42) = MultitypeFuncGraph-less{(String, String), (Number, Tensor), (Tensor, Tensor), (Tensor, Number), (Number, Number), (Tuple, Tuple), (List, List)}(%para9_@[CNode]17, %2)
       : (<Int64, NoShape>, <Int64, NoShape>) -> (<Bool, NoShape>)
       #scope: (Default/nets-SequentialCell)
       # In file /Users/moranvl/anaconda3/envs/mindspore/lib/python3.9/site-packages/mindspore/nn/layer/container.py:286/        for cell in self.cell_list:/
-  %4([CNode]57) = Switch(%3, call @↻construct.SequentialCell.32, call @↓construct.SequentialCell.58)
+  %4([CNode]43) = Switch(%3, call @↻construct.SequentialCell.18, call @↓construct.SequentialCell.44)
       : (<Bool, NoShape>, <Func, NoShape>, <Func, NoShape>) -> (<Func, NoShape>)
       #scope: (Default/nets-SequentialCell)
       # In file /Users/moranvl/anaconda3/envs/mindspore/lib/python3.9/site-packages/mindspore/nn/layer/container.py:286/        for cell in self.cell_list:/
 
 #------------------------> 3
-  %5([CNode]59) = %4()
+  %5([CNode]45) = %4()
       #scope: (Default/nets-SequentialCell)
       # In file /Users/moranvl/anaconda3/envs/mindspore/lib/python3.9/site-packages/mindspore/nn/layer/container.py:286/        for cell in self.cell_list:/
   Return(%5)
@@ -108,47 +112,48 @@ subgraph @↵construct.SequentialCell.30 parent: [subgraph @construct.Sequential
       # In file /Users/moranvl/anaconda3/envs/mindspore/lib/python3.9/site-packages/mindspore/nn/layer/container.py:286/        for cell in self.cell_list:/
 }
 # Order:
-#   1: @↵construct.SequentialCell.30:[CNode]56{[0]: ValueNode<MultitypeFuncGraph> MetaFuncGraph-less.60, [1]: @[CNode]31, [2]: [CNode]47}
-#   2: @↵construct.SequentialCell.30:[CNode]57{[0]: ValueNode<Primitive> Switch, [1]: [CNode]56, [2]: ValueNode<FuncGraph> ↻construct.SequentialCell.32, [3]: ValueNode<FuncGraph> ↓construct.SequentialCell.58}
-#   3: @↵construct.SequentialCell.30:[CNode]59{[0]: [CNode]57}
-#   4: @↵construct.SequentialCell.30:[CNode]61{[0]: ValueNode<Primitive> Return, [1]: [CNode]59}
+#   1: @↵construct.SequentialCell.16:[CNode]42{[0]: ValueNode<MultitypeFuncGraph> MetaFuncGraph-less.46, [1]: @[CNode]17, [2]: [CNode]33}
+#   2: @↵construct.SequentialCell.16:[CNode]43{[0]: ValueNode<Primitive> Switch, [1]: [CNode]42, [2]: ValueNode<FuncGraph> ↻construct.SequentialCell.18, [3]: ValueNode<FuncGraph> ↓construct.SequentialCell.44}
+#   3: @↵construct.SequentialCell.16:[CNode]45{[0]: [CNode]43}
+#   4: @↵construct.SequentialCell.16:[CNode]47{[0]: ValueNode<Primitive> Return, [1]: [CNode]45}
 
 
 subgraph attr:
-subgraph instance: ↻construct.SequentialCell.32 : 0x114246a18
+training : 0
+subgraph instance: ↻construct.SequentialCell.18 : 0x14505ea18
 # In file /Users/moranvl/anaconda3/envs/mindspore/lib/python3.9/site-packages/mindspore/nn/layer/container.py:286/        for cell in self.cell_list:/
-subgraph @↻construct.SequentialCell.32 parent: [subgraph @↵construct.SequentialCell.30]() {
-  %1([CNode]31) = MultitypeFuncGraph-add{(Number, Tensor), (Number, Number), (Tuple, Tuple), (Tensor, List), (Tuple, Tensor), (Tensor, Tuple), (Tensor, Number), (COOTensor, COOTensor), (List, Tensor), (List, List), (Tensor, Tensor), (String, String), (COOTensor, Tensor), (RowTensor, Tensor), (NoneType, NoneType), (CSRTensor, CSRTensor), (Tensor, COOTensor)}(%para9_@[CNode]31, I64(1))
+subgraph @↻construct.SequentialCell.18 parent: [subgraph @↵construct.SequentialCell.16]() {
+  %1([CNode]17) = MultitypeFuncGraph-add{(Number, Tensor), (Number, Number), (Tuple, Tuple), (Tensor, List), (Tuple, Tensor), (Tensor, Tuple), (Tensor, Number), (COOTensor, COOTensor), (List, Tensor), (List, List), (Tensor, Tensor), (String, String), (COOTensor, Tensor), (RowTensor, Tensor), (NoneType, NoneType), (CSRTensor, CSRTensor), (Tensor, COOTensor)}(%para9_@[CNode]17, I64(1))
       : (<Int64, NoShape>, <Int64, NoShape>) -> (<Int64, NoShape>)
       #scope: (Default/nets-SequentialCell)
       # In file /Users/moranvl/anaconda3/envs/mindspore/lib/python3.9/site-packages/mindspore/nn/layer/container.py:286/        for cell in self.cell_list:/
-  %2([CNode]62) = StopGradient(%1)
+  %2([CNode]48) = StopGradient(%1)
       : (<Int64, NoShape>) -> (<Int64, NoShape>)
       #scope: (Default/nets-SequentialCell)
       # In file /Users/moranvl/Code/Deep-Reinforcement-Learning-Algorithms-with-MindSpore/agents/Base_Agent.py:451/        x = self.nets(x)/
-  %3([CNode]49) = $(construct.SequentialCell.29):MakeTuple(call @construct.Dense.33, call @construct.ReLU.51, call @construct.Dropout.52, call @construct.Dense.53, call @construct.ReLU.51, call @construct.Dropout.54, call @construct.Dense.55)
+  %3([CNode]35) = $(construct.SequentialCell.15):MakeTuple(call @construct.Dense.19, call @construct.ReLU.37, call @construct.Dropout.38, call @construct.Dense.39, call @construct.ReLU.37, call @construct.Dropout.40, call @construct.Dense.41)
       : (<Func, NoShape>, <Func, NoShape>, <Func, NoShape>, <Func, NoShape>, <Func, NoShape>, <Func, NoShape>, <Func, NoShape>) -> (<Tuple[Func*7], TupleShape(NoShape, NoShape, NoShape, NoShape, NoShape, NoShape, NoShape)>)
       #scope: (Default/nets-SequentialCell)
       # In file /Users/moranvl/anaconda3/envs/mindspore/lib/python3.9/site-packages/mindspore/nn/layer/container.py:286/        for cell in self.cell_list:/
-  %4([CNode]64) = call @ms_iter.63(%3)
+  %4([CNode]50) = call @ms_iter.49(%3)
       : (<Tuple[Func*7], TupleShape(NoShape, NoShape, NoShape, NoShape, NoShape, NoShape, NoShape)>) -> (<Tuple[Func*7], TupleShape(NoShape, NoShape, NoShape, NoShape, NoShape, NoShape, NoShape)>)
       #scope: (Default/nets-SequentialCell)
       # In file /Users/moranvl/anaconda3/envs/mindspore/lib/python3.9/site-packages/mindspore/nn/layer/container.py:286/        for cell in self.cell_list:/
-  %5(cell) = S-Prim-getitem(%4, %para9_@[CNode]31)
+  %5(cell) = S-Prim-getitem(%4, %para9_@[CNode]17)
       : (<Tuple[Func*7], TupleShape(NoShape, NoShape, NoShape, NoShape, NoShape, NoShape, NoShape)>, <Int64, NoShape>) -> (<Func, NoShape>)
       #scope: (Default/nets-SequentialCell)
       # In file /Users/moranvl/anaconda3/envs/mindspore/lib/python3.9/site-packages/mindspore/nn/layer/container.py:286/        for cell in self.cell_list:/
 
 #------------------------> 4
   %6(input_data) = %5(%para10_фinput_data)
-      : (<Tensor[Float32], (256, 2)>) -> (<null>)
+      : (<Tensor[Float32], (1, 5)>) -> (<null>)
       #scope: (Default/nets-SequentialCell)
       # In file /Users/moranvl/anaconda3/envs/mindspore/lib/python3.9/site-packages/mindspore/nn/layer/container.py:287/            input_data = cell(input_data)/
-  %7([CNode]65) = call @↵construct.SequentialCell.30(%1, %6)
+  %7([CNode]51) = call @↵construct.SequentialCell.16(%1, %6)
       : (<Int64, NoShape>, <null>) -> (<null>)
       #scope: (Default/nets-SequentialCell)
       # In file /Users/moranvl/anaconda3/envs/mindspore/lib/python3.9/site-packages/mindspore/nn/layer/container.py:286/        for cell in self.cell_list:/
-  %8([CNode]66) = Depend[side_effect_propagate=I64(1)](%7, %2)
+  %8([CNode]52) = Depend[side_effect_propagate=I64(1)](%7, %2)
       : (<null>, <Int64, NoShape>) -> (<null>)
       #scope: (Default/nets-SequentialCell)
       # In file /Users/moranvl/Code/Deep-Reinforcement-Learning-Algorithms-with-MindSpore/agents/Base_Agent.py:451/        x = self.nets(x)/
@@ -158,22 +163,23 @@ subgraph @↻construct.SequentialCell.32 parent: [subgraph @↵construct.Sequent
       # In file /Users/moranvl/anaconda3/envs/mindspore/lib/python3.9/site-packages/mindspore/nn/layer/container.py:286/        for cell in self.cell_list:/
 }
 # Order:
-#   1: @↻construct.SequentialCell.32:[CNode]64{[0]: ValueNode<FuncGraph> ms_iter.63, [1]: [CNode]49}
-#   2: @↻construct.SequentialCell.32:cell{[0]: ValueNode<DoSignaturePrimitive> S-Prim-getitem, [1]: [CNode]64, [2]: @[CNode]31}
-#   3: @↻construct.SequentialCell.32:[CNode]31{[0]: ValueNode<MultitypeFuncGraph> MetaFuncGraph-add.67, [1]: @[CNode]31, [2]: ValueNode<Int64Imm> 1}
-#   4: @↻construct.SequentialCell.32:input_data{[0]: cell, [1]: фinput_data}
-#   5: @↻construct.SequentialCell.32:[CNode]65{[0]: ValueNode<FuncGraph> ↵construct.SequentialCell.30, [1]: [CNode]31, [2]: input_data}
-#   6: @↻construct.SequentialCell.32:[CNode]68{[0]: ValueNode<Primitive> Return, [1]: [CNode]66}
+#   1: @↻construct.SequentialCell.18:[CNode]50{[0]: ValueNode<FuncGraph> ms_iter.49, [1]: [CNode]35}
+#   2: @↻construct.SequentialCell.18:cell{[0]: ValueNode<DoSignaturePrimitive> S-Prim-getitem, [1]: [CNode]50, [2]: @[CNode]17}
+#   3: @↻construct.SequentialCell.18:[CNode]17{[0]: ValueNode<MultitypeFuncGraph> MetaFuncGraph-add.53, [1]: @[CNode]17, [2]: ValueNode<Int64Imm> 1}
+#   4: @↻construct.SequentialCell.18:input_data{[0]: cell, [1]: фinput_data}
+#   5: @↻construct.SequentialCell.18:[CNode]51{[0]: ValueNode<FuncGraph> ↵construct.SequentialCell.16, [1]: [CNode]17, [2]: input_data}
+#   6: @↻construct.SequentialCell.18:[CNode]54{[0]: ValueNode<Primitive> Return, [1]: [CNode]52}
 
 
 subgraph attr:
-subgraph instance: construct.Dense.33 : 0x114233618
+training : 0
+subgraph instance: construct.Dense.19 : 0x145062e18
 # In file /Users/moranvl/anaconda3/envs/mindspore/lib/python3.9/site-packages/mindspore/nn/layer/basic.py:590/    def construct(self, x):/
-subgraph @construct.Dense.33 parent: [subgraph @construct.Default.26](%para11_x) {
+subgraph @construct.Dense.19 parent: [subgraph @construct.Default.12](%para11_x) {
 
 #------------------------> 5
-  %1([CNode]69) = call @L-construct.Dense.34(%para11_x, %para2_nets.0.bias, %para3_nets.0.weight)
-      : (<Tensor[Float32], (256, 2)>, <Ref[Tensor[Float32]], (20)>, <Ref[Tensor[Float32]], (20, 1)>) -> (<null>)
+  %1([CNode]55) = call @L-construct.Dense.20(%para11_x, %para2_nets.0.bias, %para3_nets.0.weight)
+      : (<Tensor[Float32], (1, 5)>, <Ref[Tensor[Float32]], (128)>, <Ref[Tensor[Float32]], (128, 8)>) -> (<null>)
       #scope: (Default)
   Return(%1)
       : (<null>)
@@ -181,52 +187,53 @@ subgraph @construct.Dense.33 parent: [subgraph @construct.Default.26](%para11_x)
       # In file /Users/moranvl/anaconda3/envs/mindspore/lib/python3.9/site-packages/mindspore/nn/layer/basic.py:593/        if len(x_shape) != 2:/
 }
 # Order:
-#   1: @construct.Dense.33:[CNode]69{[0]: ValueNode<FuncGraph> L-construct.Dense.34, [1]: x, [2]: nets.0.bias, [3]: nets.0.weight}
-#   2: @construct.Dense.33:[CNode]70{[0]: ValueNode<Primitive> Return, [1]: [CNode]69}
+#   1: @construct.Dense.19:[CNode]55{[0]: ValueNode<FuncGraph> L-construct.Dense.20, [1]: x, [2]: nets.0.bias, [3]: nets.0.weight}
+#   2: @construct.Dense.19:[CNode]56{[0]: ValueNode<Primitive> Return, [1]: [CNode]55}
 
 
 subgraph attr:
-subgraph instance: L-construct.Dense.34 : 0x114276818
+training : 0
+subgraph instance: L-construct.Dense.20 : 0x131e61818
 # In file /Users/moranvl/anaconda3/envs/mindspore/lib/python3.9/site-packages/mindspore/nn/layer/basic.py:590/    def construct(self, x):/
-subgraph @L-construct.Dense.34(%para12_x, %para13_, %para14_) {
+subgraph @L-construct.Dense.20(%para12_x, %para13_, %para14_) {
   %1(фx_shape) = S-Prim-Shape(%para12_x)
-      : (<Tensor[Float32], (256, 2)>) -> (<Tuple[Int64*2], TupleShape(NoShape, NoShape)>)
+      : (<Tensor[Float32], (1, 5)>) -> (<Tuple[Int64*2], TupleShape(NoShape, NoShape)>)
       #scope: (Default/nets-SequentialCell/0-Dense)
       # In file /Users/moranvl/anaconda3/envs/mindspore/lib/python3.9/site-packages/mindspore/nn/layer/basic.py:600/        if len(x_shape) != 2:/
-  %2([CNode]71) = S-Prim-check_dense_input_shape[constexpr_prim=Bool(1)](%1, "Dense")
+  %2([CNode]57) = S-Prim-check_dense_input_shape[constexpr_prim=Bool(1)](%1, "Dense")
       : (<Tuple[Int64*2], TupleShape(NoShape, NoShape)>, <String, NoShape>) -> (<None, NoShape>)
       #scope: (Default/nets-SequentialCell/0-Dense)
       # In file /Users/moranvl/anaconda3/envs/mindspore/lib/python3.9/site-packages/mindspore/nn/layer/basic.py:592/        check_dense_input_shape(x_shape, self.cls_name)/
-  %3([CNode]72) = StopGradient(%2)
+  %3([CNode]58) = StopGradient(%2)
       : (<None, NoShape>) -> (<None, NoShape>)
       #scope: (Default/nets-SequentialCell/0-Dense)
       # In file /Users/moranvl/anaconda3/envs/mindspore/lib/python3.9/site-packages/mindspore/nn/layer/container.py:286/        for cell in self.cell_list:/
-  %4([CNode]74) = call @L-ms_len.73(%1)
+  %4([CNode]60) = call @L-ms_len.59(%1)
       : (<Tuple[Int64*2], TupleShape(NoShape, NoShape)>) -> (<Int64, NoShape>)
       #scope: (Default/nets-SequentialCell/0-Dense)
       # In file /Users/moranvl/anaconda3/envs/mindspore/lib/python3.9/site-packages/mindspore/nn/layer/basic.py:593/        if len(x_shape) != 2:/
-  %5([CNode]75) = S-Prim-not_equal(%4, I64(2))
+  %5([CNode]61) = S-Prim-not_equal(%4, I64(2))
       : (<Int64, NoShape>, <Int64, NoShape>) -> (<Bool, NoShape>)
       #scope: (Default/nets-SequentialCell/0-Dense)
       # In file /Users/moranvl/anaconda3/envs/mindspore/lib/python3.9/site-packages/mindspore/nn/layer/basic.py:593/        if len(x_shape) != 2:/
-  %6([CNode]77) = call @L-bool_.76(%5)
+  %6([CNode]63) = call @L-bool_.62(%5)
       : (<Bool, NoShape>) -> (<Bool, NoShape>)
       #scope: (Default/nets-SequentialCell/0-Dense)
       # In file /Users/moranvl/anaconda3/envs/mindspore/lib/python3.9/site-packages/mindspore/nn/layer/basic.py:593/        if len(x_shape) != 2:/
-  %7([CNode]78) = Switch(%6, call @L-✓construct.Dense.79, call @L-✗construct.Dense.80)
+  %7([CNode]64) = Switch(%6, call @L-✓construct.Dense.65, call @L-✗construct.Dense.66)
       : (<Bool, NoShape>, <Func, NoShape>, <Func, NoShape>) -> (<Func, NoShape>)
       #scope: (Default/nets-SequentialCell/0-Dense)
       # In file /Users/moranvl/anaconda3/envs/mindspore/lib/python3.9/site-packages/mindspore/nn/layer/basic.py:593/        if len(x_shape) != 2:/
-  %8([CNode]81) = %7()
+  %8([CNode]67) = %7()
       #scope: (Default/nets-SequentialCell/0-Dense)
       # In file /Users/moranvl/anaconda3/envs/mindspore/lib/python3.9/site-packages/mindspore/nn/layer/basic.py:593/        if len(x_shape) != 2:/
 
 #------------------------> 6
-  %9([CNode]82) = call @L-↓construct.Dense.35(%8)
-      : (<Tensor[Float32], (256, 2)>) -> (<null>)
+  %9([CNode]68) = call @L-↓construct.Dense.21(%8)
+      : (<Tensor[Float32], (1, 5)>) -> (<null>)
       #scope: (Default/nets-SequentialCell)
       # In file /Users/moranvl/anaconda3/envs/mindspore/lib/python3.9/site-packages/mindspore/nn/layer/container.py:286/        for cell in self.cell_list:/
-  %10([CNode]83) = Depend[side_effect_propagate=I64(1)](%9, %3)
+  %10([CNode]69) = Depend[side_effect_propagate=I64(1)](%9, %3)
       : (<null>, <None, NoShape>) -> (<null>)
       #scope: (Default/nets-SequentialCell)
       # In file /Users/moranvl/anaconda3/envs/mindspore/lib/python3.9/site-packages/mindspore/nn/layer/container.py:286/        for cell in self.cell_list:/
@@ -236,37 +243,38 @@ subgraph @L-construct.Dense.34(%para12_x, %para13_, %para14_) {
       # In file /Users/moranvl/anaconda3/envs/mindspore/lib/python3.9/site-packages/mindspore/nn/layer/basic.py:593/        if len(x_shape) != 2:/
 }
 # Order:
-#   1: @L-construct.Dense.34:фx_shape{[0]: ValueNode<DoSignaturePrimitive> S-Prim-Shape, [1]: x}
-#   2: @L-construct.Dense.34:[CNode]71{[0]: ValueNode<DoSignaturePrimitive> S-Prim-check_dense_input_shape, [1]: фx_shape, [2]: ValueNode<StringImm> Dense}
-#   3: @L-construct.Dense.34:[CNode]74{[0]: ValueNode<FuncGraph> L-ms_len.73, [1]: фx_shape}
-#   4: @L-construct.Dense.34:[CNode]75{[0]: ValueNode<DoSignaturePrimitive> S-Prim-not_equal, [1]: [CNode]74, [2]: ValueNode<Int64Imm> 2}
-#   5: @L-construct.Dense.34:[CNode]77{[0]: ValueNode<FuncGraph> L-bool_.76, [1]: [CNode]75}
-#   6: @L-construct.Dense.34:[CNode]78{[0]: ValueNode<Primitive> Switch, [1]: [CNode]77, [2]: ValueNode<FuncGraph> L-✓construct.Dense.79, [3]: ValueNode<FuncGraph> L-✗construct.Dense.80}
-#   7: @L-construct.Dense.34:[CNode]81{[0]: [CNode]78}
-#   8: @L-construct.Dense.34:[CNode]82{[0]: ValueNode<FuncGraph> L-↓construct.Dense.35, [1]: [CNode]81}
-#   9: @L-construct.Dense.34:[CNode]83{[0]: ValueNode<Primitive> Depend, [1]: [CNode]82, [2]: [CNode]72}
-#  10: @L-construct.Dense.34:[CNode]70{[0]: ValueNode<Primitive> Return, [1]: [CNode]83}
+#   1: @L-construct.Dense.20:фx_shape{[0]: ValueNode<DoSignaturePrimitive> S-Prim-Shape, [1]: x}
+#   2: @L-construct.Dense.20:[CNode]57{[0]: ValueNode<DoSignaturePrimitive> S-Prim-check_dense_input_shape, [1]: фx_shape, [2]: ValueNode<StringImm> Dense}
+#   3: @L-construct.Dense.20:[CNode]60{[0]: ValueNode<FuncGraph> L-ms_len.59, [1]: фx_shape}
+#   4: @L-construct.Dense.20:[CNode]61{[0]: ValueNode<DoSignaturePrimitive> S-Prim-not_equal, [1]: [CNode]60, [2]: ValueNode<Int64Imm> 2}
+#   5: @L-construct.Dense.20:[CNode]63{[0]: ValueNode<FuncGraph> L-bool_.62, [1]: [CNode]61}
+#   6: @L-construct.Dense.20:[CNode]64{[0]: ValueNode<Primitive> Switch, [1]: [CNode]63, [2]: ValueNode<FuncGraph> L-✓construct.Dense.65, [3]: ValueNode<FuncGraph> L-✗construct.Dense.66}
+#   7: @L-construct.Dense.20:[CNode]67{[0]: [CNode]64}
+#   8: @L-construct.Dense.20:[CNode]68{[0]: ValueNode<FuncGraph> L-↓construct.Dense.21, [1]: [CNode]67}
+#   9: @L-construct.Dense.20:[CNode]69{[0]: ValueNode<Primitive> Depend, [1]: [CNode]68, [2]: [CNode]58}
+#  10: @L-construct.Dense.20:[CNode]56{[0]: ValueNode<Primitive> Return, [1]: [CNode]69}
 
 
 subgraph attr:
 after_block : 1
-subgraph instance: L-↓construct.Dense.35 : 0x114269818
+training : 0
+subgraph instance: L-↓construct.Dense.21 : 0x131e65018
 # In file /Users/moranvl/anaconda3/envs/mindspore/lib/python3.9/site-packages/mindspore/nn/layer/basic.py:593/        if len(x_shape) != 2:/
-subgraph @L-↓construct.Dense.35 parent: [subgraph @L-construct.Dense.34](%para15_) {
-  %1([CNode]84) = call @L-bool_.76(Bool(1))
+subgraph @L-↓construct.Dense.21 parent: [subgraph @L-construct.Dense.20](%para15_) {
+  %1([CNode]70) = call @L-bool_.62(Bool(1))
       : (<Bool, NoShape>) -> (<Bool, NoShape>)
       #scope: (Default/nets-SequentialCell/0-Dense)
       # In file /Users/moranvl/anaconda3/envs/mindspore/lib/python3.9/site-packages/mindspore/nn/layer/basic.py:596/        if self.has_bias:/
-  %2([CNode]85) = Switch(%1, call @L-✓↓construct.Dense.36, call @L-✗↓construct.Dense.86)
+  %2([CNode]71) = Switch(%1, call @L-✓↓construct.Dense.22, call @L-✗↓construct.Dense.72)
       : (<Bool, NoShape>, <Func, NoShape>, <Func, NoShape>) -> (<Func, NoShape>)
       #scope: (Default/nets-SequentialCell/0-Dense)
       # In file /Users/moranvl/anaconda3/envs/mindspore/lib/python3.9/site-packages/mindspore/nn/layer/basic.py:596/        if self.has_bias:/
 
 #------------------------> 7
-  %3([CNode]87) = %2()
+  %3([CNode]73) = %2()
       #scope: (Default/nets-SequentialCell/0-Dense)
       # In file /Users/moranvl/anaconda3/envs/mindspore/lib/python3.9/site-packages/mindspore/nn/layer/basic.py:596/        if self.has_bias:/
-  %4([CNode]89) = call @L-↓↓construct.Dense.88(%3)
+  %4([CNode]75) = call @L-↓↓construct.Dense.74(%3)
       : (<null>) -> (<null>)
       #scope: (Default/nets-SequentialCell)
       # In file /Users/moranvl/anaconda3/envs/mindspore/lib/python3.9/site-packages/mindspore/nn/layer/container.py:286/        for cell in self.cell_list:/
@@ -276,26 +284,27 @@ subgraph @L-↓construct.Dense.35 parent: [subgraph @L-construct.Dense.34](%para
       # In file /Users/moranvl/anaconda3/envs/mindspore/lib/python3.9/site-packages/mindspore/nn/layer/basic.py:596/        if self.has_bias:/
 }
 # Order:
-#   1: @L-↓construct.Dense.35:x{[0]: ValueNode<DoSignaturePrimitive> S-Prim-MatMul, [1]: фx, [2]: L-nets.0.weight}
-#   2: @L-↓construct.Dense.35:[CNode]84{[0]: ValueNode<FuncGraph> L-bool_.76, [1]: ValueNode<BoolImm> true}
-#   3: @L-↓construct.Dense.35:[CNode]85{[0]: ValueNode<Primitive> Switch, [1]: [CNode]84, [2]: ValueNode<FuncGraph> L-✓↓construct.Dense.36, [3]: ValueNode<FuncGraph> L-✗↓construct.Dense.86}
-#   4: @L-↓construct.Dense.35:[CNode]87{[0]: [CNode]85}
-#   5: @L-↓construct.Dense.35:[CNode]89{[0]: ValueNode<FuncGraph> L-↓↓construct.Dense.88, [1]: [CNode]87}
-#   6: @L-↓construct.Dense.35:[CNode]90{[0]: ValueNode<Primitive> Return, [1]: [CNode]89}
+#   1: @L-↓construct.Dense.21:x{[0]: ValueNode<DoSignaturePrimitive> S-Prim-MatMul, [1]: фx, [2]: L-nets.0.weight}
+#   2: @L-↓construct.Dense.21:[CNode]70{[0]: ValueNode<FuncGraph> L-bool_.62, [1]: ValueNode<BoolImm> true}
+#   3: @L-↓construct.Dense.21:[CNode]71{[0]: ValueNode<Primitive> Switch, [1]: [CNode]70, [2]: ValueNode<FuncGraph> L-✓↓construct.Dense.22, [3]: ValueNode<FuncGraph> L-✗↓construct.Dense.72}
+#   4: @L-↓construct.Dense.21:[CNode]73{[0]: [CNode]71}
+#   5: @L-↓construct.Dense.21:[CNode]75{[0]: ValueNode<FuncGraph> L-↓↓construct.Dense.74, [1]: [CNode]73}
+#   6: @L-↓construct.Dense.21:[CNode]76{[0]: ValueNode<Primitive> Return, [1]: [CNode]75}
 
 
 subgraph attr:
-subgraph instance: L-✓↓construct.Dense.36 : 0x11426a418
+training : 0
+subgraph instance: L-✓↓construct.Dense.22 : 0x131e74218
 # In file /Users/moranvl/anaconda3/envs/mindspore/lib/python3.9/site-packages/mindspore/nn/layer/basic.py:596/        if self.has_bias:/
-subgraph @L-✓↓construct.Dense.36 parent: [subgraph @L-↓construct.Dense.35]() {
+subgraph @L-✓↓construct.Dense.22 parent: [subgraph @L-↓construct.Dense.21]() {
 
 #------------------------> 8
-  %1(x) = $(L-↓construct.Dense.35):S-Prim-MatMul[output_names=["output"], transpose_a=Bool(0), input_names=["x1", "x2"], transpose_x2=Bool(1), transpose_x1=Bool(0), transpose_b=Bool(1)](%para15_фx, %para14_L-nets.0.weight)
-      : (<Tensor[Float32], (256, 2)>, <Ref[Tensor[Float32]], (20, 1)>) -> (<null>)
+  %1(x) = $(L-↓construct.Dense.21):S-Prim-MatMul[output_names=["output"], transpose_a=Bool(0), input_names=["x1", "x2"], transpose_x2=Bool(1), transpose_x1=Bool(0), transpose_b=Bool(1)](%para15_фx, %para14_L-nets.0.weight)
+      : (<Tensor[Float32], (1, 5)>, <Ref[Tensor[Float32]], (128, 8)>) -> (<null>)
       #scope: (Default/nets-SequentialCell/0-Dense)
       # In file /Users/moranvl/anaconda3/envs/mindspore/lib/python3.9/site-packages/mindspore/nn/layer/basic.py:595/        x = self.matmul(x, self.weight)/
   %2(x) = S-Prim-BiasAdd[output_names=["output"], format="NCHW", input_names=["x", "b"]](%1, %para13_L-nets.0.bias)
-      : (<null>, <Ref[Tensor[Float32]], (20)>) -> (<null>)
+      : (<null>, <Ref[Tensor[Float32]], (128)>) -> (<null>)
       #scope: (Default/nets-SequentialCell/0-Dense)
       # In file /Users/moranvl/anaconda3/envs/mindspore/lib/python3.9/site-packages/mindspore/nn/layer/basic.py:597/            x = self.bias_add(x, self.bias)/
   Return(%2)
@@ -304,8 +313,8 @@ subgraph @L-✓↓construct.Dense.36 parent: [subgraph @L-↓construct.Dense.35]
       # In file /Users/moranvl/anaconda3/envs/mindspore/lib/python3.9/site-packages/mindspore/nn/layer/basic.py:596/        if self.has_bias:/
 }
 # Order:
-#   1: @L-✓↓construct.Dense.36:x{[0]: ValueNode<DoSignaturePrimitive> S-Prim-BiasAdd, [1]: x, [2]: L-nets.0.bias}
-#   2: @L-✓↓construct.Dense.36:[CNode]91{[0]: ValueNode<Primitive> Return, [1]: x}
+#   1: @L-✓↓construct.Dense.22:x{[0]: ValueNode<DoSignaturePrimitive> S-Prim-BiasAdd, [1]: x, [2]: L-nets.0.bias}
+#   2: @L-✓↓construct.Dense.22:[CNode]77{[0]: ValueNode<Primitive> Return, [1]: x}
 
 
 #===============================================================================

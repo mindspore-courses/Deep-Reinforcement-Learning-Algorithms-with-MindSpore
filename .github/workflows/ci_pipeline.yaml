@@ -12,6 +12,7 @@ on:
       - 'utilities/**'
       - 'results/**'
       - 'environments/**'
+      - 'tests/**'
       - '.github/workflows/**'
   push:
     branches: [ "main" ]
@@ -21,6 +22,7 @@ on:
       - 'exploration_strategies/**'
       - 'utilities/**'
       - 'environments/**'
+      - 'tests/**'
 
 permissions:
   contents: read
@@ -53,4 +55,7 @@ jobs:
     - name: Analysing the environments code with pylint
       run: |
         pylint environments --rcfile=.github/pylint.conf
+    - name: Analysing the tests code with pylint
+      run: |
+        pylint tests --rcfile=.github/pylint.conf
     
