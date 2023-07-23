@@ -2,7 +2,8 @@
 Four Rooms
 """
 # from agents.DQN_agents.DDQN import DDQN
-from agents.hierarchical_agents.SNN_HRL import SNN_HRL
+# from agents.hierarchical_agents.SNN_HRL import SNN_HRL
+from agents.hierarchical_agents.DIAYN import DIAYN
 from agents.Trainer import Trainer
 from environments.Four_Rooms_Environment import Four_Rooms_Environment
 from utilities.data_structures.Config import Config
@@ -13,7 +14,7 @@ config.seed = 1
 height = 15
 width = 15
 random_goal_place = False
-num_possible_states = (height * width) ** (1 + 1*random_goal_place)
+num_possible_states = (height * width) ** (1 + 1 * random_goal_place)
 embedding_dimensions = [[num_possible_states, 20]]
 print("Num possible states ", num_possible_states)
 
@@ -34,7 +35,69 @@ config.use_GPU = False
 config.overwrite_existing_results_file = False
 config.randomise_random_seed = True
 config.save_model = False
+clip_rewards = False
 
+actor_critic_agent_hyperparameters = {
+        "Actor": {
+            "learning_rate": 0.0003,
+            "linear_hidden_units": [128, 128],
+            "final_layer_activation": "Softmax",
+            "batch_norm": False,
+            "tau": 0.005,
+            "gradient_clipping_norm": 5,
+            "initialiser": "Xavier"
+        },
+
+        "Critic": {
+            "learning_rate": 0.0003,
+            "linear_hidden_units": [128, 128],
+            "final_layer_activation": None,
+            "batch_norm": False,
+            "buffer_size": 1000000,
+            "tau": 0.005,
+            "gradient_clipping_norm": 5,
+            "initialiser": "Xavier"
+        },
+
+        "min_steps_before_learning": 400,
+        "batch_size": 256,
+        "discount_rate": 0.99,
+        "mu": 0.0, #for O-H noise
+        "theta": 0.15, #for O-H noise
+        "sigma": 0.25, #for O-H noise
+        "action_noise_std": 0.2,  # for TD3
+        "action_noise_clipping_range": 0.5,  # for TD3
+        "update_every_n_steps": 1,
+        "learning_updates_per_learning_session": 1,
+        "automatically_tune_entropy_hyperparameter": True,
+        "entropy_term_weight": None,
+        "add_extra_noise": False,
+        "do_evaluation_iterations": True,
+        "clip_rewards": clip_rewards
+    }
+
+dqn_agent_hyperparameters = {
+    "learning_rate": 0.005,
+    "batch_size": 128,
+    "buffer_size": 40000,
+    "epsilon": 1.0,
+    "epsilon_decay_rate_denominator": 3,
+    "discount_rate": 0.99,
+    "tau": 0.01,
+    "alpha_prioritised_replay": 0.6,
+    "beta_prioritised_replay": 0.1,
+    "incremental_td_error": 1e-8,
+    "update_every_n_steps": 3,
+    "linear_hidden_units": [30, 15],
+    "final_layer_activation": "None",
+    "batch_norm": False,
+    "gradient_clipping_norm": 5,
+    "clip_rewards": False,
+    "learning_iterations": 2
+}
+
+manager_hyperparameters = dqn_agent_hyperparameters
+manager_hyperparameters.update({"timesteps_to_give_up_control_for": 5})
 
 config.hyperparameters = {
     "DQN_Agents": {
@@ -124,23 +187,23 @@ config.hyperparameters = {
 
     },
 
-
     "DIAYN": {
-
+        "num_unsupservised_episodes": 100,
+        "MANAGER": manager_hyperparameters,
         "num_skills": 5,
         "DISCRIMINATOR": {
-            "learning_rate": 0.01,
-            "linear_hidden_units": [20, 10],
+            # "learning_rate": 0.01,
+            # "linear_hidden_units": [20, 10],
+            "learning_rate": 0.003,
+            "linear_hidden_units": [128, 128],
             "columns_of_data_to_be_embedded": [0],
             "embedding_dimensions": embedding_dimensions,
+            "final_layer_activation": None,
+            "gradient_clipping_norm": 5,
         },
 
-        "AGENT": {
-            "learning_rate": 0.01,
-            "linear_hidden_units": [20, 10],
-        }
+        "AGENT": actor_critic_agent_hyperparameters,
     },
-
 
     "HRL": {
         "linear_hidden_units": [10, 5],
@@ -160,11 +223,10 @@ config.hyperparameters = {
 
     }
 
-
 }
 
-if __name__== '__main__':
+if __name__ == '__main__':
     # AGENTS = [DDQN] #DIAYN] # A3C] #SNN_HRL] #, DDQN]
-    AGENTS = [SNN_HRL]
+    AGENTS = [DIAYN]
     trainer = Trainer(config, AGENTS)
     trainer.run_games_for_agents()

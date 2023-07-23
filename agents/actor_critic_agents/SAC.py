@@ -22,12 +22,13 @@ class SAC(Base_Agent):
     agent is also trained to maximise the entropy of their actions as well as their cumulative reward"""
     agent_name = "SAC"
 
-    def __init__(self, config):
+    def __init__(self, config, _assert=True):
         Base_Agent.__init__(self, config)
-        assert self.action_types == "CONTINUOUS", "Action types must be continuous. Use SAC Discrete instead for " \
-                                                  "discrete actions"
-        assert self.config.hyperparameters["Actor"]["final_layer_activation"] != "Softmax", "Final actor layer must " \
-                                                                                            "not be softmax"
+        if _assert:
+            assert self.action_types == "CONTINUOUS", \
+                "Action types must be continuous. Use SAC Discrete instead for discrete actions"
+            assert self.config.hyperparameters["Actor"]["final_layer_activation"] != "Softmax", \
+                "Final actor layer must not be softmax"
         self.hyperparameters = config.hyperparameters
         self.critic_local_1 = self.create_NN(
             input_dim=self.state_size + self.action_size, output_dim=1, key_to_use="Critic"
@@ -115,8 +116,12 @@ class SAC(Base_Agent):
         """Saves the result of an episode of the game. Overriding the method in Base Agent that does this because we
         only want to keep track of the results during the evaluation episodes"""
         if self.episode_number == 1 or not self.do_evaluation_iterations:
-            self.game_full_episode_scores.extend([self.total_episode_score_so_far])
-            self.rolling_results.append(np.mean(self.game_full_episode_scores[-1 * self.rolling_score_window:]))
+            total_episode_score_so_far = self.total_episode_score_so_far
+            if isinstance(self.total_episode_score_so_far, ms.Tensor):
+                total_episode_score_so_far = total_episode_score_so_far.numpy()
+            self.game_full_episode_scores.extend([total_episode_score_so_far])
+            rolling_results = self.game_full_episode_scores[-1 * self.rolling_score_window:]
+            self.rolling_results.append(np.mean(rolling_results))
             self.save_max_result_seen()
 
         elif (self.episode_number - 1) % TRAINING_EPISODES_PER_EVAL_EPISODE == 0:
@@ -149,7 +154,7 @@ class SAC(Base_Agent):
                 self.save_experience(experience=(self.state, self.action, self.reward, self.next_state, mask))
             self.state = self.next_state
             self.global_step_number += 1
-        print(self.total_episode_score_so_far)
+        # print(self.total_episode_score_so_far)
         if eval_ep:
             self.print_summary_of_latest_evaluation_episode()
         self.episode_number += 1
@@ -220,6 +225,7 @@ class SAC(Base_Agent):
 
     def not_eval_produce_action_and_action_info(self, state):
         """Given the state, produces an action, the log probability of the action, and the tanh of the mean action"""
+        state = state.float()
         actor_output = self.actor_local(state)
         mean, log_std = actor_output[:, :self.action_size], actor_output[:, self.action_size:]
         std = log_std.exp()

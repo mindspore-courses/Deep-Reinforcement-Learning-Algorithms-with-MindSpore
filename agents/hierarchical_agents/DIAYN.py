@@ -7,6 +7,7 @@ better by maintaining a replay buffer and using that to train the discriminator 
 import random
 import time
 import copy
+import gym
 from gym import Wrapper, spaces
 import numpy as np
 import mindspore as ms
@@ -14,6 +15,7 @@ from mindspore import ops, nn
 from agents.Base_Agent import Base_Agent
 from agents.DQN_agents.DDQN import DDQN
 from agents.actor_critic_agents.SAC import SAC
+from agents.actor_critic_agents.SAC_Discrete import SAC_Discrete
 
 
 class DIAYN(Base_Agent):
@@ -44,7 +46,11 @@ class DIAYN(Base_Agent):
         self.agent_config.hyperparameters["do_evaluation_iterations"] = False
         # We have to use SAC because it involves maximising the policy's entropy over actions which is also a part of
         # DIAYN
-        self.agent = SAC(self.agent_config)
+        # self.agent = SAC(self.agent_config, _assert=False)
+        if isinstance(self.environment.action_space, gym.spaces.discrete.Discrete):
+            self.agent = SAC_Discrete(self.agent_config)
+        else:
+            self.agent = SAC(self.agent_config, _assert=False)
 
         self.timesteps_to_give_up_control_for = self.hyperparameters["MANAGER"]["timesteps_to_give_up_control_for"]
         self.manager_agent_config = copy.deepcopy(config)
@@ -74,6 +80,7 @@ class DIAYN(Base_Agent):
             return
         assert isinstance(skill, int)
 
+        next_state = ms.Tensor(next_state)
         # self.compute_loss(skill, next_state)
         _, grads = self.grad_fn(skill, next_state)
 
@@ -85,16 +92,17 @@ class DIAYN(Base_Agent):
 
     def get_predicted_probability_of_skill(self, skill, next_state):
         """Gets the probability that the disciminator gives to the correct skill"""
-        predicted_probabilities_unnormalised = self.discriminator(ms.Tensor(next_state).unsqueeze(0))
+        predicted_probabilities_unnormalised = self.discriminator(ms.Tensor(next_state, dtype=ms.float32).unsqueeze(0))
         probability_of_correct_skill = ops.softmax(predicted_probabilities_unnormalised)[:, skill]
         return probability_of_correct_skill.item(), predicted_probabilities_unnormalised
 
     def compute_loss(self, skill, next_state):
         """comput loss"""
-        discriminator_outputs = self.discriminator(ms.Tensor(next_state).unsqueeze(0))
+        discriminator_outputs = self.discriminator(ms.Tensor(next_state, ms.float32).unsqueeze(0))
         assert discriminator_outputs.shape[0] == 1
         assert discriminator_outputs.shape[1] == self.num_skills
-        loss = nn.CrossEntropyLoss()(discriminator_outputs, ms.Tensor([skill]).long())
+        # loss = nn.CrossEntropyLoss()(discriminator_outputs, ms.Tensor([skill]).long())
+        loss = nn.CrossEntropyLoss()(discriminator_outputs, ms.Tensor([skill], dtype=ms.int32))
         return loss
 
 
@@ -108,7 +116,8 @@ class DIAYN_Skill_Wrapper(Wrapper):
         self.num_skills = num_skills
         self.meta_agent = meta_agent
         self.prior_probability_of_skill = 1.0 / self.num_skills  # Each skill equally likely to be chosen
-        self._max_episode_steps = self.env._max_episode_steps
+        # self._max_episode_steps = self.env._max_episode_steps
+        self._max_episode_steps = self.env.max_episode_steps
 
     def reset(self, **kwargs):
         observation = self.env.reset(**kwargs)

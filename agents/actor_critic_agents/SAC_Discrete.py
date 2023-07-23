@@ -1,6 +1,8 @@
 """"
 SAC Discrete
 """
+# pylint: disable=W0233
+# pylint: disable=W0231
 import mindspore as ms
 from mindspore import ops, nn
 import numpy as np
@@ -16,8 +18,8 @@ class SAC_Discrete(SAC):
     agent_name = "SAC"
 
     def __init__(self, config):
-        super().__init__(config)
-        # Base_Agent.__init__(self, config)
+        # super().__init__(config)
+        Base_Agent.__init__(self, config)
         assert self.action_types == "DISCRETE", "Action types must be discrete. Use SAC instead for continuous actions"
         assert self.config.hyperparameters["Actor"][
                    "final_layer_activation"] == "Softmax", "Final actor layer must be softmax"
@@ -86,6 +88,7 @@ class SAC_Discrete(SAC):
     def produce_action_and_action_info(self, state):
         """Given the state, produces an action, the probability of the action, the log probability of the action, and
         the argmax action"""
+        state = state.float()
         action_probabilities = self.actor_local(state)
         max_probability_action = ops.argmax(action_probabilities, dim=-1)
         action_distribution = create_actor_distribution(self.action_types, action_probabilities, self.action_size)

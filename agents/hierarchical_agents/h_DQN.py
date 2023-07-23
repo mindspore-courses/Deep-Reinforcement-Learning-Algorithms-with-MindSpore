@@ -39,11 +39,16 @@ class h_DQN(Base_Agent):
         self.meta_controller_config = copy.deepcopy(config)
         self.meta_controller_config.hyperparameters = self.meta_controller_config.hyperparameters["META_CONTROLLER"]
         self.meta_controller = DDQN(self.meta_controller_config)
+
+        try:
+            observation_dim = config.environment.observation_space.n
+        except AttributeError:
+            observation_dim = config.environment.observation_space.shape[0]
         self.meta_controller.q_network_local = self.create_NN(
-            input_dim=self.state_size, output_dim=config.environment.observation_space.n, key_to_use="META_CONTROLLER"
+            input_dim=self.state_size, output_dim=observation_dim, key_to_use="META_CONTROLLER"
         )
         self.meta_controller.q_network_target = self.create_NN(
-            input_dim=self.state_size, output_dim=config.environment.observation_space.n, key_to_use="META_CONTROLLER"
+            input_dim=self.state_size, output_dim=observation_dim, key_to_use="META_CONTROLLER"
         )
         self.rolling_intrinsic_rewards = []
         self.goals_seen = []

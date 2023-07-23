@@ -33,7 +33,7 @@ config.hyperparameters = {
         "CONTROLLER": {
             "batch_size": 256,
             # "learning_rate": 0.01,
-            "learning_rate": 0.01,
+            "learning_rate": 0.005,
             # "buffer_size": 40000,
             "buffer_size": 400000,
             # "linear_hidden_units": [20, 10],
@@ -57,7 +57,7 @@ config.hyperparameters = {
             # "learning_rate": 0.001,
             # "buffer_size": 40000,
             # "linear_hidden_units": [20, 10],
-            "learning_rate": 0.001,
+            "learning_rate": 0.0005,
             "buffer_size": 400000,
             "linear_hidden_units": [128, 128],
             "final_layer_activation": "None",
