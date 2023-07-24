@@ -101,6 +101,7 @@ class DIAYN(Base_Agent):
         discriminator_outputs = self.discriminator(ms.Tensor(next_state, ms.float32).unsqueeze(0))
         assert discriminator_outputs.shape[0] == 1
         assert discriminator_outputs.shape[1] == self.num_skills
+        discriminator_outputs = nn.Softmax()(discriminator_outputs)
         # loss = nn.CrossEntropyLoss()(discriminator_outputs, ms.Tensor([skill]).long())
         loss = nn.CrossEntropyLoss()(discriminator_outputs, ms.Tensor([skill], dtype=ms.int32))
         return loss

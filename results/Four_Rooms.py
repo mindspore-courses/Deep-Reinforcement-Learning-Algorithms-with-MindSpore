@@ -39,11 +39,11 @@ clip_rewards = False
 
 actor_critic_agent_hyperparameters = {
         "Actor": {
-            "learning_rate": 0.0003,
+            "learning_rate": 0.0001,
             "linear_hidden_units": [128, 128],
             "final_layer_activation": "Softmax",
             "batch_norm": False,
-            "tau": 0.005,
+            "tau": 0.05,
             "gradient_clipping_norm": 5,
             "initialiser": "Xavier"
         },
@@ -54,7 +54,7 @@ actor_critic_agent_hyperparameters = {
             "final_layer_activation": None,
             "batch_norm": False,
             "buffer_size": 1000000,
-            "tau": 0.005,
+            "tau": 0.05,
             "gradient_clipping_norm": 5,
             "initialiser": "Xavier"
         },
@@ -67,8 +67,8 @@ actor_critic_agent_hyperparameters = {
         "sigma": 0.25, #for O-H noise
         "action_noise_std": 0.2,  # for TD3
         "action_noise_clipping_range": 0.5,  # for TD3
-        "update_every_n_steps": 1,
-        "learning_updates_per_learning_session": 1,
+        "update_every_n_steps": 5,
+        "learning_updates_per_learning_session": 10,
         "automatically_tune_entropy_hyperparameter": True,
         "entropy_term_weight": None,
         "add_extra_noise": False,
@@ -81,14 +81,16 @@ dqn_agent_hyperparameters = {
     "batch_size": 128,
     "buffer_size": 40000,
     "epsilon": 1.0,
-    "epsilon_decay_rate_denominator": 3,
+    # "epsilon_decay_rate_denominator": 3,
+    "epsilon_decay_rate_denominator": 15,
     "discount_rate": 0.99,
     "tau": 0.01,
     "alpha_prioritised_replay": 0.6,
     "beta_prioritised_replay": 0.1,
     "incremental_td_error": 1e-8,
-    "update_every_n_steps": 3,
-    "linear_hidden_units": [30, 15],
+    "update_every_n_steps": 20,
+    # "linear_hidden_units": [30, 15],
+    "linear_hidden_units": [128, 128],
     "final_layer_activation": "None",
     "batch_norm": False,
     "gradient_clipping_norm": 5,
@@ -139,7 +141,8 @@ config.hyperparameters = {
             "batch_norm": False,
             "gradient_clipping_norm": 2,
             "update_every_n_steps": 1,
-            "epsilon_decay_rate_denominator": 500,
+            # "epsilon_decay_rate_denominator": 500,
+            "epsilon_decay_rate_denominator": 50,
             "discount_rate": 0.999,
             "learning_iterations": 1,
             "tau": 0.01,
@@ -161,7 +164,8 @@ config.hyperparameters = {
             "batch_norm": False,
             "gradient_clipping_norm": 5,
             "update_every_n_steps": 1,
-            "epsilon_decay_rate_denominator": 50,
+            # "epsilon_decay_rate_denominator": 50,
+            "epsilon_decay_rate_denominator": 5,
             "discount_rate": 0.99,
             "learning_iterations": 1,
             "tau": 0.01,
@@ -188,16 +192,17 @@ config.hyperparameters = {
     },
 
     "DIAYN": {
-        "num_unsupservised_episodes": 100,
+        "num_unsupservised_episodes": 200,
         "MANAGER": manager_hyperparameters,
-        "num_skills": 5,
+        "num_skills": 20,
         "DISCRIMINATOR": {
             # "learning_rate": 0.01,
             # "linear_hidden_units": [20, 10],
-            "learning_rate": 0.003,
+            "learning_rate": 0.001,
             "linear_hidden_units": [128, 128],
-            "columns_of_data_to_be_embedded": [0],
-            "embedding_dimensions": embedding_dimensions,
+            # useless:
+            # "columns_of_data_to_be_embedded": [0],
+            # "embedding_dimensions": embedding_dimensions,
             "final_layer_activation": None,
             "gradient_clipping_norm": 5,
         },

@@ -88,8 +88,12 @@ class SAC_Discrete(SAC):
     def produce_action_and_action_info(self, state):
         """Given the state, produces an action, the probability of the action, the log probability of the action, and
         the argmax action"""
+        # eps = 1e-6
         state = state.float()
         action_probabilities = self.actor_local(state)
+        # action_probabilities = action_probabilities.clip(min=eps, max=1-eps)
+        # action_probabilities /= action_probabilities.sum()
+
         max_probability_action = ops.argmax(action_probabilities, dim=-1)
         action_distribution = create_actor_distribution(self.action_types, action_probabilities, self.action_size)
         action = action_distribution.sample()
