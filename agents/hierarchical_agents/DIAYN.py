@@ -141,7 +141,7 @@ class DIAYN_Skill_Wrapper(Wrapper):
         outputs so they can be used for training"""
         probability_correct_skill, disciminator_outputs = self.meta_agent.get_predicted_probability_of_skill(self.skill,
                                                                                                              next_state)
-        new_reward = np.log(probability_correct_skill + 1e-8) - np.log(self.prior_probability_of_skill)
+        new_reward = np.log(probability_correct_skill.numpy() + 1e-8) - np.log(self.prior_probability_of_skill)
         return new_reward, disciminator_outputs
 
 

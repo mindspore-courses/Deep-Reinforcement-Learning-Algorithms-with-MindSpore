@@ -217,8 +217,8 @@ class SAC(Base_Agent):
         x_t = mean + self.sample(shape=mean.shape) * std
         action = ops.tanh(x_t)
         # log_prob = normal.log_prob(x_t)
-        # 尝试不使用normal
-        log_prob = self.normal.log_prob((x_t-mean)/std)
+        # 尝试不使用normal, 分母防止0出现
+        log_prob = self.normal.log_prob((x_t-mean)/(std+EPSILON))
         log_prob -= ops.log(1 - action.pow(2) + EPSILON)
         log_prob = log_prob.sum(1, keepdims=True)
         return action, log_prob

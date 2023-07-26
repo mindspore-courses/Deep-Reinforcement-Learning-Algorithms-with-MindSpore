@@ -11,7 +11,7 @@ from utilities.data_structures.Config import Config
 height = 15
 width = 15
 random_goal_place = False
-num_possible_states = (height * width) ** (1 + 1*random_goal_place)
+num_possible_states = (height * width) ** (1 + 1 * random_goal_place)
 embedding_dimensions = [[num_possible_states, 20]]
 
 config = Config()
@@ -72,7 +72,7 @@ use_relative_counts = True
 config.debug_mode = False
 
 config.hyperparameters = {
-"SNN_HRL": {
+    "SNN_HRL": {
         "SKILL_AGENT": {
             "num_skills": 20,
             "regularisation_weight": 1.5,
@@ -98,6 +98,7 @@ config.hyperparameters = {
             "tau": 0.01,
             "clip_rewards": False
         },
+    },
     "h_DQN": {
         "CONTROLLER": {
             "batch_size": 256,
@@ -240,9 +241,7 @@ config.hyperparameters = {
         "do_evaluation_iterations": True,
         "clip_rewards": clip_rewards
     },
-},
 }
-
 
 if __name__ == "__main__":
     # AGENTS = [DDQN] #] #DDQN, ,  ] #] ##  ] #, SAC_Discrete] #, DQN]

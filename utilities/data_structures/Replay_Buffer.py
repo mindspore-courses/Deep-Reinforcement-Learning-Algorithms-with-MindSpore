@@ -3,7 +3,7 @@ Replay Buffer
 """
 from collections import namedtuple, deque
 import random
-import mindspore.numpy as np
+import mindspore as ms
 
 
 class Replay_Buffer:
@@ -59,9 +59,9 @@ class Replay_Buffer:
                 next_states_append(e.next_state)
                 dones_append(int(e.done))
 
-        states, actions = np.array(states, dtype=np.float32), np.array(actions).unsqueeze(-1)
-        rewards = np.array(rewards).unsqueeze(-1)
-        next_states, dones = np.array(next_states, dtype=np.float32), np.array(dones).unsqueeze(-1)
+        states, actions = ms.Tensor(states, dtype=ms.float32), ms.Tensor(actions).unsqueeze(-1)
+        rewards = ms.Tensor(rewards).unsqueeze(-1)
+        next_states, dones = ms.Tensor(next_states, dtype=ms.float32), ms.Tensor(dones).unsqueeze(-1)
         if len(states.shape) == 1:
             states = states.unsqueeze(-1)
         if len(next_states.shape) == 1:
