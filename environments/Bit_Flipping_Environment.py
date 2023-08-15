@@ -1,4 +1,5 @@
 """bit fliping environments"""
+# pylint: disable=W0613
 import copy
 import random
 import gym
