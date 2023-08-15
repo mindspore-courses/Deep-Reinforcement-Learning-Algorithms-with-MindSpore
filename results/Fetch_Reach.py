@@ -1,6 +1,5 @@
 """
 Fetch Reach
-TODO: mujoco
 """
 import gym
 
@@ -29,8 +28,8 @@ config.hyperparameters = {
 
     "Actor_Critic_Agents": {
         "Actor": {
-            "learning_rate": 0.001,
-            "linear_hidden_units": [50, 50],
+            "learning_rate": 0.0002,
+            "linear_hidden_units": [128, 128],
             "final_layer_activation": "TANH",
             "batch_norm": False,
             "tau": 0.01,
@@ -38,8 +37,8 @@ config.hyperparameters = {
         },
 
         "Critic": {
-            "learning_rate": 0.01,
-            "linear_hidden_units": [50, 50, 50],
+            "learning_rate": 0.002,
+            "linear_hidden_units": [128, 128, 128],
             "final_layer_activation": None,
             "batch_norm": False,
             "buffer_size": 30000,

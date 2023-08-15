@@ -87,6 +87,8 @@ class Base_Agent:
                     name = "Hopper"
                 elif str(self.environment.unwrapped)[1:9] == "Walker2d":
                     name = "Walker2d"
+                elif str(self.environment.unwrapped)[1:8] == "Reacher":
+                    name = "Reacher"
                 else:
                     name = self.environment.spec.id.split("-")[0]
             except AttributeError:
@@ -136,8 +138,11 @@ class Base_Agent:
         print("TITLE ", self.environment_title)
         if self.environment_title == "FetchReach":
             return -5
-        if self.environment_title == "Pendulum":
+        # if self.environment_title == "Pendulum" or  self.environment_title == "Reacher":
+        if self.environment_title in ("Pendulum", "Reacher"):
             return -500
+        # if self.environment_title == "Reacher":
+        #     return -500
         if self.environment_title in ["AntMaze", "Hopper", "Walker2d"]:
             print("Score required to win set to infinity therefore no learning rate annealing will happen")
             return float("inf")
@@ -151,7 +156,7 @@ class Base_Agent:
 
     def get_trials(self):
         """Gets the number of trials to average a score over"""
-        if self.environment_title in ["AntMaze", "FetchReach", "Hopper", "Walker2d", "CartPole"]:
+        if self.environment_title in ["AntMaze", "FetchReach", "Hopper", "Walker2d", "CartPole", "Reacher"]:
             return 100
         try:
             return self.environment.unwrapped.trials

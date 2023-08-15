@@ -1,6 +1,5 @@
 """
 walker
-TODO mujoco
 """
 import gym
 # from agents.policy_gradient_agents.PPO import PPO
@@ -16,14 +15,14 @@ clip_rewards = False
 config = Config()
 config.seed = 1
 config.environment = gym.make("Walker2d-v2")
-config.num_episodes_to_run = 400
-config.file_to_save_data_results = "data_and_graphs/Walker_Results_Data.pkl"
-config.file_to_save_results_graph = "data_and_graphs/Walker_Results_Graph.png"
+config.num_episodes_to_run = 1000
+config.file_to_save_data_results = "results/data_and_graphs/Walker_Results_Data.pkl"
+config.file_to_save_results_graph = "results/data_and_graphs/Walker_Results_Graph.png"
 config.show_solution_score = False
 config.visualise_individual_results = False
 config.visualise_overall_agent_results = True
 config.standard_deviation_results = 1.0
-config.runs_per_agent = 3
+config.runs_per_agent = 1
 config.use_GPU = False
 config.overwrite_existing_results_file = False
 config.randomise_random_seed = True
@@ -34,7 +33,7 @@ clip_reward = False
 actor_critic_agent_hyperparameters = {
         "Actor": {
             "learning_rate": 0.0003,
-            "linear_hidden_units": [64, 64],
+            "linear_hidden_units": [128, 128],
             "final_layer_activation": None,
             "batch_norm": False,
             "tau": 0.005,
@@ -44,7 +43,7 @@ actor_critic_agent_hyperparameters = {
 
         "Critic": {
             "learning_rate": 0.0003,
-            "linear_hidden_units": [64, 64],
+            "linear_hidden_units": [128, 128],
             "final_layer_activation": None,
             "batch_norm": False,
             "buffer_size": 1000000,
@@ -71,7 +70,7 @@ actor_critic_agent_hyperparameters = {
     }
 
 dqn_agent_hyperparameters =   {
-        "learning_rate": 0.005,
+        "learning_rate": 0.0005,
         "batch_size": 128,
         "buffer_size": 40000,
         "epsilon": 1.0,
@@ -82,11 +81,12 @@ dqn_agent_hyperparameters =   {
         "beta_prioritised_replay": 0.1,
         "incremental_td_error": 1e-8,
         "update_every_n_steps": 3,
-        "linear_hidden_units": [30, 15],
+        "linear_hidden_units": [128, 128],
         "final_layer_activation": "None",
         "batch_norm": False,
         "gradient_clipping_norm": 5,
-        "clip_rewards": clip_rewards
+        "clip_rewards": clip_rewards,
+        "learning_iterations": 5
     }
 
 
@@ -116,8 +116,8 @@ config.hyperparameters = {
     "Actor_Critic_Agents": actor_critic_agent_hyperparameters,
     "DIAYN": {
         "DISCRIMINATOR": {
-            "learning_rate": 0.001,
-            "linear_hidden_units": [32, 32],
+            "learning_rate": 0.0001,
+            "linear_hidden_units": [128, 128],
             "final_layer_activation": None,
             "gradient_clipping_norm": 5
 
@@ -125,12 +125,13 @@ config.hyperparameters = {
         "AGENT": actor_critic_agent_hyperparameters,
         "MANAGER": manager_hyperparameters,
         "num_skills": 10,
-        "num_unsupservised_episodes": 100
+        "num_unsupservised_episodes": 200
     }
 }
 
 
 if __name__ == "__main__":
-    AGENTS = [DIAYN] #, SAC] #, DDPG, PPO, TD3] ] #,DIAYN] #
+    # AGENTS = [DIAYN] #, SAC] #, DDPG, PPO, TD3] ] #,DIAYN] #
+    AGENTS = [DIAYN]
     trainer = Trainer(config, AGENTS)
     trainer.run_games_for_agents()

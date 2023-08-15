@@ -1,6 +1,6 @@
 """
 Reacher
-TODO: mojoco
+TODO: 原始代码即跑不起来，有部分代码没生成
 """
 import gym
 from agents.Trainer import Trainer
@@ -96,7 +96,8 @@ config.hyperparameters = {
             "action_noise_clipping_range": 0.5,  # for TD3
             "update_every_n_steps": 20,
             "learning_updates_per_learning_session": 10,
-            "clip_rewards": False
+            "clip_rewards": False,
+            "number_goal_candidates": 10,
 
             } ,
 

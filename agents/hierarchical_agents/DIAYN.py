@@ -118,7 +118,10 @@ class DIAYN_Skill_Wrapper(Wrapper):
         self.meta_agent = meta_agent
         self.prior_probability_of_skill = 1.0 / self.num_skills  # Each skill equally likely to be chosen
         # self._max_episode_steps = self.env._max_episode_steps
-        self._max_episode_steps = self.env.max_episode_steps
+        if hasattr(self.env, "max_episode_steps"):
+            self._max_episode_steps = self.env.max_episode_steps
+        else:
+            self._max_episode_steps = self.env._max_episode_steps
 
     def reset(self, **kwargs):
         observation = self.env.reset(**kwargs)

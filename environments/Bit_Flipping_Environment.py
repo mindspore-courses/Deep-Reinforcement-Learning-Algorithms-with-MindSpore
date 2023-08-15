@@ -90,7 +90,7 @@ class Bit_Flipping_Environment(gym.Env):
         """goal achieved"""
         return next_state[:self.environment_dimension] == next_state[-self.environment_dimension:]
 
-    def compute_reward(self, achieved_goal, desired_goal):
+    def compute_reward(self, achieved_goal, desired_goal, info):
         """Computes the reward we would have got with this achieved goal and desired goal. Must be of this exact
         interface to fit with the open AI gym specifications"""
         if (achieved_goal == desired_goal).all():
