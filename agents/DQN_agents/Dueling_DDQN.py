@@ -1,7 +1,12 @@
+"""
+Dueling DDQN
+"""
+# pylint: disable=C0103
 import mindspore as ms
 from mindspore import nn, ops
 from agents.Base_Agent import Base_Agent
 from agents.DQN_agents.DDQN import DDQN
+
 
 class Dueling_DDQN(DDQN):
     """A dueling double DQN agent as described in the paper http://proceedings.mlr.press/v48/wangf16.pdf"""
@@ -74,10 +79,3 @@ class Dueling_DDQN(DDQN):
         # Q_expected = q_values.gather(1, actions.long())
         Q_expected = q_values.gather(actions.long(), axis=1, batch_dims=1)
         return Q_expected
-
-
-
-
-
-
-

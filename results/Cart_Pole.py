@@ -1,20 +1,22 @@
-import os
+"""
+Cartpole
+"""
 import sys
 from os.path import dirname, abspath
+# import mindspore as ms
+import gym
+# from agents.DQN_agents.Dueling_DDQN import Dueling_DDQN
+from agents.actor_critic_agents.SAC_Discrete import SAC_Discrete
+# from agents.policy_gradient_agents.PPO import PPO
+from agents.Trainer import Trainer
+# from agents.policy_gradient_agents.REINFORCE import REINFORCE
+from utilities.data_structures.Config import Config
+# from agents.DQN_agents.DDQN import DDQN
+# from agents.DQN_agents.DDQN_With_Prioritised_Experience_Replay import DDQN_With_Prioritised_Experience_Replay
+# from agents.DQN_agents.DQN import DQN
+# from agents.DQN_agents.DQN_With_Fixed_Q_Targets import DQN_With_Fixed_Q_Targets
 
 sys.path.append(dirname(dirname(abspath(__file__))))
-import mindspore as ms
-import gym
-
-from agents.DQN_agents.Dueling_DDQN import Dueling_DDQN
-from agents.actor_critic_agents.SAC_Discrete import SAC_Discrete
-from agents.policy_gradient_agents.PPO import PPO
-from agents.Trainer import Trainer
-from utilities.data_structures.Config import Config
-from agents.DQN_agents.DDQN import DDQN
-from agents.DQN_agents.DDQN_With_Prioritised_Experience_Replay import DDQN_With_Prioritised_Experience_Replay
-from agents.DQN_agents.DQN import DQN
-from agents.DQN_agents.DQN_With_Fixed_Q_Targets import DQN_With_Fixed_Q_Targets
 
 config = Config()
 config.seed = 1
@@ -67,6 +69,7 @@ config.hyperparameters = {
         "clip_rewards": False
     },
     "Policy_Gradient_Agents": {
+        # PPO: 0.005, REINFORCE: 0.05
         "learning_rate": 0.005,
         "linear_hidden_units": [128, 128],
         "final_layer_activation": "SOFTMAX",
@@ -80,7 +83,8 @@ config.hyperparameters = {
         "mu": 0.0,  # only required for continuous action games
         "theta": 0.0,  # only required for continuous action games
         "sigma": 0.0,  # only required for continuous action games
-        "epsilon_decay_rate_denominator": 1.0,
+        # "epsilon_decay_rate_denominator": 1.0,
+        "epsilon_decay_rate_denominator": 20.0,
         "clip_rewards": False
     },
 
@@ -90,7 +94,6 @@ config.hyperparameters = {
         "linear_hidden_units": [20, 10],
         "final_layer_activation": ["SOFTMAX", None],
         "gradient_clipping_norm": 5.0,
-        "discount_rate": 0.99,
         "epsilon_decay_rate_denominator": 1.0,
         "normalise_rewards": True,
         "exploration_worker_difference": 2.0,
@@ -137,7 +140,7 @@ config.hyperparameters = {
 if __name__ == "__main__":
     # AGENTS = [SAC_Discrete, DDQN, Dueling_DDQN, DQN, DQN_With_Fixed_Q_Targets,
     #           DDQN_With_Prioritised_Experience_Replay, A2C, PPO]
-    ms.set_context(mode=ms.GRAPH_MODE)
+    # ms.set_context(mode=ms.GRAPH_MODE)
     AGENTS = [SAC_Discrete]
     trainer = Trainer(config, AGENTS)
     trainer.run_games_for_agents()

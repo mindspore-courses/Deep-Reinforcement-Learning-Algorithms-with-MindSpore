@@ -1,16 +1,23 @@
+"""
+Base Agent
+"""
+# pylint:disable=R0904
+# pylint:disable=R0902
+import time
 import logging
 import os
 import sys
-import gym
 import random
+import gym
 import numpy as np
-import time
 import mindspore as ms
 from mindspore import nn, ops
-from mindspore.nn.probability.distribution import Normal
 
 
-class Base_Agent(object):
+class Base_Agent:
+    """
+    Base Agent
+    """
 
     def __init__(self, config):
         self.logger = self.setup_logger()
@@ -46,6 +53,22 @@ class Base_Agent(object):
         # device
         ms.set_context(device_target=config.device_target, device_id=config.device_id)
 
+        # None init
+        self.state = None
+        self.next_state = None
+        self.action = None
+        self.reward = None
+        self.done = None
+        self.total_episode_score_so_far = 0
+        self.episode_states = []
+        self.episode_rewards = []
+        self.episode_actions = []
+        self.episode_next_states = []
+        self.episode_dones = []
+        self.episode_desired_goals = []
+        self.episode_achieved_goals = []
+        self.episode_observations = []
+
     def step(self):
         """Takes a step in the game. This method must be overriden by any agent"""
         raise ValueError("Step needs to be implemented by the agent")
@@ -57,20 +80,23 @@ class Base_Agent(object):
         except AttributeError:
             try:
                 if str(self.environment.unwrapped)[1:11] == "FetchReach":
-                    return "FetchReach"
+                    name = "FetchReach"
                 elif str(self.environment.unwrapped)[1:8] == "AntMaze":
-                    return "AntMaze"
+                    name = "AntMaze"
                 elif str(self.environment.unwrapped)[1:7] == "Hopper":
-                    return "Hopper"
+                    name = "Hopper"
                 elif str(self.environment.unwrapped)[1:9] == "Walker2d":
-                    return "Walker2d"
+                    name = "Walker2d"
+                elif str(self.environment.unwrapped)[1:8] == "Reacher":
+                    name = "Reacher"
                 else:
                     name = self.environment.spec.id.split("-")[0]
             except AttributeError:
                 name = str(self.environment.env)
                 if name[0:10] == "TimeLimit<":
                     name = name[10:]
-                name = name.split(" ")[0]
+                # name = name.split(" ")[0]
+                name = name.split(' ', maxsplit=1)[0]
                 if name[0] == "<":
                     name = name[1:]
                 if name[-3:] == "Env":
@@ -85,31 +111,38 @@ class Base_Agent(object):
 
     def get_action_size(self):
         """Gets the action_size for the gym env into the correct shape for a neural network"""
+        result = None
         if "overwrite_action_size" in self.config.__dict__:
-            return self.config.overwrite_action_size
+            result = self.config.overwrite_action_size
         if "action_size" in self.environment.__dict__:
-            return self.environment.action_size
+            result = self.environment.action_size
         if self.action_types == "DISCRETE":
-            return self.environment.action_space.n
+            result = self.environment.action_space.n
         else:
-            return self.environment.action_space.shape[0]
+            result = self.environment.action_space.shape[0]
+        return result
 
     def get_state_size(self):
         """Gets the state_size for the gym env into the correct shape for a neural network"""
         random_state = self.environment.reset()
+        result = None
         if isinstance(random_state, dict):
             state_size = random_state["observation"].shape[0] + random_state["desired_goal"].shape[0]
-            return state_size
+            result = state_size
         else:
-            return random_state.size
+            result = random_state.size
+        return result
 
     def get_score_required_to_win(self):
         """Gets average score required to win game"""
         print("TITLE ", self.environment_title)
         if self.environment_title == "FetchReach":
             return -5
-        if self.environment_title == "Pendulum":
+        # if self.environment_title == "Pendulum" or  self.environment_title == "Reacher":
+        if self.environment_title in ("Pendulum", "Reacher"):
             return -500
+        # if self.environment_title == "Reacher":
+        #     return -500
         if self.environment_title in ["AntMaze", "Hopper", "Walker2d"]:
             print("Score required to win set to infinity therefore no learning rate annealing will happen")
             return float("inf")
@@ -123,7 +156,7 @@ class Base_Agent(object):
 
     def get_trials(self):
         """Gets the number of trials to average a score over"""
-        if self.environment_title in ["AntMaze", "FetchReach", "Hopper", "Walker2d", "CartPole"]:
+        if self.environment_title in ["AntMaze", "FetchReach", "Hopper", "Walker2d", "CartPole", "Reacher"]:
             return 100
         try:
             return self.environment.unwrapped.trials
@@ -133,11 +166,8 @@ class Base_Agent(object):
     def setup_logger(self):
         """Sets up the logger"""
         filename = "Training.log"
-        try:
-            if os.path.isfile(filename):
-                os.remove(filename)
-        except:
-            pass
+        # if os.path.isfile(filename):
+        #     os.remove(filename)
 
         logger = logging.getLogger(__name__)
         logger.setLevel(logging.INFO)
@@ -157,7 +187,8 @@ class Base_Agent(object):
                 [self.environment_title, self.action_types, self.action_size, self.lowest_possible_episode_score,
                  self.state_size, self.hyperparameters, self.average_score_required_to_win, self.rolling_score_window,
                  ]):
-            self.logger.info("{} -- {}".format(ix, param))
+            # self.logger.info(f"{ix} -- {param}")
+            self.logger.info("%d -- %s", ix, param)
 
     def set_random_seeds(self, random_seed):
         """Sets all possible random seeds so results can be reproduced"""
@@ -186,9 +217,10 @@ class Base_Agent(object):
         self.episode_desired_goals = []
         self.episode_achieved_goals = []
         self.episode_observations = []
-        if "exploration_strategy" in self.__dict__.keys():
+        # if "exploration_strategy" in self.__dict__.keys():
+        if "exploration_strategy" in self.__dict__:
             self.exploration_strategy.reset()
-        self.logger.info("Reseting game -- New start state {}".format(self.state))
+        # self.logger.info(f"Reseting game -- New start state {self.state}")
 
     def track_episodes_data(self):
         """Saves the data from the recent episodes"""
@@ -244,8 +276,8 @@ class Base_Agent(object):
 
     def print_rolling_result(self):
         """Prints out the latest episode results"""
-        text = """"\r Episode {0}, Score: {3: .2f}, Max score seen: {4: .2f}, Rolling score: {1: .2f}, Max rolling 
-        score seen: {2: .2f}"""
+        text = """"\r Episode {0}, Score: {3: .2f}, Max score seen: {4: .2f}, Rolling score: {1: .2f},
+        Max rolling  score seen: {2: .2f}"""
         sys.stdout.write(
             text.format(len(self.game_full_episode_scores), self.rolling_results[-1], self.max_rolling_score_seen,
                         self.game_full_episode_scores[-1], self.max_episode_score_seen))
@@ -257,11 +289,11 @@ class Base_Agent(object):
         print(" ")
         if index_achieved_goal == -1:  # this means agent never achieved goal
             print("\033[91m" + "\033[1m" +
-                  "{} did not achieve required score \n".format(self.agent_name) +
+                  f"{self.agent_name} did not achieve required score \n" +
                   "\033[0m" + "\033[0m")
         else:
             print("\033[92m" + "\033[1m" +
-                  "{} achieved required score at episode {} \n".format(self.agent_name, index_achieved_goal) +
+                  f"{self.agent_name} achieved required score at episode {index_achieved_goal} \n" +
                   "\033[0m" + "\033[0m")
 
     def achieved_required_score_at_index(self):
@@ -273,6 +305,7 @@ class Base_Agent(object):
 
     def update_learning_rate(self, starting_lr, optimizer):
         """Lowers the learning rate according to how close we are to the solution"""
+        new_lr = starting_lr
         if len(self.rolling_results) > 0:
             last_rolling_score = self.rolling_results[-1]
             if last_rolling_score > 0.75 * self.average_score_required_to_win:
@@ -287,7 +320,7 @@ class Base_Agent(object):
                 new_lr = starting_lr
             ops.assign(optimizer.learning_rate, ms.Tensor(new_lr, ms.float32))
         if random.random() < 0.001:
-            self.logger.info("Learning rate {}".format(new_lr))
+            self.logger.info("Learning rate %d", new_lr)
 
     def enough_experiences_to_learn_from(self):
         """Boolean indicated whether there are enough experiences in the memory buffer to learn from"""
@@ -301,7 +334,8 @@ class Base_Agent(object):
             experience = self.state, self.action, self.reward, self.next_state, self.done
         memory.add_experience(*experience)
 
-    def take_optimisation_step(self, optimizer, loss, grads, clipping_norm=None):
+    def take_optimisation_step(self, optimizer, grads, clipping_norm=None):
+        """takes an optimizer"""
         # (loss, _), grads = grad_fn(data, label)
         # self.logger.info("Loss -- {}".format(loss.numpy().item()))
         if clipping_norm is not None:
@@ -309,16 +343,16 @@ class Base_Agent(object):
         optimizer(grads)
 
     def log_gradient_and_weight_information(self, grads, optimizer):
-        # log weight information
+        """Log gradient and weight information"""
         total_norm = 0
         for grad in grads:
             param_norm = ops.norm(grad, 2)
             total_norm += param_norm.item() ** 2
         total_norm = total_norm ** (1. / 2)
-        self.logger.info("Gradient Norm {}".format(total_norm))
+        self.logger.info("Gradient Norm %d", total_norm)
 
         learning_rate = optimizer.learning_rate.data.asnumpy()
-        self.logger.info("Learning Rate {}".format(learning_rate))
+        self.logger.info("Learning Rate %d", learning_rate)
 
     def soft_update_of_target_network(self, local_model, target_model, tau):
         """Updates the target network in the direction of the local network but by taking a step size less than one
@@ -342,9 +376,10 @@ class Base_Agent(object):
         default_hyperparameter_choices = {"output_activation": None, "hidden_activations": "relu", "dropout": 0.0,
                                           "batch_norm": False, "y_range": ()}
 
-        for key in default_hyperparameter_choices:
+        for key, value in default_hyperparameter_choices.items():
             if key not in hyperparameters.keys():
-                hyperparameters[key] = default_hyperparameter_choices[key]
+                # hyperparameters[key] = default_hyperparameter_choices[key]
+                hyperparameters[key] = value
 
         return Network(
             input_dim=input_dim,
@@ -366,11 +401,14 @@ class Base_Agent(object):
     @staticmethod
     def copy_model_over(from_model, to_model):
         """Copies model parameters from from_model to to_model"""
-        for to_model, from_model in zip(to_model.get_parameters(), from_model.get_parameters()):
-            to_model.set_data(from_model.value())
+        for to_, from_ in zip(to_model.get_parameters(), from_model.get_parameters()):
+            to_.set_data(from_.value())
 
 
 class Network(nn.Cell):
+    """
+    NN Network
+    """
     def __init__(self, input_dim: int, output_dim: int, layers_info: list, hyperparameters):
         super().__init__()
         activation = nn.ReLU()
@@ -406,12 +444,10 @@ class Network(nn.Cell):
             nets.append(nn.Softmax())
         elif hyperparameters["final_layer_activation"] == 'Softmax':
             nets.append(nn.Softmax())
-        elif hyperparameters["final_layer_activation"] is None:
-            pass
-        elif hyperparameters["final_layer_activation"] == 'None':
+        elif hyperparameters["final_layer_activation"] is None or hyperparameters["final_layer_activation"] == 'None':
             pass
         else:
-            raise Exception("Error, final layer activation is not set")
+            raise ValueError("Error, final layer activation is not set")
         nets = nn.SequentialCell(nets)
         self.nets = nets
 

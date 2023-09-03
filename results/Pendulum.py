@@ -1,19 +1,21 @@
-# 测试连续动作
+"""
+测试连续动作 Pendulum
+"""
 import gym
 
-from agents.policy_gradient_agents.PPO import PPO
+# from agents.policy_gradient_agents.PPO import PPO
 # from agents.actor_critic_agents.DDPG import DDPG
 from agents.actor_critic_agents.SAC import SAC
 # from agents.actor_critic_agents.TD3 import TD3
+# from agents.actor_critic_agents.DDPG_HER import DDPG_HER
 from agents.Trainer import Trainer
 from utilities.data_structures.Config import Config
-
 
 config = Config()
 config.seed = 1
 config.environment = gym.make("Pendulum-v0")
 config.num_episodes_to_run = 450
-config.file_to_save_data_results = Noneta
+config.file_to_save_data_results = None
 config.file_to_save_results_graph = None
 config.show_solution_score = False
 config.visualise_individual_results = False
@@ -26,50 +28,49 @@ config.randomise_random_seed = True
 config.save_model = False
 config.device_target = 'CPU'
 
-
 config.hyperparameters = {
     "Policy_Gradient_Agents": {
-            "learning_rate": 0.005,
-            "linear_hidden_units": [128, 128],
-            "final_layer_activation": "TANH",
-            "learning_iterations_per_round": 10,
-            "discount_rate": 0.9,
-            "batch_norm": False,
-            "clip_epsilon": 0.2,
-            "episodes_per_learning_round": 10,
-            "normalise_rewards": True,
-            "gradient_clipping_norm": 5,
-            "mu": 0.0,
-            "theta": 0.15,
-            "sigma": 0.2,
-            "epsilon_decay_rate_denominator": 1,
-            "clip_rewards": False
-        },
+        "learning_rate": 0.005,
+        "linear_hidden_units": [128, 128],
+        "final_layer_activation": "TANH",
+        "learning_iterations_per_round": 10,
+        "discount_rate": 0.9,
+        "batch_norm": False,
+        "clip_epsilon": 0.2,
+        "episodes_per_learning_round": 10,
+        "normalise_rewards": True,
+        "gradient_clipping_norm": 5,
+        "mu": 0.0,
+        "theta": 0.15,
+        "sigma": 0.2,
+        "epsilon_decay_rate_denominator": 1,
+        "clip_rewards": False
+    },
 
     "Actor_Critic_Agents": {
-            "Actor": {
-                "learning_rate": 3e-4,
-                "linear_hidden_units": [128, 128],
-                "final_layer_activation": None,
-                "batch_norm": False,
-                "tau": 0.005,
-                "gradient_clipping_norm": 5,
-                "initialiser": "Xavier"
-            },
+        "Actor": {
+            "learning_rate": 3e-4,
+            "linear_hidden_units": [128, 128],
+            "final_layer_activation": None,
+            "batch_norm": False,
+            "tau": 0.005,
+            "gradient_clipping_norm": 5,
+            "initialiser": "Xavier"
+        },
 
-            "Critic": {
-                # "learning_rate": 0.002,
-                "learning_rate": 5e-4,
-                "linear_hidden_units": [128, 128],
-                "final_layer_activation": None,
-                "batch_norm": False,
-                "buffer_size": int(1e6),
-                "tau": 0.005,
-                "gradient_clipping_norm": 5,
-                "initialiser": "Xavier"
-            },
+        "Critic": {
+            # "learning_rate": 0.002,
+            "learning_rate": 5e-4,
+            "linear_hidden_units": [128, 128],
+            "final_layer_activation": None,
+            "batch_norm": False,
+            "buffer_size": int(1e6),
+            "tau": 0.005,
+            "gradient_clipping_norm": 5,
+            "initialiser": "Xavier"
+        },
 
-        "min_steps_before_learning": 1000, #for SAC only
+        "min_steps_before_learning": 1000,  # for SAC only
         "batch_size": 256,
         "discount_rate": 0.99,
         "mu": 0.0,  # for O-H noise
@@ -83,7 +84,8 @@ config.hyperparameters = {
         "entropy_term_weight": None,
         "add_extra_noise": True,
         "do_evaluation_iterations": True,
-        "clip_rewards": False
+        "clip_rewards": False,
+        "HER_sample_proportion": 0.8
 
     }
 

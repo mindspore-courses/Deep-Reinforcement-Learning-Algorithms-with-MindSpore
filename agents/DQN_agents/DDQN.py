@@ -1,4 +1,9 @@
+"""
+DDQN
+"""
+# pylint: disable=C0103
 from agents.DQN_agents.DQN_With_Fixed_Q_Targets import DQN_With_Fixed_Q_Targets
+
 
 class DDQN(DQN_With_Fixed_Q_Targets):
     """A double DQN agent"""
@@ -16,6 +21,4 @@ class DDQN(DQN_With_Fixed_Q_Targets):
         Q_targets_next = self.q_network_target(next_states).gather(
             max_action_indexes.unsqueeze(1), axis=1, batch_dims=1
         )
-        return Q_targets_next 
-            
-
+        return Q_targets_next

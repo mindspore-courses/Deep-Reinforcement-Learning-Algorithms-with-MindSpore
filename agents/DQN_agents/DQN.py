@@ -1,9 +1,12 @@
+""""
+DQN
+"""
+# pylint: disable=C0103
+# pylint: disable=W1201
 from collections import Counter
-import mindspore.nn as nn
+from mindspore import nn
 import mindspore as ms
-import mindspore.ops as ops
 # import torch
-import random
 # import torch.optim as optim
 # import torch.nn.functional as F
 import numpy as np
@@ -29,9 +32,13 @@ class DQN(Base_Agent):
         self.grad_fn = ms.value_and_grad(
             self.compute_loss, grad_position=None, weights=self.q_network_local.trainable_params(), has_aux=True
         )
+        # nothing but for pylint
+        self.action = None
+        self.state = None
 
     def reset_game(self):
-        super(DQN, self).reset_game()
+        # super(DQN, self).reset_game()
+        super().reset_game()
         self.update_learning_rate(self.hyperparameters["learning_rate"], self.q_network_optimizer)
 
     def step(self):
@@ -48,11 +55,15 @@ class DQN(Base_Agent):
         self.episode_number += 1
 
     def pick_action(self, state=None):
-        """Uses the local Q network and an epsilon greedy policy to pick an action"""
-        # PyTorch only accepts mini-batches and not single observations so we have to use unsqueeze to add
-        # a "fake" dimension to make it a mini-batch rather than a single observation
-        if state is None: state = self.state
-        if isinstance(state, np.int64) or isinstance(state, int): state = np.array([state])
+        """
+        Uses the local Q network and an epsilon greedy policy to pick an action
+        PyTorch only accepts mini-batches and not single observations so we have to use unsqueeze to add
+        a "fake" dimension to make it a mini-batch rather than a single observation
+        """
+        if state is None:
+            state = self.state
+        if isinstance(state, (int, np.int64)):
+            state = np.array([state])
         state = ms.Tensor(state).float().unsqueeze(0)
         if len(state.shape) < 2:
             state = state.unsqueeze(0)
@@ -68,7 +79,8 @@ class DQN(Base_Agent):
                 "episode_number": self.episode_number
             }
         )
-        self.logger.info("Q values {} -- Action chosen {}".format(action_values, action))
+        # self.logger.info("Q values {} -- Action chosen {}".format(action_values, action))
+        self.logger.info("Q values" + str(action_values) + " -- Action chosen "+ str(action))
         return action
 
     def learn(self, experiences=None):
@@ -80,17 +92,18 @@ class DQN(Base_Agent):
 
         Q_targets = self.compute_q_targets(next_states, rewards, dones)
         # self.compute_loss(states, next_states, rewards, actions, dones, Q_targets)
-        (loss, _), grads = self.grad_fn(states, next_states, rewards, actions, dones, Q_targets)
+        (_, _), grads = self.grad_fn(states, actions, Q_targets)
 
         actions_list = [action_X.numpy().item() for action_X in actions]
 
-        self.logger.info("Action counts {}".format(Counter(actions_list)))
+        # self.logger.info("Action counts {}".format(Counter(actions_list)))
+        self.logger.info("Action counts " + str(Counter(actions_list)))
         self.take_optimisation_step(
-            optimizer=self.q_network_optimizer, loss=loss, grads=grads,
+            optimizer=self.q_network_optimizer, grads=grads,
             clipping_norm=self.hyperparameters["gradient_clipping_norm"]
         )
 
-    def compute_loss(self, states, next_states, rewards, actions, dones, Q_targets):
+    def compute_loss(self, states, actions, Q_targets):
         """Computes the loss required to train the Q network"""
         # Q_targets = self.compute_q_targets(next_states, rewards, dones)
         Q_expected = self.compute_expected_q_values(states, actions)
@@ -122,7 +135,7 @@ class DQN(Base_Agent):
 
     def locally_save_policy(self):
         """Saves the policy"""
-        ms.save_checkpoint(self.q_network_local, ckpt_file_name="Models/{}_local_network.pt".format(self.agent_name))
+        ms.save_checkpoint(self.q_network_local, ckpt_file_name=f"Models/{self.agent_name}_local_network.pt")
 
     def time_for_q_network_to_learn(self):
         """Returns boolean indicating whether enough steps have been taken for learning to begin and there are

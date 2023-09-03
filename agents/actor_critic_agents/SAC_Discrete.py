@@ -1,9 +1,14 @@
+""""
+SAC Discrete
+"""
+# pylint: disable=W0233
+# pylint: disable=W0231
 import mindspore as ms
 from mindspore import ops, nn
 import numpy as np
 from agents.Base_Agent import Base_Agent
-from utilities.data_structures.Replay_Buffer import Replay_Buffer
 from agents.actor_critic_agents.SAC import SAC
+from utilities.data_structures.Replay_Buffer import Replay_Buffer
 from utilities.Utility_Functions import create_actor_distribution
 
 
@@ -13,6 +18,7 @@ class SAC_Discrete(SAC):
     agent_name = "SAC"
 
     def __init__(self, config):
+        # super().__init__(config)
         Base_Agent.__init__(self, config)
         assert self.action_types == "DISCRETE", "Action types must be discrete. Use SAC instead for continuous actions"
         assert self.config.hyperparameters["Actor"][
@@ -82,7 +88,12 @@ class SAC_Discrete(SAC):
     def produce_action_and_action_info(self, state):
         """Given the state, produces an action, the probability of the action, the log probability of the action, and
         the argmax action"""
+        # eps = 1e-6
+        state = state.float()
         action_probabilities = self.actor_local(state)
+        # action_probabilities = action_probabilities.clip(min=eps, max=1-eps)
+        # action_probabilities /= action_probabilities.sum()
+
         max_probability_action = ops.argmax(action_probabilities, dim=-1)
         action_distribution = create_actor_distribution(self.action_types, action_probabilities, self.action_size)
         action = action_distribution.sample()
@@ -91,7 +102,6 @@ class SAC_Discrete(SAC):
         z = z.float() * 1e-8
         log_action_probabilities = ops.log(action_probabilities + z)
         return action, (action_probabilities, log_action_probabilities), max_probability_action
-
 
     def actor_pick_action(self, state=None, _eval=False):
         """Uses actor to pick an action in one of two ways: 1) If eval = False and we aren't in eval mode then it picks
@@ -106,14 +116,14 @@ class SAC_Discrete(SAC):
         if not _eval:
             action, _, _ = self.produce_action_and_action_info(state)
         else:
-            _, z, action = self.produce_action_and_action_info(state)
+            # _, z, action = self.produce_action_and_action_info(state)
+            _, _, action = self.produce_action_and_action_info(state)
         action = action.numpy()
         return action[0]
 
-
     def learn(self):
         state_batch, action_batch, reward_batch, next_state_batch, mask_batch = self.sample_experiences()
-        next_state_action, (action_probabilities, log_action_probabilities), _ = \
+        _, (action_probabilities, log_action_probabilities), _ = \
             self.produce_action_and_action_info(next_state_batch)
         qf1_next_target = self.critic_target_1(next_state_batch)
         qf2_next_target = self.critic_target_2(next_state_batch)
@@ -124,29 +134,29 @@ class SAC_Discrete(SAC):
         min_qf_next_target = min_qf_next_target.sum(axis=1).unsqueeze(-1)
         next_q_value = reward_batch + (1.0 - mask_batch) * self.hyperparameters["discount_rate"] * min_qf_next_target
 
-        qf1_loss, qf1_grads = self.q1_grad_fn(state_batch, action_batch, next_q_value)
-        qf2_loss, qf2_grads = self.q2_grad_fn(state_batch, action_batch, next_q_value)
+        _, qf1_grads = self.q1_grad_fn(state_batch, action_batch, next_q_value)
+        _, qf2_grads = self.q2_grad_fn(state_batch, action_batch, next_q_value)
         self.update_critic_parameters(
             # critic_loss_1=qf1_loss, critic_loss_2=qf2_loss,
             critic_grads_1=qf1_grads, critic_grads_2=qf2_grads
         )
 
-        (policy_loss, log_pi), policy_grads = self.actor_grad_fn(state_batch)
+        (_, log_pi), policy_grads = self.actor_grad_fn(state_batch)
         if self.automatic_entropy_tuning:
             # alpha_loss = self.calculate_entropy_tuning_loss(log_pi)
-            alpha_loss, alpha_grads = self.alpha_grad_fn(log_pi)
+            _, alpha_grads = self.alpha_grad_fn(log_pi)
         else:
-            alpha_loss = None
             alpha_grads = None
         self.update_actor_parameters(
-            actor_loss=policy_loss, alpha_loss=alpha_loss, actor_grads=policy_grads, alpha_grads=alpha_grads
+            # actor_loss=policy_loss, alpha_loss=alpha_loss,
+            actor_grads=policy_grads, alpha_grads=alpha_grads
         )
 
     def calculate_critic_losses(self, state_batch, action_batch, reward_batch, next_state_batch, mask_batch):
         """Calculates the losses for the two critics. This is the ordinary Q-learning loss except the additional entropy
          term is taken into account"""
         # with torch.no_grad():
-        next_state_action, (
+        _, (
             action_probabilities, log_action_probabilities), _ = self.produce_action_and_action_info(next_state_batch)
         qf1_next_target = self.critic_target_1(next_state_batch)
         qf2_next_target = self.critic_target_2(next_state_batch)
@@ -164,7 +174,7 @@ class SAC_Discrete(SAC):
 
     def calculate_actor_loss(self, state_batch):
         """Calculates the loss for the actor. This loss includes the additional entropy term"""
-        action, (action_probabilities, log_action_probabilities), _ = self.produce_action_and_action_info(state_batch)
+        _, (action_probabilities, log_action_probabilities), _ = self.produce_action_and_action_info(state_batch)
         qf1_pi = self.critic_local_1(state_batch)
         qf2_pi = self.critic_local_2(state_batch)
         min_qf_pi = ops.stack((qf1_pi, qf2_pi)).min(axis=0)

@@ -1,4 +1,8 @@
-import copy
+"""
+PPO
+"""
+# pylint: disable=C0103
+
 import sys
 import mindspore as ms
 from mindspore import nn, ops
@@ -7,13 +11,12 @@ from agents.Base_Agent import Base_Agent
 from exploration_strategies.Epsilon_Greedy_Exploration import Epsilon_Greedy_Exploration
 from utilities.Parallel_Experience_Generator import Parallel_Experience_Generator
 from utilities.Utility_Functions import normalise_rewards, create_actor_distribution
-from multiprocessing import Pool
-from contextlib import closing
-
 
 
 class PPO(Base_Agent):
-    """Proximal Policy Optimization agent"""
+    """
+    Proximal Policy Optimization agent
+    """
     agent_name = "PPO"
 
     def __init__(self, config):
@@ -41,10 +44,12 @@ class PPO(Base_Agent):
 
     def calculate_policy_output_size(self):
         """Initialises the policies"""
+        result = 0
         if self.action_types == "DISCRETE":
-            return self.action_size
+            result = self.action_size
         elif self.action_types == "CONTINUOUS":
-            return self.action_size * 2  # Because we need 1 parameter for mean and 1 for std of distribution
+            result = self.action_size * 2  # Because we need 1 parameter for mean and 1 for std of distribution
+        return result
 
     def step(self):
         """Runs a step for the PPO agent"""
@@ -81,10 +86,8 @@ class PPO(Base_Agent):
                 self.policy_old, all_states, all_actions
             )
             # all_ratio_of_policy_probabilities = self.calculate_all_ratio_of_policy_probabilities()
-            loss = self.calculate_loss(
-                all_discounted_returns, all_states, all_actions, old_policy_distribution_log_prob
-            )
-            loss, grads = self.calculate_loss_grad_fn(
+            self.calculate_loss(all_discounted_returns, all_states, all_actions, old_policy_distribution_log_prob)
+            _, grads = self.calculate_loss_grad_fn(
                 all_discounted_returns, all_states, all_actions, old_policy_distribution_log_prob
             )
             self.take_policy_new_optimisation_step(grads)
@@ -93,9 +96,9 @@ class PPO(Base_Agent):
         """Calculates the cumulative discounted return for each episode which we will then use in a learning
         iteration"""
         all_discounted_returns = []
-        for episode in range(len(self.many_episode_states)):
+        for episode, many_episode_states_element in enumerate(self.many_episode_states):
             discounted_returns = [0]
-            for ix in range(len(self.many_episode_states[episode])):
+            for ix in range(len(many_episode_states_element)):
                 return_value = self.many_episode_rewards[episode][-(ix + 1)] + \
                                self.hyperparameters["discount_rate"] * discounted_returns[-1]
                 discounted_returns.append(return_value)
@@ -171,12 +174,11 @@ class PPO(Base_Agent):
 
     def save_result(self):
         """Save the results seen by the agent in the most recent experiences"""
-        for ep in range(len(self.many_episode_rewards)):
-            total_reward = np.sum(self.many_episode_rewards[ep])
+        for episode_reward in self.many_episode_rewards:
+            total_reward = np.sum(episode_reward)
             self.game_full_episode_scores.append(total_reward)
             self.rolling_results.append(np.mean(self.game_full_episode_scores[-1 * self.rolling_score_window:]))
         self.save_max_result_seen()
-
 
     # def play_n_episodes(self, n, exploration_epsilon=None):
     #     """Plays n episodes in parallel using the fixed policy and returns the data"""

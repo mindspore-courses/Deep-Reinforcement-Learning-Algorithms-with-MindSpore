@@ -5,15 +5,24 @@ name: CI Pipe
 
 on:
   pull_request:
-    branches: [ "master" ]
+    branches: [ "main" ]
     paths:
       - 'agents/**'
+      - 'exploration_strategies/**'
+      - 'utilities/**'
+      - 'results/**'
+      - 'environments/**'
+      - 'tests/**'
       - '.github/workflows/**'
   push:
-    branches: [ "master" ]
+    branches: [ "main" ]
     paths:
       - 'agents/**'
       - 'results/**'
+      - 'exploration_strategies/**'
+      - 'utilities/**'
+      - 'environments/**'
+      - 'tests/**'
 
 permissions:
   contents: read
@@ -37,3 +46,16 @@ jobs:
     - name: Analysing the results code with pylint
       run: |
         pylint results --rcfile=.github/pylint.conf
+    - name: Analysing the utilities code with pylint
+      run: |
+        pylint utilities --rcfile=.github/pylint.conf
+    - name: Analysing the exploration_strategies code with pylint
+      run: |
+        pylint exploration_strategies --rcfile=.github/pylint.conf
+    - name: Analysing the environments code with pylint
+      run: |
+        pylint environments --rcfile=.github/pylint.conf
+    - name: Analysing the tests code with pylint
+      run: |
+        pylint tests --rcfile=.github/pylint.conf
+    
